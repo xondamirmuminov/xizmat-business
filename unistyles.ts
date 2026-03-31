@@ -1,4 +1,10 @@
-import { StyleSheet } from "react-native-unistyles";
+import {
+  StyleSheet,
+  UnistylesThemes,
+  UnistylesRuntime,
+} from "react-native-unistyles";
+
+import { useThemeStore } from "@/store";
 
 const lightPalette = {
   red1: "#fffcfc",
@@ -249,15 +255,15 @@ declare module "react-native-unistyles" {
   export interface UnistylesThemes extends UnistylesAppThemes {}
 }
 
-// const settings = {
-//   initialTheme: () => {
-//     return useThemeStore.getState()?.currentTheme === "system-default"
-//       ? (UnistylesRuntime.colorScheme as keyof UnistylesThemes)
-//       : (useThemeStore.getState()?.currentTheme as keyof UnistylesThemes);
-//   },
-// };
+const settings = {
+  initialTheme: () => {
+    return useThemeStore.getState()?.currentTheme === "system-default"
+      ? (UnistylesRuntime.colorScheme as keyof UnistylesThemes)
+      : (useThemeStore.getState()?.currentTheme as keyof UnistylesThemes);
+  },
+};
 
 StyleSheet.configure({
+  settings,
   themes: appThemes,
-  settings: { adaptiveThemes: true },
 });

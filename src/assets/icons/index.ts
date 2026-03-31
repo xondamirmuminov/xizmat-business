@@ -3,6 +3,7 @@ export * from "./icons/x.icon";
 export * from "./icons/eye.icon";
 export * from "./icons/check.icon";
 export * from "./icons/eye-off.icon";
+export * from "./icons/telegram.icon";
 export * from "./icons/chevron-up.icon";
 export * from "./icons/chevron-down.icon";
 export * from "./icons/chevron-left.icon";

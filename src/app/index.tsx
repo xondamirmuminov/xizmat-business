@@ -1,10 +1,27 @@
-import { Text, View } from "react-native";
+import React from "react";
+import { Link } from "expo-router";
+import { View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
+import { useAuthStore } from "@/store";
+import { deleteToken } from "@/lib/helpers";
+import { Button, Typography } from "@/components";
+
 export default function Index() {
+  const { signOut } = useAuthStore();
+
+  const handleSignOut = async () => {
+    signOut();
+    await deleteToken();
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Hello world from Unistyles</Text>
+      <Typography>Hello world from Unistyles</Typography>
+      <Link href="/(auth)/sign-up">Sign up</Link>
+      <Button color="error" onPress={handleSignOut}>
+        Sign Out
+      </Button>
     </View>
   );
 }

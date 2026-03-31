@@ -1,11 +1,10 @@
+import { isEmpty } from "lodash";
+import { StyleSheet } from "react-native-unistyles";
 import React, { useRef, useState, useEffect } from "react";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import {
-  View,
-  TextInput,
-  TextInputProps,
-  TextInputKeyPressEvent,
-} from "react-native";
+import { View, TextInput, Pressable, TextInputProps } from "react-native";
+
+import { Flex } from "../flex";
+import { Typography } from "../typography";
 
 type OTPInputProps = {
   value?: string;
@@ -26,123 +25,104 @@ export const OTPInput: React.FC<OTPInputProps> = ({
   autoFocus = true,
   disabled = false,
 }) => {
-  const { theme } = useUnistyles();
-  const inputRefs = useRef<TextInput[]>([]);
-  const [otp, setOtp] = useState(Array(length).fill(""));
-  const [focusedIndex, setFocusedIndex] = useState<number>();
+  const [code, setCode] = useState("");
+  const inputRef = useRef<TextInput>(null);
+  const [isInputBoxFocused, setIsInputBoxFocused] = useState(false);
 
-  const focusInput = (index: number) => {
-    if (inputRefs.current[index]) {
-      inputRefs.current[index].focus();
+  const handleOnPress = () => {
+    setIsInputBoxFocused(true);
+    inputRef.current?.focus();
+  };
+
+  const handleOnBlur = () => {
+    setIsInputBoxFocused(false);
+  };
+
+  const handleChangeInput = (value: string) => {
+    setCode(value);
+    onChange?.(value);
+
+    if (value?.length === length) {
+      onComplete?.();
     }
   };
 
-  const handleChange = (text: string, index: number) => {
-    const value = text?.replace(/\D/g, "");
-    const newOtp = [...otp];
+  const renderInputBox = (_: any, index: number) => {
+    const emptyInput = "";
+    const digit = code[index] || emptyInput;
 
-    const isBackspace = !value && otp[index];
+    const isCurrentValue = index === code.length;
+    const isLastValue = index === length - 1;
+    const isCodeComplete = code.length === length;
+    const isFilled = !isEmpty(digit);
 
-    if (isBackspace) {
-      newOtp[index] = "";
-      setOtp(newOtp);
-      onChange?.(newOtp?.join(""));
+    const isValueFocused = isCurrentValue || (isLastValue && isCodeComplete);
 
-      if (index > 0) {
-        focusInput(index - 1);
-      }
-
-      return;
-    }
-
-    if (value.length === 1 && otp[index] !== value) {
-      newOtp[index] = value;
-      setOtp(newOtp);
-      onChange?.(newOtp?.join(""));
-
-      if (index < otp.length - 1) {
-        focusInput(index + 1);
-      } else {
-        onComplete?.();
-        inputRefs.current[index].blur();
-      }
-    }
+    return (
+      <Flex
+        key={index}
+        alignItems="center"
+        justifyContent="center"
+        style={[
+          styles.inputBox,
+          isInputBoxFocused && isFilled && styles.filledInputBox,
+          isInputBoxFocused && isValueFocused && styles.focusedInputBox,
+        ]}
+      >
+        <Typography weight="medium" size="display-sm">
+          {digit}
+        </Typography>
+      </Flex>
+    );
   };
-
-  const handleKeyPress = (event: TextInputKeyPressEvent, index: number) => {
-    if (event.nativeEvent.key === "Backspace" && !otp[index] && index > 0) {
-      focusInput(index - 1);
-    }
-  };
-
-  useEffect(() => {
-    if (value) {
-      const valueArr = value.split("").slice(0, otp.length);
-
-      if (valueArr.join("") !== otp.join("")) {
-        setOtp(valueArr);
-      }
-    } else if (!value) {
-      setOtp(Array(length).fill(""));
-    }
-  }, [value]);
 
   useEffect(() => {
     if (autoFocus) {
-      inputRefs.current[0]?.focus();
+      inputRef.current?.focus();
     }
   }, []);
 
-  return (
-    <View style={styles.container}>
-      {otp.map((code, index) => {
-        const focused = focusedIndex === index;
+  useEffect(() => {
+    if (value && value !== code) {
+      setCode(value);
+    }
+  }, [value]);
 
-        return (
-          <View
-            key={`otp-input-${index}`}
-            style={[
-              styles.inputContainer,
-              code ? styles.filledInputContainer : {},
-              focused ? styles.focusedInputContainer : {},
-            ]}
-          >
-            <TextInput
-              value={code}
-              maxLength={1}
-              selectTextOnFocus
-              textAlign="center"
-              enterKeyHint="next"
-              editable={!disabled}
-              keyboardType="number-pad"
-              autoComplete="one-time-code"
-              placeholderTextColor={theme.colors.textSecondary}
-              {...inputProps}
-              style={styles.input}
-              onKeyPress={(event) => handleKeyPress(event, index)}
-              onFocus={() => {
-                setFocusedIndex(index);
-              }}
-              onChangeText={(text) => {
-                handleChange(text, index);
-              }}
-              ref={(ref) => {
-                if (ref) inputRefs.current[index] = ref;
-              }}
-            />
-          </View>
-        );
-      })}
+  const inputBoxesArray = new Array(length).fill(0);
+
+  return (
+    <View>
+      <Pressable
+        disabled={disabled}
+        onPress={handleOnPress}
+        style={styles.container}
+      >
+        {inputBoxesArray.map(renderInputBox)}
+      </Pressable>
+      <TextInput
+        {...inputProps}
+        value={code}
+        ref={inputRef}
+        maxLength={length}
+        editable={!disabled}
+        onBlur={handleOnBlur}
+        keyboardType="number-pad"
+        style={styles.hiddenInput}
+        autoComplete="one-time-code"
+        onChangeText={handleChangeInput}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create(({ space, colors }) => ({
-  filledInputContainer: {
-    borderColor: colors.primary8,
+  filledInputBox: {
+    borderColor: colors.primary6,
   },
-  focusedInputContainer: {
+  hiddenInput: { opacity: 0, zIndex: -99999, position: "absolute" },
+  focusedInputBox: {
     borderColor: colors.primary8,
+    backgroundColor: colors.primary2,
   },
   input: {
     padding: 0,
@@ -152,7 +132,7 @@ const styles = StyleSheet.create(({ space, colors }) => ({
     color: colors.textPrimary,
     fontFamily: "Inter Medium",
   },
-  inputContainer: {
+  inputBox: {
     width: 64,
     height: 64,
     borderWidth: 1,

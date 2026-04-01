@@ -19,6 +19,7 @@ export default function Index() {
     <View style={styles.container}>
       <Typography>Hello world from Unistyles</Typography>
       <Link href="/(auth)/sign-up">Sign up</Link>
+      <Link href="/create-business">Create Business</Link>
       <Button color="error" onPress={handleSignOut}>
         Sign Out
       </Button>

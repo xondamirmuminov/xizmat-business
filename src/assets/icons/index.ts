@@ -5,6 +5,8 @@ export * from "./icons/check.icon";
 export * from "./icons/eye-off.icon";
 export * from "./icons/telegram.icon";
 export * from "./icons/chevron-up.icon";
+export * from "./icons/circle-plus.icon";
+export * from "./icons/circle-minus.icon";
 export * from "./icons/chevron-down.icon";
 export * from "./icons/chevron-left.icon";
 export * from "./icons/chevron-right.icon";

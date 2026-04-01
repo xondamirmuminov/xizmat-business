@@ -12,4 +12,5 @@ export * from "./otp-input";
 export * from "./typography";
 export * from "./phone-input";
 export * from "./password-input";
+export * from "./circular-progress";
 export * from "./custom-bottom-sheet-modal";

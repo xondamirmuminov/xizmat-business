@@ -12,10 +12,19 @@
     "availability": "Availability",
     "open_now": "Open now",
     "closed": "Closed",
+    "working_day": "Working day",
     "price": "Price",
     "service_provider": "Service provider",
     "newPassword": "New password",
-    "oldPassword": "Old password"
+    "oldPassword": "Old password",
+    "next": "Next",
+    "step_count": "{{active}} of {{total}}",
+    "businessName": "Business name",
+    "phoneNumbers": "Phone numbers",
+    "working_days": "Working days",
+    "working_hours": "Working hours",
+    "from": "From",
+    "to": "To"
   },
   "placeholders": {
     "phone": "Enter your phone",
@@ -23,7 +32,8 @@
     "fullName": "Enter your name",
     "address": "Enter your address",
     "newPassword": "Enter your new password",
-    "oldPassword": "Enter your old password"
+    "oldPassword": "Enter your old password",
+    "businessName": "Enter business name or your full name"
   },
   "actions": {
     "view_profile": "View Profile",
@@ -97,51 +107,6 @@
       "send_code": "Send 5-digit code"
     }
   },
-  "home": {
-    "location": "Your location",
-    "search_input_placeholder": "Search for a service...",
-    "browse_by_category": "Browse by category",
-    "recommended_services": "Recommended Services",
-    "top_specialists": "Top Specialists",
-    "no_categories": "No categories yet."
-  },
-  "categories": {
-    "title": "Categories",
-    "card": {
-      "categories": "categories",
-      "services": "services"
-    },
-    "empty": {
-      "title": "No categories found",
-      "description": "There’s no categories to display here right now. Please check back later or try pressing refresh button."
-    }
-  },
-  "location_modal": {
-    "current_location": {
-      "title": "Your location",
-      "description": "Based on your GPS"
-    }
-  },
-  "subcategory": {
-    "all_services": "All Services",
-    "search_placeholder": "Search for services and providers",
-    "empty": {
-      "title": "No services found",
-      "description": "There’s no services to display here right now. Please check back later or try adjusting your filters."
-    },
-    "sort_options": {
-      "nearest": "Nearest",
-      "cheapest": "Cheapest",
-      "most_recommended": "Most Recommended"
-    },
-    "filters": {
-      "title": "Filters",
-      "actions": {
-        "clear_all": "Clear all",
-        "apply": "Apply Filters"
-      }
-    }
-  },
   "graphql_errors": {
     "invalidToken": "Session expired. Please log in again.",
     "userNotFound": "User not found.",
@@ -155,137 +120,21 @@
     "standByBookingAlreadyExists": "You're already joined to waitlist.",
     "bookingTimeOverlaps": "This booking overlaps with an existing appointment."
   },
-  "status": {
-    "recommended": "Recommended",
-    "available_now": "Available now",
-    "not_available": "Not available"
-  },
-  "provider_info": {
-    "services": "Services",
-    "gallery": "Gallery",
-    "working_hours": "Working hours"
-  },
-  "service_info": {
-    "time_picker_label": "What time can you arrive?",
-    "no_suitable_time": "Can’t find a suitable time?",
-    "join_waitlist": "Join waitlist",
-    "date_time_warning": "Select date and time to book this service.",
-    "booking_message": {
-      "title": "Service booked successfully.",
-      "description": "We will send you reminder notifications before your turn arrives.",
-      "action": "View Bookings"
-    },
-    "empty": {
-      "title": "No time available this day",
-      "description": "There’s no available time slots this day. Please join waitlist or try pressing refresh button."
+  "create_business": {
+    "steps": {
+      "actions": {
+        "next": "Next step",
+        "finish": "Finish",
+        "back": "Go back"
+      },
+      "general": {
+        "title": "General Information",
+        "add_phone": "Add phone"
+      },
+      "images_media": {
+        "title": "Images & Media"
+      }
     }
-  },
-  "empty": {
-    "title": "No results found",
-    "description": "There’s no results to display here right now. Please check back later or try adjusting your filters."
-  },
-  "bookings": {
-    "title": "My Bookings",
-    "status": {
-      "upcoming": "Upcoming",
-      "completed": "Completed",
-      "cancelled": "Cancelled",
-      "confirmed": "Confirmed",
-      "pending": "Pending",
-      "declined": "Declined",
-      "standby": "Waitlisted"
-    },
-    "actions": {
-      "cancel": "Cancel Booking",
-      "view": "View Details"
-    },
-    "cancel": {
-      "why": "Why do you want to cancel?",
-      "comment_placeholder": "Your comment",
-      "title": "Are you sure you want to cancel?",
-      "description": "If you cancel now, you might not be able to book this service again for today because of limited time slots."
-    },
-    "empty": {
-      "title": "No bookings with status \"{{status}}\"",
-      "description": "There’s no bookings with status \"{{status}}\" to display here right now. Explore and book services.",
-      "action": "Explore services"
-    },
-    "cancel_success_message": "Booking cancelled successfully.",
-    "select_date": "Select date"
-  },
-  "cancel_reasons": {
-    "wrong_time": "Wrong time",
-    "plans_changed": "Plans changed",
-    "provider_asked_cancel": "Provider asked to cancel",
-    "provider_not_responding": "Provider not responding"
-  },
-  "waitlist_modal": {
-    "success_message": {
-      "title": "Joined to waitlist successfully.",
-      "description": "You will be notified if there is an available slot."
-    },
-    "title": "What is waitlist?",
-    "description": "If you join the waitlist, you will be notified if there is an available slot. But you have to confirm that you will come after receiving the notification."
-  },
-  "profile": {
-    "title": "Profile",
-    "no_account": {
-      "title": "Sign in",
-      "description": "Please sign in to your account to book services, save favorite providers with us."
-    },
-    "themes": {
-      "light": "Light",
-      "dark": "Dark",
-      "title": "Choose preferred theme",
-      "system-default": "System default"
-    },
-    "languages": {
-      "en": "English",
-      "ru": "Русский",
-      "uz": "O'zbekcha",
-      "title": "Choose preferred language"
-    },
-    "sign_out": {
-      "title": "Sign Out",
-      "description": "Are you sure you want to sign out of your account?"
-    },
-    "sections": {
-      "support": "Support",
-      "account": "Account",
-      "preferences": "Preferences",
-      "sign_out": "Sign out"
-    },
-    "section_items": {
-      "theme": "Theme",
-      "sign_out": "Sign out",
-      "language": "Language",
-      "favorites": "Favorites",
-      "contact_us": "Contact us",
-      "help_center": "Help center",
-      "notifications": "Notifications",
-      "change_password": "Change password",
-      "edit_personal_details": "Edit personal details"
-    }
-  },
-  "edit_profile": {
-    "title": "Edit Personal Details",
-    "change_photo": "Change photo",
-    "success_message": "Profile updated successfully.",
-    "actions": {
-      "update": "Update details"
-    }
-  },
-  "favorites": {
-    "title": "Favorites",
-    "remove_success_message": "Item removed successfully from Favorites.",
-    "tabs": { "services": "Services", "providers": "Providers" },
-    "empty": {
-      "action": "Explore services"
-    }
-  },
-  "change_password": {
-    "title": "Change password",
-    "success_message": "Password changed successfully."
   },
   "date": {
     "last": "Last",
@@ -300,50 +149,6 @@
       "friday": "Friday",
       "saturday": "Saturday",
       "sunday": "Sunday"
-    }
-  },
-  "notifications": {
-    "title": "Notifications",
-    "notifications": {
-      "standbyBookingCreated": {
-        "description": "Stand by mode is active for today."
-      },
-      "bookingCreated": {
-        "title": "Booking created",
-        "description": "Estimated turn time: {{meta}}"
-      },
-      "standbySlotAvailable": {
-        "title": "Stand by slot available",
-        "description": "A slot is available now because another booking was {{meta}}."
-      },
-      "bookingUpdated": {
-        "title": "Booking updated",
-        "description": "Booking status changed to {{meta}}."
-      },
-      "standbySlotClaimed": {
-        "title": "Stand-by slot claimed",
-        "description": "Your stand-by booking has been confirmed for {{meta}}"
-      },
-      "bookingReminder": {
-        "title": "Booking reminder",
-        "description": "Your booking starts in about {{meta}} minutes. Please confirm if you are coming."
-      },
-      "bookingDeclined": {
-        "title": "Booking declined",
-        "description": "Booking was declined because attendance was not confirmed in time."
-      }
-    }
-  },
-  "calendar": {
-    "actions": { "today": "Today" },
-    "week_day_short": {
-      "monday": "Mo",
-      "tuesday": "Tu",
-      "wednesday": "We",
-      "thursday": "Th",
-      "friday": "Fr",
-      "saturday": "Sa",
-      "sunday": "Su"
     }
   }
 }

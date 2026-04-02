@@ -121,18 +121,23 @@
     "bookingTimeOverlaps": "This booking overlaps with an existing appointment."
   },
   "create_business": {
+    "actions": {
+      "next": "Next step",
+      "finish": "Finish",
+      "back": "Go back"
+    },
     "steps": {
-      "actions": {
-        "next": "Next step",
-        "finish": "Finish",
-        "back": "Go back"
-      },
       "general": {
         "title": "General Information",
         "add_phone": "Add phone"
       },
       "images_media": {
         "title": "Images & Media"
+      },
+      "categories": {
+        "title": "Categories",
+        "categories_count": "categories",
+        "description": "Select categories that best describes your business."
       }
     }
   },

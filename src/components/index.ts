@@ -2,6 +2,7 @@ export * from "./chip";
 export * from "./flex";
 export * from "./tabs";
 export * from "./input";
+export * from "./empty";
 export * from "./button";
 export * from "./select";
 export * from "./loader";

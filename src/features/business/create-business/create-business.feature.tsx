@@ -85,7 +85,7 @@ export function CreateBusiness() {
               startIcon={<ChevronLeftIcon />}
               onPress={() => setStep((prev) => prev - 1)}
             >
-              {t("create_business.steps.actions.back")}
+              {t("create_business.actions.back")}
             </Button>
           )}
           {step !== BUSINESS_FORM_STEPS?.length - 1 ? (
@@ -95,11 +95,11 @@ export function CreateBusiness() {
               color="secondary"
               onPress={() => setStep((prev) => prev + 1)}
             >
-              {t("create_business.steps.actions.next")}
+              {t("create_business.actions.next")}
             </Button>
           ) : (
             <Button fullWidth size="lg" color="secondary">
-              {t("create_business.steps.actions.finish")}
+              {t("create_business.actions.finish")}
             </Button>
           )}
         </Flex>
@@ -119,6 +119,7 @@ const styles = StyleSheet.create(({ space, colors }) => ({
     backgroundColor: colors.background,
   },
   formContainer: {
+    paddingTop: space(1),
     paddingInline: space(2),
     paddingBottom: space(4),
   },

@@ -66,6 +66,7 @@ export function BusinessCategoriesFormStep() {
       </Typography>
       <FlashList
         data={categories}
+        keyExtractor={(category) => category?._id}
         ItemSeparatorComponent={() => <View style={{ height: 16 }}></View>}
         ListEmptyComponent={loading ? renderCategoriesSkeleton() : <Empty />}
         renderItem={({ item: category }) => {

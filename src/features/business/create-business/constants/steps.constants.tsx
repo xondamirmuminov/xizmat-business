@@ -1,4 +1,8 @@
-import { BusinessGeneralFormStep, BusinessCategoriesFormStep } from "../steps";
+import {
+  BusinessImagesFormStep,
+  BusinessGeneralFormStep,
+  BusinessCategoriesFormStep,
+} from "../steps";
 
 export const BUSINESS_FORM_STEPS = [
   {
@@ -15,7 +19,7 @@ export const BUSINESS_FORM_STEPS = [
   },
   {
     key: "images-media",
-    component: <BusinessGeneralFormStep />,
+    component: <BusinessImagesFormStep />,
     next: "create_business.steps.images_media.title",
     title: "create_business.steps.images_media.title",
   },

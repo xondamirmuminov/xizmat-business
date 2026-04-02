@@ -48,7 +48,8 @@
     "sign_out": "Sign out",
     "remove": "Remove",
     "open": "Open",
-    "show_results": "Show results"
+    "show_results": "Show results",
+    "upload": "Upload"
   },
   "form_errors": {
     "disabled": "",
@@ -132,7 +133,19 @@
         "add_phone": "Add phone"
       },
       "images_media": {
-        "title": "Images & Media"
+        "title": "Images & Media",
+        "logo": {
+          "title": "Logo",
+          "description": "Your logo will appear where your business is presented on Xizmat. (Recommended at least 98 x 98)"
+        },
+        "thumbnail": {
+          "title": "Banner image",
+          "description": "This image will appear across the top of your business profile."
+        },
+        "images": {
+          "title": "Images of your works",
+          "description": "These images will appear in the gallery of your business."
+        }
       },
       "categories": {
         "title": "Categories",

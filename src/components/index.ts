@@ -6,6 +6,7 @@ export * from "./empty";
 export * from "./button";
 export * from "./select";
 export * from "./loader";
+export * from "./upload";
 export * from "./divider";
 export * from "./checkbox";
 export * from "./skeleton";

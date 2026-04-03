@@ -14,3 +14,4 @@ export * from "./icons/circle-minus.icon";
 export * from "./icons/chevron-down.icon";
 export * from "./icons/chevron-left.icon";
 export * from "./icons/chevron-right.icon";
+export * from "./icons/map-pin-filled.icon";

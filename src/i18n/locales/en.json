@@ -151,6 +151,9 @@
         "title": "Categories",
         "categories_count": "categories",
         "description": "Select categories that best describes your business."
+      },
+      "address": {
+        "title": "Address"
       }
     }
   },

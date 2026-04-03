@@ -1,6 +1,7 @@
 import {
   BusinessImagesFormStep,
   BusinessGeneralFormStep,
+  BusinessAddressFormStep,
   BusinessCategoriesFormStep,
 } from "../steps";
 
@@ -20,7 +21,13 @@ export const BUSINESS_FORM_STEPS = [
   {
     key: "images-media",
     component: <BusinessImagesFormStep />,
-    next: "create_business.steps.images_media.title",
+    next: "create_business.steps.address.title",
     title: "create_business.steps.images_media.title",
+  },
+  {
+    key: "address",
+    component: <BusinessAddressFormStep />,
+    next: "create_business.steps.address.title",
+    title: "create_business.steps.address.title",
   },
 ];

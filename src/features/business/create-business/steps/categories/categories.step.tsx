@@ -6,8 +6,8 @@ import { useQuery } from "@apollo/client/react";
 import { FlashList } from "@shopify/flash-list";
 import { useFormContext } from "react-hook-form";
 
-import { CategoryType } from "@/types";
 import { Flex, Empty, Typography } from "@/components";
+import { CategoryType, BusinessFormValuesType } from "@/types";
 
 import { CATEGORIES_QUERY } from "./api";
 import {
@@ -16,7 +16,7 @@ import {
 } from "./components";
 
 export function BusinessCategoriesFormStep() {
-  const { setValue, getValues } = useFormContext();
+  const { setValue, getValues } = useFormContext<BusinessFormValuesType>();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const { t } = useTranslation();

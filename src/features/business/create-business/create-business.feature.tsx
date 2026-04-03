@@ -7,6 +7,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { ChevronLeftIcon } from "@/assets";
+import { BusinessFormValuesType } from "@/types";
 import { DEFAULT_WORKING_DAYS } from "@/lib/constants";
 import {
   Flex,
@@ -21,7 +22,8 @@ import { BUSINESS_FORM_STEPS } from "./constants";
 export function CreateBusiness() {
   const [step, setStep] = useState(0);
 
-  const formMethods = useForm({
+  const formMethods = useForm<BusinessFormValuesType>({
+    mode: "onChange",
     defaultValues: {
       workingDays: DEFAULT_WORKING_DAYS,
       workingHours: {
@@ -33,6 +35,15 @@ export function CreateBusiness() {
 
   const { t } = useTranslation();
 
+  const handlePressNext = async () => {
+    console.log(activeStep.fields);
+
+    const isValid = await formMethods.trigger();
+    if (isValid) {
+      setStep((prev) => prev + 1);
+    }
+  };
+
   const activeStep = BUSINESS_FORM_STEPS[step];
 
   return (
@@ -40,16 +51,17 @@ export function CreateBusiness() {
       <SafeAreaView style={styles.safeArea}>
         <ScrollView style={styles.container}>
           <Flex
+            gap={2}
             direction="row"
             alignItems="center"
             style={styles.stepsContainer}
             justifyContent="space-between"
           >
-            <Flex gap={0.5}>
-              <Typography size="text-lg" weight="semibold">
+            <Flex gap={0.5} flexShrink={1}>
+              <Typography size="text-lg" weight="semibold" numberOfLines={1}>
                 {t(activeStep?.title)}
               </Typography>
-              <Typography size="text-sm" color="secondary">
+              <Typography size="text-sm" color="secondary" numberOfLines={1}>
                 {t("labels.next")}: {t(activeStep?.next)}
               </Typography>
             </Flex>
@@ -93,7 +105,7 @@ export function CreateBusiness() {
               fullWidth
               size="lg"
               color="secondary"
-              onPress={() => setStep((prev) => prev + 1)}
+              onPress={handlePressNext}
             >
               {t("create_business.actions.next")}
             </Button>

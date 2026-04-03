@@ -154,6 +154,10 @@
       },
       "address": {
         "title": "Address"
+      },
+      "social_links": {
+        "title": "Social Links",
+        "next": "Complete setup and add services"
       }
     }
   },

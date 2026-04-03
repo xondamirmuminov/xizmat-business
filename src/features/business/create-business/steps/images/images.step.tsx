@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { Controller, useFormContext } from "react-hook-form";
 
+import { BusinessFormValuesType } from "@/types";
 import { Flex, Upload, Typography } from "@/components";
 
 export function BusinessImagesFormStep() {
-  const { control } = useFormContext();
+  const { control } = useFormContext<BusinessFormValuesType>();
 
   const { t } = useTranslation();
 

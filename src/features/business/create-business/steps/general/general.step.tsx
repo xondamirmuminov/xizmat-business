@@ -9,6 +9,7 @@ import DateTimePicker, {
 } from "@react-native-community/datetimepicker";
 
 import { getErrorMessage } from "@/lib/helpers";
+import { BusinessFormValuesType } from "@/types";
 import { CirclePlusIcon, CircleMinusIcon } from "@/assets";
 import {
   Flex,
@@ -23,7 +24,7 @@ export function BusinessGeneralFormStep() {
   const {
     control,
     formState: { errors },
-  } = useFormContext();
+  } = useFormContext<BusinessFormValuesType>();
 
   const { t } = useTranslation();
 
@@ -31,13 +32,13 @@ export function BusinessGeneralFormStep() {
     append: appendPhoneNumber,
     remove: removePhoneNumber,
     fields: phoneNumbersFields,
-  } = useFieldArray({
+  } = useFieldArray<BusinessFormValuesType>({
     control,
-    name: "phoneNumbers",
     rules: { required: true },
+    name: "phoneNumbers" as any,
   });
 
-  const { fields: workingDaysFields } = useFieldArray({
+  const { fields: workingDaysFields } = useFieldArray<BusinessFormValuesType>({
     control,
     name: "workingDays",
   });
@@ -102,15 +103,19 @@ export function BusinessGeneralFormStep() {
             )}
             <Controller
               control={control}
-              rules={{ required: true }}
               name={`phoneNumbers.${index}`}
+              rules={{ minLength: 9, maxLength: 9, required: true }}
               render={({ field, fieldState: { error } }) => (
                 <PhoneInput
                   {...field}
                   required
                   error={!!error}
-                  helperText={handleGetErrorMessage(field?.name)}
                   label={index === 0 ? t("labels.phoneNumbers") : undefined}
+                  helperText={handleGetErrorMessage(field?.name, {
+                    min: 9,
+                    max: 9,
+                    isArray: true,
+                  })}
                 />
               )}
             />

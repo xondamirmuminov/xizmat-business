@@ -6,6 +6,7 @@ import { Camera, MapView, MarkerView } from "@maplibre/maplibre-react-native";
 
 import { MapPinFilledIcon } from "@/assets";
 import { getErrorMessage } from "@/lib/helpers";
+import { BusinessFormValuesType } from "@/types";
 import { Flex, Input, Typography } from "@/components";
 
 const INITIAL_COORDS = [67.823309, 40.133476];
@@ -16,7 +17,7 @@ export function BusinessAddressFormStep() {
   const {
     control,
     formState: { errors },
-  } = useFormContext();
+  } = useFormContext<BusinessFormValuesType>();
 
   const { t } = useTranslation();
 

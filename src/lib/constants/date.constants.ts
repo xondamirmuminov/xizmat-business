@@ -1,3 +1,5 @@
+import { BusinessFormWorkingDayType } from "@/types";
+
 export const WEEK_DAYS = [
   "monday",
   "tuesday",
@@ -8,7 +10,7 @@ export const WEEK_DAYS = [
   "sunday",
 ];
 
-export const DEFAULT_WORKING_DAYS = [
+export const DEFAULT_WORKING_DAYS: BusinessFormWorkingDayType[] = [
   { value: "monday", isClosed: false },
   { isClosed: false, value: "tuesday" },
   { isClosed: false, value: "wednesday" },

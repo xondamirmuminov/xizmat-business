@@ -50,8 +50,8 @@ export type BusinessFormWorkingHoursType = {
 
 export type BusinessFormValuesType = {
   address?: string;
-  categories: string[];
   businessName: string;
+  categoryIds: string[];
   phoneNumbers: string[];
   logo?: ImagePickerAsset;
   coords?: CoordinatesType;

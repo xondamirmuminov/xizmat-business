@@ -1,7 +1,9 @@
 import dayjs from "dayjs";
 import { useState } from "react";
+import { toast } from "sonner-native";
 import { useTranslation } from "react-i18next";
 import { View, ScrollView } from "react-native";
+import { useMutation } from "@apollo/client/react";
 import { StyleSheet } from "react-native-unistyles";
 import { useForm, FormProvider } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,7 +19,9 @@ import {
   CircularProgress,
 } from "@/components";
 
+import { CREATE_BUSINESS_MUTATION } from "./api";
 import { BUSINESS_FORM_STEPS } from "./constants";
+import { normalizeFormValuesForSubmission } from "./helpers";
 
 export function CreateBusiness() {
   const [step, setStep] = useState(0);
@@ -32,15 +36,35 @@ export function CreateBusiness() {
       },
     },
   });
-  const { trigger } = formMethods;
+  const { trigger, handleSubmit } = formMethods;
 
   const { t } = useTranslation();
+
+  const [createBusiness, { loading }] = useMutation(CREATE_BUSINESS_MUTATION);
+
+  const handlePressPrevious = () => {
+    setStep((prev) => prev - 1);
+  };
 
   const handlePressNext = async () => {
     const isValid = await trigger(activeStep?.fields);
     if (isValid) {
       setStep((prev) => prev + 1);
     }
+  };
+
+  const handleCreateBusinessCompleted = () => {
+    toast.success(t("create_business.success_message"));
+  };
+
+  const handleFinish = (values: BusinessFormValuesType) => {
+    const normalizedValues = normalizeFormValuesForSubmission(values);
+    console.log(normalizedValues);
+
+    createBusiness({
+      variables: { data: normalizedValues },
+      onCompleted: handleCreateBusinessCompleted,
+    });
   };
 
   const activeStep = BUSINESS_FORM_STEPS[step];
@@ -92,9 +116,10 @@ export function CreateBusiness() {
               fullWidth
               size="lg"
               color="secondary"
+              disabled={loading}
               variant="outlined"
+              onPress={handlePressPrevious}
               startIcon={<ChevronLeftIcon />}
-              onPress={() => setStep((prev) => prev - 1)}
             >
               {t("create_business.actions.back")}
             </Button>
@@ -104,12 +129,19 @@ export function CreateBusiness() {
               fullWidth
               size="lg"
               color="secondary"
+              disabled={loading}
               onPress={handlePressNext}
             >
               {t("create_business.actions.next")}
             </Button>
           ) : (
-            <Button fullWidth size="lg" color="secondary">
+            <Button
+              fullWidth
+              size="lg"
+              loading={loading}
+              color="secondary"
+              onPress={handleSubmit(handleFinish)}
+            >
               {t("create_business.actions.finish")}
             </Button>
           )}

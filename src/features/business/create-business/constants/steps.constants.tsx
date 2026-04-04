@@ -28,7 +28,7 @@ export const BUSINESS_FORM_STEPS: BusinessFormStepType[] = [
   },
   {
     key: "categories",
-    fields: ["categories"],
+    fields: ["categoryIds"],
     component: <BusinessCategoriesFormStep />,
     title: "create_business.steps.categories.title",
     next: "create_business.steps.images_media.title",

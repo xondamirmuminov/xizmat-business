@@ -49,7 +49,7 @@ export function BusinessCategoriesFormStep() {
 
   const renderCategoryItem = useCallback(
     (
-      field: ControllerRenderProps<BusinessFormValuesType, "categories">,
+      field: ControllerRenderProps<BusinessFormValuesType, "categoryIds">,
       category: CategoryType,
     ) => {
       const isSelected = field?.value?.includes(category?._id);
@@ -89,8 +89,8 @@ export function BusinessCategoriesFormStep() {
         {t("create_business.steps.categories.description")}
       </Typography>
       <Controller
-        name="categories"
         control={control}
+        name="categoryIds"
         rules={{ required: true }}
         render={({ field, fieldState: { error } }) => (
           <Flex gap={1}>

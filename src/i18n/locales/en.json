@@ -129,6 +129,7 @@
       "finish": "Finish",
       "back": "Go back"
     },
+    "success_message": "Business successfully created.",
     "steps": {
       "general": {
         "title": "General Information",

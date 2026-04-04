@@ -25,6 +25,8 @@ export function BusinessSocialLinksFormStep() {
             <Input
               {...field}
               error={!!error}
+              autoCorrect={false}
+              autoCapitalize="none"
               icon={socialLinkField?.icon}
               label={t(socialLinkField?.label)}
               helperText={handleGetErrorMessage(error)}

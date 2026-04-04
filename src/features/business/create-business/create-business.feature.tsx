@@ -32,13 +32,12 @@ export function CreateBusiness() {
       },
     },
   });
+  const { trigger } = formMethods;
 
   const { t } = useTranslation();
 
   const handlePressNext = async () => {
-    console.log(activeStep.fields);
-
-    const isValid = await formMethods.trigger();
+    const isValid = await trigger(activeStep?.fields);
     if (isValid) {
       setStep((prev) => prev + 1);
     }

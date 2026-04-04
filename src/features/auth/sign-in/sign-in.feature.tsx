@@ -33,11 +33,7 @@ type SignInOutputType = {
 export function SignIn() {
   const { setUser, setToken } = useAuthStore((state) => state);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { control, handleSubmit } = useForm();
 
   const router = useRouter();
   const { t } = useTranslation();
@@ -68,7 +64,7 @@ export function SignIn() {
     }
   }, [data, loading]);
 
-  const handleGetErrorMessage = getErrorMessage(errors, t);
+  const handleGetErrorMessage = getErrorMessage(t);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -102,7 +98,7 @@ export function SignIn() {
                   error={!!error}
                   label={t("labels.phone")}
                   placeholder={t("placeholders.phone")}
-                  helperText={handleGetErrorMessage(field?.name, {
+                  helperText={handleGetErrorMessage(error, {
                     min: 9,
                     max: 9,
                   })}
@@ -123,7 +119,7 @@ export function SignIn() {
                   label={t("labels.password")}
                   autoComplete="current-password"
                   placeholder={t("placeholders.password")}
-                  helperText={handleGetErrorMessage(field?.name)}
+                  helperText={handleGetErrorMessage(error)}
                 />
               )}
             />

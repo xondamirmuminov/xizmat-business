@@ -44,8 +44,8 @@ export const BUSINESS_FORM_STEPS: BusinessFormStepType[] = [
     key: "address",
     fields: ["address", "coords"],
     component: <BusinessAddressFormStep />,
-    next: "create_business.steps.address.title",
     title: "create_business.steps.address.title",
+    next: "create_business.steps.social_links.title",
   },
   {
     key: "social-links",

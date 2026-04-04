@@ -17,11 +17,7 @@ import { SIGN_UP_QUERY } from "./api";
 import { SignUpOutputType } from "./types";
 
 export function SignUp() {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { control, handleSubmit } = useForm();
 
   const router = useRouter();
   const { t } = useTranslation();
@@ -46,7 +42,7 @@ export function SignUp() {
     }
   }, [data, loading]);
 
-  const handleGetErrorMessage = getErrorMessage(errors, t);
+  const handleGetErrorMessage = getErrorMessage(t);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -80,7 +76,7 @@ export function SignUp() {
                   error={!!error}
                   label={t("labels.fullName")}
                   placeholder={t("placeholders.fullName")}
-                  helperText={handleGetErrorMessage(field?.name)}
+                  helperText={handleGetErrorMessage(error)}
                 />
               )}
             />
@@ -99,7 +95,7 @@ export function SignUp() {
                   textContentType="newPassword"
                   placeholder={t("placeholders.password")}
                   helperText={
-                    handleGetErrorMessage(field?.name, { min: 8 }) ||
+                    handleGetErrorMessage(error, { min: 8 }) ||
                     t("sign_up.password_requirement")
                   }
                 />

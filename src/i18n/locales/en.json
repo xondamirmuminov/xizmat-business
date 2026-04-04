@@ -24,7 +24,9 @@
     "working_days": "Working days",
     "working_hours": "Working hours",
     "from": "From",
-    "to": "To"
+    "to": "To",
+    "categories": "Categories",
+    "coords": "Coordinates"
   },
   "placeholders": {
     "phone": "Enter your phone",
@@ -153,11 +155,37 @@
         "description": "Select categories that best describes your business."
       },
       "address": {
-        "title": "Address"
+        "title": "Address",
+        "coords_title": "Select business location on the map",
+        "autocomplete_helper_text": "Address will be filled automatically after you set your location on the map below."
       },
       "social_links": {
         "title": "Social Links",
-        "next": "Complete setup and add services"
+        "next": "Complete setup and add services",
+        "website": {
+          "label": "Website URL",
+          "placeholder": "e.g. xizmat.org"
+        },
+        "instagram": {
+          "label": "Instagram username",
+          "placeholder": "e.g. xizmat_official"
+        },
+        "telegram": {
+          "label": "Telegram username",
+          "placeholder": "e.g. xizmat_official"
+        },
+        "facebook": {
+          "label": "Facebook username",
+          "placeholder": "e.g. xizmat_official"
+        },
+        "youtube": {
+          "label": "Youtube username",
+          "placeholder": "e.g. xizmat_official"
+        },
+        "tiktok": {
+          "label": "Tiktok username",
+          "placeholder": "e.g. xizmat_official"
+        }
       }
     }
   },

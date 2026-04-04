@@ -1,43 +1,65 @@
 import { isEmpty } from "lodash";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ActivityIndicator } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { Controller, useFormContext } from "react-hook-form";
 import { Camera, MapView, MarkerView } from "@maplibre/maplibre-react-native";
 
 import { MapPinFilledIcon } from "@/assets";
-import { getErrorMessage } from "@/lib/helpers";
-import { BusinessFormValuesType } from "@/types";
 import { Flex, Input, Typography } from "@/components";
+import { LocalizedTextType, BusinessFormValuesType } from "@/types";
+import { getErrorMessage, getAddressFromCoords } from "@/lib/helpers";
 
 const INITIAL_COORDS = [67.823309, 40.133476];
 const MAP_TILER_STYLE_URL =
   "https://api.maptiler.com/maps/openstreetmap/style.json";
 
 export function BusinessAddressFormStep() {
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext<BusinessFormValuesType>();
+  const [isAddressLoading, setIsAddressLoading] = useState(false);
+  const { control, setValue, clearErrors } =
+    useFormContext<BusinessFormValuesType>();
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language as keyof LocalizedTextType;
 
-  const handleGetErrorMessage = getErrorMessage(errors, t);
+  const handleAutoCompleteAddress = async (lat: number, lon: number) => {
+    setIsAddressLoading(true);
+    const formattedAddress = await getAddressFromCoords(lat, lon, locale, [
+      "country",
+      "postcode",
+      "country_code",
+      "continent",
+    ]);
+    setIsAddressLoading(false);
+
+    setValue("address", formattedAddress);
+    clearErrors("address");
+  };
+
+  const handleGetErrorMessage = getErrorMessage(t);
 
   return (
     <Flex gap={3}>
       <Controller
         name="address"
         control={control}
+        rules={{ required: true }}
         render={({ field, fieldState: { error } }) => (
           <Input
             {...field}
-            label="Address"
+            required
             error={!!error}
+            label={t("labels.address")}
+            editable={!isAddressLoading}
             placeholder="e.g. Zargarlik ko'chasi 1-uy, S2, Jizzax"
+            actionIconButton={
+              isAddressLoading ? <ActivityIndicator /> : undefined
+            }
             helperText={
               error
-                ? handleGetErrorMessage(field?.name)
-                : "Address will be filled automatically after you set your location on the map below."
+                ? handleGetErrorMessage(error)
+                : t("create_business.steps.address.autocomplete_helper_text")
             }
           />
         )}
@@ -45,10 +67,14 @@ export function BusinessAddressFormStep() {
       <Controller
         name="coords"
         control={control}
+        rules={{ required: true }}
         render={({ field, fieldState: { error } }) => (
           <Flex gap={1}>
             <Typography size="text-sm" weight="medium">
-              Select business location on the map
+              {t("create_business.steps.address.coords_title")}{" "}
+              <Typography color="error" size="text-sm" weight="medium">
+                *
+              </Typography>
             </Typography>
             <MapView
               style={styles.map}
@@ -56,7 +82,8 @@ export function BusinessAddressFormStep() {
               onPress={(feature) => {
                 const coords = (feature?.geometry as GeoJSON.Point)
                   ?.coordinates;
-                field?.onChange({ latitude: coords[0], longitude: coords[1] });
+                field?.onChange({ latitude: coords[1], longitude: coords[0] });
+                handleAutoCompleteAddress(coords[1], coords[0]);
               }}
             >
               <Camera
@@ -66,7 +93,7 @@ export function BusinessAddressFormStep() {
               />
               {!isEmpty(field?.value) && (
                 <MarkerView
-                  coordinate={[field?.value?.latitude, field?.value?.longitude]}
+                  coordinate={[field?.value?.longitude, field?.value?.latitude]}
                 >
                   <MapPinFilledIcon style={styles.mapPinIcon} />
                 </MarkerView>
@@ -74,7 +101,7 @@ export function BusinessAddressFormStep() {
             </MapView>
             {!!error && (
               <Typography color="error" size="text-xs">
-                {handleGetErrorMessage(field?.name)}
+                {handleGetErrorMessage(error)}
               </Typography>
             )}
           </Flex>

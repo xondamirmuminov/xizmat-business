@@ -1,29 +1,19 @@
 import { TFunction } from "i18next";
-import { FieldErrors, FieldValues } from "react-hook-form";
+import { FieldError } from "react-hook-form";
 
-export const getErrorMessage = (
-  errors: FieldErrors<FieldValues>,
-  t: TFunction<"translation", undefined>,
-) => {
+export const getErrorMessage = (t: TFunction<"translation", undefined>) => {
   return (
-    fieldName: string,
+    error: undefined | FieldError,
     options?: { min?: number; max?: number; isArray?: boolean },
   ) => {
-    const fieldNameArray = fieldName?.split(".");
-    const fieldArrayError = (errors[fieldNameArray[0]] as unknown as any[])
-      ? (errors[fieldNameArray[0]] as unknown as any[])[
-          (fieldNameArray[1] as unknown as number) || 0
-        ]
-      : null;
-    const fieldError = options?.isArray ? fieldArrayError : errors[fieldName];
-    const formattedFieldName = options?.isArray ? fieldNameArray[0] : fieldName;
+    if (error) {
+      const fieldName = error?.ref?.name?.split(".")[0];
 
-    if (fieldError) {
-      return t(`form_errors.${fieldError?.type}`, {
+      return t(`form_errors.${error?.type}`, {
         min: options?.min,
         max: options?.max,
-        name: t(`labels.${formattedFieldName}`),
-        nameLowercased: t(`labels.${formattedFieldName}`)?.toLocaleLowerCase(),
+        name: t(`labels.${fieldName}`),
+        nameLowercased: t(`labels.${fieldName}`)?.toLocaleLowerCase(),
       });
     }
 

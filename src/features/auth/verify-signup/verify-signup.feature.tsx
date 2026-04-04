@@ -24,12 +24,9 @@ type ConfirmSignUpOutputType = {
 export function VerifySignUp() {
   const { setUser, setToken } = useAuthStore((state) => state);
 
-  const {
-    watch,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FieldValues>({ defaultValues: { code: "" } });
+  const { watch, control, handleSubmit } = useForm<FieldValues>({
+    defaultValues: { code: "" },
+  });
 
   const code = watch("code") || "";
 
@@ -65,7 +62,7 @@ export function VerifySignUp() {
     }
   };
 
-  const handleGetErrorMessage = getErrorMessage(errors, t);
+  const handleGetErrorMessage = getErrorMessage(t);
 
   const isSubmitButtonDisabled = code?.length < 5;
 
@@ -97,7 +94,7 @@ export function VerifySignUp() {
                 <OTPInput {...field} autoFocus={false} />
                 {error && (
                   <Typography color="error" size="text-xs">
-                    {handleGetErrorMessage(field?.name, { max: 5, min: 5 })}
+                    {handleGetErrorMessage(error, { max: 5, min: 5 })}
                   </Typography>
                 )}
               </Flex>

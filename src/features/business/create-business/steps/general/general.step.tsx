@@ -21,10 +21,7 @@ import {
 } from "@/components";
 
 export function BusinessGeneralFormStep() {
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext<BusinessFormValuesType>();
+  const { control } = useFormContext<BusinessFormValuesType>();
 
   const { t } = useTranslation();
 
@@ -64,7 +61,7 @@ export function BusinessGeneralFormStep() {
     }
   }, [phoneNumbersFields]);
 
-  const handleGetErrorMessage = getErrorMessage(errors, t);
+  const handleGetErrorMessage = getErrorMessage(t);
 
   return (
     <Flex gap={3}>
@@ -78,8 +75,8 @@ export function BusinessGeneralFormStep() {
             required
             error={!!error}
             label={t("labels.businessName")}
+            helperText={handleGetErrorMessage(error)}
             placeholder={t("placeholders.businessName")}
-            helperText={handleGetErrorMessage(field?.name)}
           />
         )}
       />
@@ -111,7 +108,7 @@ export function BusinessGeneralFormStep() {
                   required
                   error={!!error}
                   label={index === 0 ? t("labels.phoneNumbers") : undefined}
-                  helperText={handleGetErrorMessage(field?.name, {
+                  helperText={handleGetErrorMessage(error, {
                     min: 9,
                     max: 9,
                     isArray: true,

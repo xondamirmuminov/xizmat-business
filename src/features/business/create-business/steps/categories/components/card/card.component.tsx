@@ -10,7 +10,7 @@ import { CategoryType, LocalizedTextType } from "@/types";
 type Props = {
   isSelected: boolean;
   category: CategoryType;
-  onSelect: (id: string) => void;
+  onSelect: VoidFunction;
 };
 
 export function BusinessFormCategoryCard({
@@ -23,7 +23,7 @@ export function BusinessFormCategoryCard({
 
   return (
     <Pressable
-      onPress={() => onSelect(category?._id)}
+      onPress={onSelect}
       style={[styles.card, isSelected && styles.selectedCard]}
     >
       <Flex

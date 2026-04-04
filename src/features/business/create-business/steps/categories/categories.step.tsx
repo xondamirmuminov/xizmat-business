@@ -1,11 +1,15 @@
-import { isEqual } from "lodash";
 import { View } from "react-native";
-import { useState, useEffect } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@apollo/client/react";
 import { FlashList } from "@shopify/flash-list";
-import { useFormContext } from "react-hook-form";
+import {
+  Controller,
+  useFormContext,
+  ControllerRenderProps,
+} from "react-hook-form";
 
+import { getErrorMessage } from "@/lib/helpers";
 import { Flex, Empty, Typography } from "@/components";
 import { CategoryType, BusinessFormValuesType } from "@/types";
 
@@ -16,8 +20,7 @@ import {
 } from "./components";
 
 export function BusinessCategoriesFormStep() {
-  const { setValue, getValues } = useFormContext<BusinessFormValuesType>();
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const { control } = useFormContext<BusinessFormValuesType>();
 
   const { t } = useTranslation();
 
@@ -25,19 +28,48 @@ export function BusinessCategoriesFormStep() {
     CATEGORIES_QUERY,
   );
 
-  const handleSelectCategory = (id: string) => {
-    if (selectedCategories?.includes(id)) {
-      const filteredCategories = selectedCategories?.filter(
-        (category: string) => category !== id,
-      );
-      setSelectedCategories(filteredCategories);
-      setValue("categories", filteredCategories);
-      return;
-    }
+  const handleSelectCategory = useCallback(
+    (
+      id: string,
+      selectedCategories: string[],
+      onChange: (categories: string[]) => void,
+    ) => {
+      if (selectedCategories?.includes(id)) {
+        const filteredCategories = selectedCategories?.filter(
+          (category: string) => category !== id,
+        );
+        onChange(filteredCategories);
+        return;
+      }
 
-    setSelectedCategories((prev) => [...prev, id]);
-    setValue("categories", [...selectedCategories, id]);
-  };
+      onChange([...selectedCategories, id]);
+    },
+    [],
+  );
+
+  const renderCategoryItem = useCallback(
+    (
+      field: ControllerRenderProps<BusinessFormValuesType, "categories">,
+      category: CategoryType,
+    ) => {
+      const isSelected = field?.value?.includes(category?._id);
+
+      return (
+        <BusinessFormCategoryCard
+          category={category}
+          isSelected={isSelected}
+          onSelect={() =>
+            handleSelectCategory(
+              category?._id,
+              field?.value || [],
+              field?.onChange,
+            )
+          }
+        />
+      );
+    },
+    [handleSelectCategory],
+  );
 
   const renderCategoriesSkeleton = () => (
     <Flex gap={2} flexWrap="wrap">
@@ -47,15 +79,7 @@ export function BusinessCategoriesFormStep() {
     </Flex>
   );
 
-  useEffect(() => {
-    const defaultCategories = getValues("categories");
-    if (
-      defaultCategories?.length &&
-      !isEqual(defaultCategories, selectedCategories)
-    ) {
-      setSelectedCategories(defaultCategories);
-    }
-  }, []);
+  const handleGetErrorMessage = getErrorMessage(t);
 
   const categories = data?.categories;
 
@@ -64,22 +88,32 @@ export function BusinessCategoriesFormStep() {
       <Typography weight="medium" size="display-xs">
         {t("create_business.steps.categories.description")}
       </Typography>
-      <FlashList
-        data={categories}
-        keyExtractor={(category) => category?._id}
-        ItemSeparatorComponent={() => <View style={{ height: 16 }}></View>}
-        ListEmptyComponent={loading ? renderCategoriesSkeleton() : <Empty />}
-        renderItem={({ item: category }) => {
-          const isSelected = selectedCategories?.includes(category?._id);
-
-          return (
-            <BusinessFormCategoryCard
-              category={category}
-              isSelected={isSelected}
-              onSelect={handleSelectCategory}
+      <Controller
+        name="categories"
+        control={control}
+        rules={{ required: true }}
+        render={({ field, fieldState: { error } }) => (
+          <Flex gap={1}>
+            {!!error && (
+              <Typography color="error" size="text-sm">
+                {handleGetErrorMessage(error)}
+              </Typography>
+            )}
+            <FlashList
+              data={categories}
+              keyExtractor={(category) => category?._id}
+              ItemSeparatorComponent={() => (
+                <View style={{ height: 16 }}></View>
+              )}
+              ListEmptyComponent={
+                loading ? renderCategoriesSkeleton() : <Empty />
+              }
+              renderItem={({ item: category }) =>
+                renderCategoryItem(field, category)
+              }
             />
-          );
-        }}
+          </Flex>
+        )}
       />
     </Flex>
   );

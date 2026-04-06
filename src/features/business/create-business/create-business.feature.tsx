@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { useState } from "react";
 import { toast } from "sonner-native";
+import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { View, ScrollView } from "react-native";
 import { useMutation } from "@apollo/client/react";
@@ -38,6 +39,7 @@ export function CreateBusiness() {
   });
   const { trigger, handleSubmit } = formMethods;
 
+  const router = useRouter();
   const { t } = useTranslation();
 
   const [createBusiness, { loading }] = useMutation(CREATE_BUSINESS_MUTATION);
@@ -55,11 +57,18 @@ export function CreateBusiness() {
 
   const handleCreateBusinessCompleted = () => {
     toast.success(t("create_business.success_message"));
+    router.navigate("/");
+    formMethods.reset({
+      workingDays: DEFAULT_WORKING_DAYS,
+      workingHours: {
+        to: dayjs().set("hour", 19).set("minute", 0),
+        from: dayjs().set("hour", 9).set("minute", 0),
+      },
+    });
   };
 
   const handleFinish = (values: BusinessFormValuesType) => {
     const normalizedValues = normalizeFormValuesForSubmission(values);
-    console.log(normalizedValues);
 
     createBusiness({
       variables: { data: normalizedValues },

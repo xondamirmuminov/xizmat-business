@@ -1,6 +1,7 @@
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native-unistyles";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -8,6 +9,8 @@ import { NoBusinessImage } from "@/assets";
 import { Flex, Button, Typography } from "@/components";
 
 export function NoBusiness() {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.screenContainer}>
       <SafeAreaView style={styles.safeArea}>
@@ -24,14 +27,14 @@ export function NoBusiness() {
           />
           <Flex gap={1}>
             <Typography align="center" weight="medium" size="display-xs">
-              No business yet
+              {t("no_business.title")}
             </Typography>
             <Typography align="center">
-              You do not have any business to work with, create a new business.
+              {t("no_business.description")}
             </Typography>
           </Flex>
           <Link asChild href="/create-business">
-            <Button size="lg">Create business</Button>
+            <Button size="lg">{t("no_business.action")}</Button>
           </Link>
         </Flex>
       </SafeAreaView>

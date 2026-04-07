@@ -27,7 +27,7 @@ import { graphqlClient } from "@/graphql";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const { token, setToken } = useAuthStore((state) => state);
+  const { token, setToken, businessId } = useAuthStore((state) => state);
   const [fontsLoaded, fontsError] = useFonts({
     Inter: Inter_400Regular,
     "Inter Bold": Inter_700Bold,
@@ -80,6 +80,12 @@ export default function RootLayout() {
                   name="no-business/index"
                   options={{ headerShown: false }}
                 />
+                <Stack.Protected guard={!!businessId}>
+                  <Stack.Screen
+                    name="(tabs)"
+                    options={{ headerShown: false }}
+                  />
+                </Stack.Protected>
               </Stack.Protected>
             </Stack>
           </ApolloProvider>

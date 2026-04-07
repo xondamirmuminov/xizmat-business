@@ -1,6 +1,7 @@
-import { Redirect } from "expo-router";
 import { NetworkStatus } from "@apollo/client";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "@apollo/client/react";
+import { Redirect, useRouter } from "expo-router";
 import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native-unistyles";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,8 +18,11 @@ import {
 } from "./components";
 
 export function Businesses() {
-  const { user, setBusinessId, setHasBusiness } = useAuthStore();
+  const { user, businessId, setBusinessId, setHasBusiness } = useAuthStore();
   const [selectedBusiness, setSelectedBusiness] = useState<string>("");
+
+  const router = useRouter();
+  const { t } = useTranslation();
 
   const { data: hasBusinessData, loading: hasBusinessLoading } = useQuery<{
     hasBusiness: boolean;
@@ -56,6 +60,7 @@ export function Businesses() {
   const handleStartWorking = () => {
     if (selectedBusiness) {
       setBusinessId(selectedBusiness);
+      router.push("/(tabs)");
     }
   };
 
@@ -67,6 +72,10 @@ export function Businesses() {
 
   if (hasBusinessData && !hasBusiness) {
     return <Redirect href="/no-business" />;
+  }
+
+  if (businessId) {
+    return <Redirect href="/(tabs)" />;
   }
 
   const businesses = businessesData?.businesses?.items;
@@ -87,10 +96,10 @@ export function Businesses() {
           <Flex gap={3}>
             <Flex gap={0.5}>
               <Typography size="text-xl" weight="semibold">
-                Choose business
+                {t("businesses_list.title")}
               </Typography>
               <Typography size="text-sm" color="secondary">
-                Select one of your businesses to start working.
+                {t("businesses_list.description")}
               </Typography>
             </Flex>
             <Flex>
@@ -116,7 +125,7 @@ export function Businesses() {
             disabled={!selectedBusiness}
             onPress={handleStartWorking}
           >
-            Start working
+            {t("businesses_list.action")}
           </Button>
         </Flex>
       </SafeAreaView>

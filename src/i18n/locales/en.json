@@ -204,5 +204,18 @@
       "saturday": "Saturday",
       "sunday": "Sunday"
     }
+  },
+  "businesses_list": {
+    "title": "Choose business",
+    "description": "Select one of your businesses to start working.",
+    "action": "Start working"
+  },
+  "no_business": {
+    "title": "No business yet",
+    "description": "You do not have any business to work with, create a new business.",
+    "action": "Create business"
+  },
+  "tab_bar": {
+    "queues": "Queues"
   }
 }

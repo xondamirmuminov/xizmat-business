@@ -1,15 +1,15 @@
 import { TFunction } from "i18next";
-import { FieldErrors, FieldValues } from "react-hook-form";
+import { FieldError } from "react-hook-form";
 
-export const getErrorMessage = (
-  errors: FieldErrors<FieldValues>,
-  t: TFunction<"translation", undefined>,
-) => {
-  return (fieldName: string, options?: { min?: number; max?: number }) => {
-    const fieldError = errors[fieldName];
+export const getErrorMessage = (t: TFunction<"translation", undefined>) => {
+  return (
+    error: undefined | FieldError,
+    options?: { min?: number; max?: number; isArray?: boolean },
+  ) => {
+    if (error) {
+      const fieldName = error?.ref?.name?.split(".")[0];
 
-    if (fieldError) {
-      return t(`form_errors.${fieldError?.type}`, {
+      return t(`form_errors.${error?.type}`, {
         min: options?.min,
         max: options?.max,
         name: t(`labels.${fieldName}`),

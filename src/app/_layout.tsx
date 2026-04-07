@@ -70,6 +70,17 @@ export default function RootLayout() {
               <Stack.Protected guard={!token}>
                 <Stack.Screen name="(auth)" options={{ headerShown: false }} />
               </Stack.Protected>
+              <Stack.Protected guard={!!token}>
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="create-business/index"
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="no-business/index"
+                  options={{ headerShown: false }}
+                />
+              </Stack.Protected>
             </Stack>
           </ApolloProvider>
         </BottomSheetModalProvider>

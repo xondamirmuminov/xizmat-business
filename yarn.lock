@@ -1485,6 +1485,17 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@maplibre/maplibre-react-native@^10.4.2":
+  version "10.4.2"
+  resolved "https://registry.yarnpkg.com/@maplibre/maplibre-react-native/-/maplibre-react-native-10.4.2.tgz#e3e9dab47c002014219eb0d28b2484dadef70d9f"
+  integrity sha512-5qAfaEe66eMXyILklm2DMHwyaXwXxsZWVop4BqfU7AyTg13LHAcaMmLJNJ3jPkMtiJvjH2m8ywGnobdIg2I0lg==
+  dependencies:
+    "@turf/distance" "^7.1.0"
+    "@turf/helpers" "^7.1.0"
+    "@turf/length" "^7.1.0"
+    "@turf/nearest-point-on-line" "^7.1.0"
+    debounce "^2.2.0"
+
 "@napi-rs/wasm-runtime@^0.2.11":
   version "0.2.12"
   resolved "https://registry.yarnpkg.com/@napi-rs/wasm-runtime/-/wasm-runtime-0.2.12.tgz#3e78a8b96e6c33a6c517e1894efbd5385a7cb6f2"
@@ -1678,6 +1689,13 @@
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-use-layout-effect/-/react-use-layout-effect-1.1.1.tgz#0c4230a9eed49d4589c967e2d9c0d9d60a23971e"
   integrity sha512-RbJRS4UWQFkzHTTwVymMTUv8EqYhOp8dOOviLj2ugtTiXRaRQS7GLGxZTLL1jWhMeoSCf5zmcZkqTl9IiYfXcQ==
+
+"@react-native-community/datetimepicker@8.6.0":
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-8.6.0.tgz#1c4318a8bc1d5bfd111d782a87cf0b729f718e79"
+  integrity sha512-yxPSqNfxgpGaqHQIpatqe6ykeBdU/1pdsk/G3x01mY2bpTflLpmVTLqFSJYd3MiZzxNZcMs/j1dQakUczSjcYA==
+  dependencies:
+    invariant "^2.2.4"
 
 "@react-native/assets-registry@0.83.2":
   version "0.83.2"
@@ -1942,6 +1960,13 @@
   resolved "https://registry.yarnpkg.com/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
+"@shopify/flash-list@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@shopify/flash-list/-/flash-list-2.0.2.tgz#644748f883fccf8cf2e0ca251e0ef88673b89120"
+  integrity sha512-zhlrhA9eiuEzja4wxVvotgXHtqd3qsYbXkQ3rsBfOgbFA9BVeErpDE/yEwtlIviRGEqpuFj/oU5owD6ByaNX+w==
+  dependencies:
+    tslib "2.8.1"
+
 "@sinclair/typebox@^0.27.8":
   version "0.27.10"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.27.10.tgz#beefe675f1853f73676aecc915b2bd2ac98c4fc6"
@@ -1960,6 +1985,65 @@
   integrity sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==
   dependencies:
     "@sinonjs/commons" "^3.0.0"
+
+"@turf/distance@7.3.4", "@turf/distance@^7.1.0":
+  version "7.3.4"
+  resolved "https://registry.yarnpkg.com/@turf/distance/-/distance-7.3.4.tgz#6552ccf9addf7f7d4f74ffaf1686142f8d787f9a"
+  integrity sha512-9drWgd46uHPPyzgrcRQLgSvdS/SjVlQ6ZIBoRQagS5P2kSjUbcOXHIMeOSPwfxwlKhEtobLyr+IiR2ns1TfF8w==
+  dependencies:
+    "@turf/helpers" "7.3.4"
+    "@turf/invariant" "7.3.4"
+    "@types/geojson" "^7946.0.10"
+    tslib "^2.8.1"
+
+"@turf/helpers@7.3.4", "@turf/helpers@^7.1.0":
+  version "7.3.4"
+  resolved "https://registry.yarnpkg.com/@turf/helpers/-/helpers-7.3.4.tgz#a8c918981599dddcf452421c7b307c5832d05f02"
+  integrity sha512-U/S5qyqgx3WTvg4twaH0WxF3EixoTCfDsmk98g1E3/5e2YKp7JKYZdz0vivsS5/UZLJeZDEElOSFH4pUgp+l7g==
+  dependencies:
+    "@types/geojson" "^7946.0.10"
+    tslib "^2.8.1"
+
+"@turf/invariant@7.3.4":
+  version "7.3.4"
+  resolved "https://registry.yarnpkg.com/@turf/invariant/-/invariant-7.3.4.tgz#d81f448aa4fdda36047337a688517581e91c12f0"
+  integrity sha512-88Eo4va4rce9sNZs6XiMJowWkikM3cS2TBhaCKlU+GFHdNf8PFEpiU42VDU8q5tOF6/fu21Rvlke5odgOGW4AQ==
+  dependencies:
+    "@turf/helpers" "7.3.4"
+    "@types/geojson" "^7946.0.10"
+    tslib "^2.8.1"
+
+"@turf/length@^7.1.0":
+  version "7.3.4"
+  resolved "https://registry.yarnpkg.com/@turf/length/-/length-7.3.4.tgz#c35aca9695d783c0fdd34b46b5e13119fb2aee13"
+  integrity sha512-Dg1GnQ/B2go5NIWXt91N4L7XTjIgIWCftBSYIXkrpIM7QGjItzglek0Z5caytvb8ZRWXzZOGs8//+Q5we91WuQ==
+  dependencies:
+    "@turf/distance" "7.3.4"
+    "@turf/helpers" "7.3.4"
+    "@turf/meta" "7.3.4"
+    "@types/geojson" "^7946.0.10"
+    tslib "^2.8.1"
+
+"@turf/meta@7.3.4":
+  version "7.3.4"
+  resolved "https://registry.yarnpkg.com/@turf/meta/-/meta-7.3.4.tgz#8e917d29de9da96a0f95f3f16119ba9abde7dee6"
+  integrity sha512-tlmw9/Hs1p2n0uoHVm1w3ugw1I6L8jv9YZrcdQa4SH5FX5UY0ATrKeIvfA55FlL//PGuYppJp+eyg/0eb4goqw==
+  dependencies:
+    "@turf/helpers" "7.3.4"
+    "@types/geojson" "^7946.0.10"
+    tslib "^2.8.1"
+
+"@turf/nearest-point-on-line@^7.1.0":
+  version "7.3.4"
+  resolved "https://registry.yarnpkg.com/@turf/nearest-point-on-line/-/nearest-point-on-line-7.3.4.tgz#0e6ef812a0deacb0aee15fb924b1246027cd0f61"
+  integrity sha512-DQrP3lRju83rIXFN68tUEpc7ki/eRwdwBkK2CTT4RAcyCxbcH2NGJPQv8dYiww/Ar77u1WLVn+aINXZH904dWw==
+  dependencies:
+    "@turf/distance" "7.3.4"
+    "@turf/helpers" "7.3.4"
+    "@turf/invariant" "7.3.4"
+    "@turf/meta" "7.3.4"
+    "@types/geojson" "^7946.0.10"
+    tslib "^2.8.1"
 
 "@tybys/wasm-util@^0.10.0":
   version "0.10.1"
@@ -2024,6 +2108,11 @@
   version "13.0.2"
   resolved "https://registry.yarnpkg.com/@types/extract-files/-/extract-files-13.0.2.tgz#0e36682a745e8c7a18fef9e1242e9fc9b467651d"
   integrity sha512-4sd7uDB0OVZmwH2wD6w7Qlpr2P5Pn8C9IGwnaq9aiiBDD3Lou7CwFjjkJTDYCDsEvk9zxAtmv9TaMg1lt/YJfA==
+
+"@types/geojson@^7946.0.10":
+  version "7946.0.16"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.16.tgz#8ebe53d69efada7044454e3305c19017d97ced2a"
+  integrity sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg==
 
 "@types/graceful-fs@^4.1.3":
   version "4.1.9"
@@ -3198,6 +3287,16 @@ data-view-byte-offset@^1.0.1:
     es-errors "^1.3.0"
     is-data-view "^1.0.1"
 
+dayjs@^1.11.20:
+  version "1.11.20"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.20.tgz#88d919fd639dc991415da5f4cb6f1b6650811938"
+  integrity sha512-YbwwqR/uYpeoP4pu043q+LTDLFBLApUP6VxRihdfNTqu4ubqMlGDLd6ErXhEgsyvY0K6nCs7nggYumAN+9uEuQ==
+
+debounce@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/debounce/-/debounce-2.2.0.tgz#f895fa2fbdb579a0f0d3dcf5dde19657e50eaad5"
+  integrity sha512-Xks6RUDLZFdz8LIdR6q0MTH44k7FikOmnh5xkSjMig6ch45afc8sjTjRQf3P6ax8dMgcQrYO/AR2RGWURrruqw==
+
 debug@2.6.9, debug@^2.6.9:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -3897,6 +3996,18 @@ expo-glass-effect@^55.0.8, expo-glass-effect@~55.0.8:
   version "55.0.8"
   resolved "https://registry.yarnpkg.com/expo-glass-effect/-/expo-glass-effect-55.0.8.tgz#ace0e662d7c8fc2935c9d1260e8303eb2fde0bc3"
   integrity sha512-IvUjHb/4t6r2H/LXDjcQ4uDoHrmO2cLOvEb9leLavQ4HX5+P4LRtQrMDMlkWAn5Wo5DkLcG8+1CrQU2nqgogTA==
+
+expo-image-loader@~55.0.0:
+  version "55.0.0"
+  resolved "https://registry.yarnpkg.com/expo-image-loader/-/expo-image-loader-55.0.0.tgz#56ae6631a0f43191432296a1f7f1e9737e653cfe"
+  integrity sha512-NOjp56wDrfuA5aiNAybBIjqIn1IxKeGJ8CECWZncQ/GzjZfyTYAHTCyeApYkdKkMBLHINzI4BbTGSlbCa0fXXQ==
+
+expo-image-picker@~55.0.14:
+  version "55.0.14"
+  resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-55.0.14.tgz#222b3e8402cd36cb0e93f1ea1f5324a432966645"
+  integrity sha512-qiloh0DY2JiS86wVT0f7Oe8n2Js65wZMQb0X5lJK1mH1wk8UqWlfqgMSF75ZKODtJAkYwO7m+fy5drGt0cEQng==
+  dependencies:
+    expo-image-loader "~55.0.0"
 
 expo-image@^55.0.6, expo-image@~55.0.6:
   version "55.0.6"
@@ -6226,10 +6337,10 @@ react-freeze@^1.0.0:
   resolved "https://registry.yarnpkg.com/react-freeze/-/react-freeze-1.0.4.tgz#cbbea2762b0368b05cbe407ddc9d518c57c6f3ad"
   integrity sha512-r4F0Sec0BLxWicc7HEyo2x3/2icUTrRmDjaaRyzzn+7aDyFZliszMDOgLVwSnQnYENOlL1o569Ze2HZefk8clA==
 
-react-hook-form@^7.72.0:
-  version "7.72.0"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.72.0.tgz#995a655b894249fd8798f36383e43f55ed66ae25"
-  integrity sha512-V4v6jubaf6JAurEaVnT9aUPKFbNtDgohj5CIgVGyPHvT9wRx5OZHVjz31GsxnPNI278XMu+ruFz+wGOscHaLKw==
+react-hook-form@^7.72.1:
+  version "7.72.1"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.72.1.tgz#19a8bbeaf685934f4c9fc422294cc730ade2780e"
+  integrity sha512-RhwBoy2ygeVZje+C+bwJ8g0NjTdBmDlJvAUHTxRjTmSUKPYsKfMphkS2sgEMotsY03bP358yEYlnUeZy//D9Ig==
 
 react-i18next@^17.0.2:
   version "17.0.2"
@@ -7155,7 +7266,7 @@ tsconfig-paths@^3.15.0:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
-tslib@^2.0.0, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.4.0:
+tslib@2.8.1, tslib@^2.0.0, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.4.0, tslib@^2.8.1:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==

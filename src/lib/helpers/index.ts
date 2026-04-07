@@ -3,3 +3,4 @@ export * from "./form.helpers";
 export * from "./phone.helpers";
 export * from "./token.helpers";
 export * from "./image.helpers";
+export * from "./address.helpers";

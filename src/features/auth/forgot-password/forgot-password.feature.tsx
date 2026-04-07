@@ -15,11 +15,7 @@ import { getErrorMessage, formatPhoneNumberForSubmit } from "@/lib/helpers";
 import { FORGOT_PASSWORD_QUERY } from "./api";
 
 export function ForgotPassword() {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { control, handleSubmit } = useForm();
 
   const { t } = useTranslation();
 
@@ -39,7 +35,7 @@ export function ForgotPassword() {
     }
   }, [data, loading]);
 
-  const handleGetErrorMessage = getErrorMessage(errors, t);
+  const handleGetErrorMessage = getErrorMessage(t);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -72,7 +68,7 @@ export function ForgotPassword() {
                 error={!!error}
                 label={t("labels.phone")}
                 placeholder={t("placeholders.phone")}
-                helperText={handleGetErrorMessage(field?.name, {
+                helperText={handleGetErrorMessage(error, {
                   min: 9,
                   max: 9,
                 })}

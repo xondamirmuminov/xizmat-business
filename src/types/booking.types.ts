@@ -8,6 +8,7 @@ export enum BookingStatusEnum {
   CONFIRMED = "CONFIRMED",
   CANCELLED = "CANCELLED",
   COMPLETED = "COMPLETED",
+  IN_PROGRESS = "IN_PROGRESS",
 }
 
 export type BookingType = {

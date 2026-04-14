@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { StyleSheet } from "react-native-unistyles";
 import {
-  Text,
   View,
   Animated,
   ViewStyle,
@@ -11,44 +10,40 @@ import {
 
 import { CheckIcon, ChevronRightIcon } from "@/assets";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
 interface SlideToConfirmProps {
   label?: string;
   width?: number;
   height?: number;
   style?: ViewStyle;
   fillColor?: string;
+  disabled?: boolean;
   trackColor?: string;
   thumbColor?: string;
   onConfirm?: () => void;
 }
 
-// ─── Constants ────────────────────────────────────────────────────────────────
-
 const THUMB_SIZE = 52;
 const PADDING = 4;
 const WIDTH = Dimensions.get("window").width - 64;
-
-// ─── Component ────────────────────────────────────────────────────────────────
 
 export default function SlideToConfirm({
   style,
   onConfirm,
   height = 60,
   width = WIDTH,
-  fillColor = "#16bcba",
+  disabled = false,
+  fillColor = "#00b7b5",
   trackColor = "#00b7b5",
   thumbColor = "#FFFFFF",
   label = "Slide to confirm",
 }: SlideToConfirmProps) {
+  styles.useVariants({ disabled });
   const maxSlide = width - THUMB_SIZE - PADDING * 2;
 
   const translateX = useRef(new Animated.Value(0)).current;
   const [confirmed, setConfirmed] = useState(false);
   const [dragging, setDragging] = useState(false);
 
-  // Derived animated values
   const fillWidth = translateX.interpolate({
     extrapolate: "clamp",
     inputRange: [0, maxSlide],
@@ -79,12 +74,10 @@ export default function SlideToConfirm({
     inputRange: [0, maxSlide * 0.3],
   });
 
-  // ─── PanResponder ──────────────────────────────────────────────────────────
-
   const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: () => !confirmed,
-      onStartShouldSetPanResponder: () => !confirmed,
+      onMoveShouldSetPanResponder: () => !confirmed && !disabled,
+      onStartShouldSetPanResponder: () => !confirmed && !disabled,
 
       onPanResponderGrant: () => {
         setDragging(true);
@@ -122,47 +115,31 @@ export default function SlideToConfirm({
     }),
   ).current;
 
-  // ─── Reset ─────────────────────────────────────────────────────────────────
-
-  const reset = () => {
-    setConfirmed(false);
-    Animated.spring(translateX, {
-      toValue: 0,
-      bounciness: 8,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  // ─── Render ────────────────────────────────────────────────────────────────
-
   return (
     <View style={[style]}>
-      {/* Track */}
       <View
         style={[
-          styles.track,
           {
             width,
             height,
             borderRadius: height / 2,
             backgroundColor: trackColor,
           },
+          styles.track,
         ]}
       >
-        {/* Animated fill */}
         <Animated.View
           style={[
-            styles.fill,
             {
               height,
               width: fillWidth,
               borderRadius: height / 2,
               backgroundColor: fillColor,
             },
+            styles.fill,
           ]}
         />
 
-        {/* Center label */}
         <Animated.Text
           numberOfLines={1}
           style={[styles.label, { opacity: labelOpacity }]}
@@ -177,11 +154,9 @@ export default function SlideToConfirm({
           Confirmed
         </Animated.Text>
 
-        {/* Thumb */}
         <Animated.View
           {...panResponder.panHandlers}
           style={[
-            styles.thumb,
             {
               left: PADDING,
               width: THUMB_SIZE,
@@ -192,9 +167,9 @@ export default function SlideToConfirm({
               top: (height - THUMB_SIZE) / 2,
               shadowOpacity: dragging ? 0.18 : 0.08,
             },
+            styles.thumb,
           ]}
         >
-          {/* Arrow icon (shown at start) */}
           <Animated.View
             style={[
               styles.iconWrapper,
@@ -206,7 +181,6 @@ export default function SlideToConfirm({
             <ChevronRightIcon style={styles.icon} />
           </Animated.View>
 
-          {/* Check icon (shown at end) */}
           <Animated.View
             style={[styles.iconWrapper, { opacity: checkOpacity }]}
           >
@@ -214,41 +188,53 @@ export default function SlideToConfirm({
           </Animated.View>
         </Animated.View>
       </View>
-
-      {/* Confirmed state label + reset */}
-      {/* {confirmed && (
-        <Text onPress={reset} style={styles.confirmedText}>
-          Confirmed! Tap to reset
-        </Text>
-      )} */}
     </View>
   );
 }
-
-// ─── Styles ───────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create(({ colors }) => ({
   check: {
     color: colors.success,
   },
+  iconWrapper: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
   fill: {
     top: 0,
     left: 0,
     position: "absolute",
+    variants: {
+      disabled: {
+        true: {
+          backgroundColor: colors.slate3,
+        },
+      },
+    },
   },
   track: {
     overflow: "hidden",
     justifyContent: "center",
-  },
-  iconWrapper: {
-    alignItems: "center",
-    justifyContent: "center",
+    variants: {
+      disabled: {
+        true: {
+          backgroundColor: colors.slate3,
+        },
+      },
+    },
   },
   icon: {
     width: 22,
     height: 22,
     position: "absolute",
     color: colors.textPrimary,
+    variants: {
+      disabled: {
+        true: {
+          color: colors.slate8,
+        },
+      },
+    },
   },
   confirmedText: {
     fontSize: 13,
@@ -256,6 +242,13 @@ const styles = StyleSheet.create(({ colors }) => ({
     fontWeight: "500",
     textAlign: "center",
     color: colors.success,
+    variants: {
+      disabled: {
+        true: {
+          color: colors.slate7,
+        },
+      },
+    },
   },
   label: {
     fontSize: 15,
@@ -264,7 +257,14 @@ const styles = StyleSheet.create(({ colors }) => ({
     textAlign: "center",
     color: colors.white,
     position: "absolute",
-    fontFamily: "Inter SemiBold",
+    fontFamily: "Inter Semibold",
+    variants: {
+      disabled: {
+        true: {
+          color: colors.slate7,
+        },
+      },
+    },
   },
   thumb: {
     elevation: 4,
@@ -274,5 +274,15 @@ const styles = StyleSheet.create(({ colors }) => ({
     alignItems: "center",
     justifyContent: "center",
     shadowOffset: { width: 0, height: 2 },
+    variants: {
+      disabled: {
+        true: {
+          elevation: 0,
+          shadowOpacity: 0,
+
+          backgroundColor: colors.slate4,
+        },
+      },
+    },
   },
 }));

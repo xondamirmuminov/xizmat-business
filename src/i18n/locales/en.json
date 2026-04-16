@@ -51,7 +51,8 @@
     "remove": "Remove",
     "open": "Open",
     "show_results": "Show results",
-    "upload": "Upload"
+    "upload": "Upload",
+    "decline": "Decline"
   },
   "form_errors": {
     "disabled": "",
@@ -217,5 +218,15 @@
   },
   "tab_bar": {
     "queues": "Queues"
+  },
+  "bookings": {
+    "cancel": {
+      "why": "Why do you want to decline?",
+      "comment_placeholder": "Your comment"
+    }
+  },
+  "cancel_reasons": {
+    "customer_asked_cancel": "Customer asked to cancel",
+    "customer_not_responding": "Customer not responding"
   }
 }

@@ -1,11 +1,19 @@
-import React, { useRef, useState } from "react";
 import { StyleSheet } from "react-native-unistyles";
+import React, {
+  useRef,
+  useState,
+  RefObject,
+  useEffect,
+  useCallback,
+  useImperativeHandle,
+} from "react";
 import {
   View,
   Animated,
   ViewStyle,
   Dimensions,
   PanResponder,
+  PanResponderCallbacks,
 } from "react-native";
 
 import { CheckIcon, ChevronRightIcon } from "@/assets";
@@ -19,7 +27,9 @@ interface SlideToConfirmProps {
   disabled?: boolean;
   trackColor?: string;
   thumbColor?: string;
+  confirmedText?: string;
   onConfirm?: () => void;
+  ref?: RefObject<null | { reset: VoidFunction }>;
 }
 
 const THUMB_SIZE = 52;
@@ -27,6 +37,7 @@ const PADDING = 4;
 const WIDTH = Dimensions.get("window").width - 64;
 
 export default function SlideToConfirm({
+  ref,
   style,
   onConfirm,
   height = 60,
@@ -36,6 +47,7 @@ export default function SlideToConfirm({
   trackColor = "#00b7b5",
   thumbColor = "#FFFFFF",
   label = "Slide to confirm",
+  confirmedText = "Confirmed",
 }: SlideToConfirmProps) {
   styles.useVariants({ disabled });
   const maxSlide = width - THUMB_SIZE - PADDING * 2;
@@ -74,8 +86,8 @@ export default function SlideToConfirm({
     inputRange: [0, maxSlide * 0.3],
   });
 
-  const panResponder = useRef(
-    PanResponder.create({
+  const handleCreatePanResponder = (): PanResponderCallbacks => {
+    return {
       onMoveShouldSetPanResponder: () => !confirmed && !disabled,
       onStartShouldSetPanResponder: () => !confirmed && !disabled,
 
@@ -94,7 +106,6 @@ export default function SlideToConfirm({
         const currentX = Math.max(0, Math.min(gestureState.dx, maxSlide));
 
         if (currentX >= maxSlide * 0.85) {
-          // Snap to confirmed
           Animated.spring(translateX, {
             bounciness: 6,
             toValue: maxSlide,
@@ -104,7 +115,6 @@ export default function SlideToConfirm({
             onConfirm?.();
           });
         } else {
-          // Snap back to start
           Animated.spring(translateX, {
             toValue: 0,
             bounciness: 8,
@@ -112,8 +122,29 @@ export default function SlideToConfirm({
           }).start();
         }
       },
-    }),
-  ).current;
+    };
+  };
+
+  const panResponder = useRef(PanResponder.create(handleCreatePanResponder()));
+
+  const reset = useCallback(() => {
+    setConfirmed(false);
+    Animated.spring(translateX, {
+      toValue: 0,
+      bounciness: 8,
+      useNativeDriver: false,
+    }).start();
+  }, [translateX]);
+
+  useImperativeHandle(ref, () => {
+    return {
+      reset,
+    };
+  }, [reset]);
+
+  useEffect(() => {
+    panResponder.current = PanResponder.create(handleCreatePanResponder());
+  }, [onConfirm]);
 
   return (
     <View style={[style]}>
@@ -151,11 +182,11 @@ export default function SlideToConfirm({
           numberOfLines={1}
           style={[styles.label, { opacity: confirmedLabelOpacity }]}
         >
-          Confirmed
+          {confirmedText}
         </Animated.Text>
 
         <Animated.View
-          {...panResponder.panHandlers}
+          {...panResponder.current.panHandlers}
           style={[
             {
               left: PADDING,

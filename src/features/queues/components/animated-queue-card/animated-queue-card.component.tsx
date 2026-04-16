@@ -1,8 +1,10 @@
 import dayjs from "dayjs";
 import { Image } from "expo-image";
 import { Linking } from "react-native";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet } from "react-native-unistyles";
+import { useMutation } from "@apollo/client/react";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import Animated, {
   interpolate,
   SharedValue,
@@ -16,11 +18,15 @@ import { XIcon, PhoneIcon, AvatarPlaceholder } from "@/assets";
 import { BookingType, BookingStatusEnum, LocalizedTextType } from "@/types";
 import SlideToConfirm from "@/components/swipe-button/swipe-button.component";
 
+import {
+  BOOKING_CARD_FRAGMENT,
+  UPDATE_BOOKING_STATUS_MUTATION,
+} from "../../api";
+
 type Props = {
   index: number;
   booking: BookingType;
   onCancel?: VoidFunction;
-  onConfirm: VoidFunction;
   scrollY: SharedValue<number>;
 };
 
@@ -29,8 +35,14 @@ export function AnimatedQueueCard({
   scrollY,
   booking,
   onCancel,
-  onConfirm,
 }: Props) {
+  const [isStarted, setIsStarted] = useState(false);
+  const slideButtonRef = useRef<{ reset: VoidFunction }>(null);
+
+  const {
+    theme: { colors },
+  } = useUnistyles();
+
   const { i18n } = useTranslation();
   const locale = i18n.language as keyof LocalizedTextType;
 
@@ -55,6 +67,42 @@ export function AnimatedQueueCard({
 
   const handleCall = () => {
     Linking.openURL(`tel:${booking?.user?.phone}`);
+  };
+
+  const [updateBookingStatus] = useMutation<{
+    updateBookingStatus: BookingType;
+  }>(UPDATE_BOOKING_STATUS_MUTATION);
+
+  const handleConfirmStatusChange = (
+    bookingId: string,
+    bookingStatus: BookingStatusEnum,
+  ) => {
+    if (bookingId && bookingStatus) {
+      updateBookingStatus({
+        variables: { id: bookingId, status: bookingStatus },
+        update(cache, { data }) {
+          if (data?.updateBookingStatus) {
+            cache.writeFragment({
+              fragment: BOOKING_CARD_FRAGMENT,
+              id: cache.identify(data?.updateBookingStatus),
+              data: {
+                ...data?.updateBookingStatus,
+              },
+            });
+          }
+        },
+      });
+    }
+  };
+
+  const handleComplete = () => {
+    handleConfirmStatusChange(booking?._id, BookingStatusEnum?.COMPLETED);
+  };
+
+  const handleStart = () => {
+    handleConfirmStatusChange(booking?._id, BookingStatusEnum?.IN_PROGRESS);
+    setIsStarted(true);
+    slideButtonRef?.current?.reset();
   };
 
   const isConfirmButtonDisabled =
@@ -125,6 +173,7 @@ export function AnimatedQueueCard({
                   variant="ghost"
                   onPress={onCancel}
                   startIcon={<XIcon />}
+                  disabled={isConfirmButtonDisabled}
                 >
                   Cancel
                 </Button>
@@ -142,12 +191,28 @@ export function AnimatedQueueCard({
           </Flex>
         </Flex>
         <Flex gap={2}>
-          <SlideToConfirm
-            height={60}
-            onConfirm={onConfirm}
-            label="Start the work"
-            disabled={isConfirmButtonDisabled}
-          />
+          {!isStarted ? (
+            <SlideToConfirm
+              height={60}
+              ref={slideButtonRef}
+              onConfirm={handleStart}
+              label={"Start the work"}
+              confirmedText={"Started"}
+              fillColor={colors.primary}
+              trackColor={colors.primary}
+              disabled={isConfirmButtonDisabled}
+            />
+          ) : (
+            <SlideToConfirm
+              height={60}
+              onConfirm={handleComplete}
+              fillColor={colors.success}
+              confirmedText={"Completed"}
+              trackColor={colors.success}
+              label={"Complete the work"}
+              disabled={isConfirmButtonDisabled}
+            />
+          )}
         </Flex>
       </Flex>
     </Animated.View>

@@ -2,14 +2,20 @@ import { useRef } from "react";
 import { FlashList } from "@shopify/flash-list";
 import { StyleSheet } from "react-native-unistyles";
 import { View, useWindowDimensions } from "react-native";
+import {
+  ApolloClient,
+  ObservableQuery,
+  OperationVariables,
+} from "@apollo/client";
 import Animated, {
   useSharedValue,
   useAnimatedScrollHandler,
 } from "react-native-reanimated";
 
-import { BookingType, BookingStatusEnum } from "@/types";
+import { Flex, Empty } from "@/components";
+import { BookingType, PageInfoType } from "@/types";
 
-import { AnimatedQueueCard } from "../animated-queue-card";
+import { AnimatedQueueCard, QueueCardSkeleton } from "../animated-queue-card";
 
 const spacing = 16;
 const itemSize = 420;
@@ -18,11 +24,42 @@ const itemFullSize = itemSize + spacing;
 const AnimatedFlashList = Animated.createAnimatedComponent(FlashList);
 
 type Props = {
+  loading?: boolean;
+  refreshing?: boolean;
+  pageInfo?: PageInfoType;
   bookings: BookingType[];
-  onConfirm: (id: string, status: BookingStatusEnum) => void;
+  onCancel: (bookingId: string) => void;
+  fetchMore: <
+    TFetchData = {
+      businessBookings: {
+        items: BookingType[];
+        pageInfo: PageInfoType;
+      };
+    },
+    TFetchVars extends OperationVariables = OperationVariables,
+  >(
+    fetchMoreOptions: ObservableQuery.FetchMoreOptions<
+      {
+        businessBookings: {
+          items: BookingType[];
+          pageInfo: PageInfoType;
+        };
+      },
+      OperationVariables,
+      TFetchData,
+      TFetchVars
+    >,
+  ) => Promise<ApolloClient.QueryResult<TFetchData>>;
 };
 
-export function QueueList({ bookings, onConfirm }: Props) {
+export function QueueList({
+  loading,
+  pageInfo,
+  bookings,
+  onCancel,
+  fetchMore,
+  refreshing,
+}: Props) {
   const listRef = useRef(null);
 
   const { height: windowHeight } = useWindowDimensions();
@@ -33,6 +70,44 @@ export function QueueList({ bookings, onConfirm }: Props) {
     scrollY.value = e.contentOffset.y / itemFullSize;
   });
 
+  const renderSkeleton = () => {
+    return (
+      <Flex gap={2}>
+        {Array.from({ length: 4 }).map((_, index) => (
+          <QueueCardSkeleton key={"queue-skeleton" + index} />
+        ))}
+      </Flex>
+    );
+  };
+
+  const handleReachListEnd = () => {
+    if (pageInfo?.hasNextPage && !refreshing && !loading) {
+      fetchMore({
+        variables: {
+          limit: 20,
+          page: (pageInfo?.currentPage || 0) + 1,
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (
+            !fetchMoreResult ||
+            fetchMoreResult.businessBookings?.items?.length === 0
+          ) {
+            return previousResult;
+          }
+
+          return {
+            businessBookings: {
+              pageInfo: fetchMoreResult?.businessBookings?.pageInfo,
+              items: previousResult.businessBookings?.items?.concat(
+                fetchMoreResult?.businessBookings?.items,
+              ),
+            },
+          };
+        },
+      });
+    }
+  };
+
   return (
     <AnimatedFlashList
       ref={listRef}
@@ -40,8 +115,11 @@ export function QueueList({ bookings, onConfirm }: Props) {
       onScroll={handleScroll}
       decelerationRate="fast"
       scrollEventThrottle={16}
+      onEndReachedThreshold={0.4}
       snapToInterval={itemFullSize}
+      onEndReached={handleReachListEnd}
       keyExtractor={(booking) => (booking as BookingType)?._id}
+      ListEmptyComponent={loading ? renderSkeleton() : <Empty />}
       ItemSeparatorComponent={() => <View style={{ height: spacing }}></View>}
       contentContainerStyle={[
         styles.listContainer,
@@ -49,17 +127,13 @@ export function QueueList({ bookings, onConfirm }: Props) {
       ]}
       renderItem={({ item, index }) => {
         const booking = item as BookingType;
-        const status =
-          booking?.status === BookingStatusEnum.CONFIRMED
-            ? BookingStatusEnum.IN_PROGRESS
-            : BookingStatusEnum.COMPLETED;
 
         return (
           <AnimatedQueueCard
             index={index}
             scrollY={scrollY}
             booking={booking}
-            onConfirm={() => onConfirm(booking?._id, status)}
+            onCancel={() => onCancel(booking?._id)}
           />
         );
       }}

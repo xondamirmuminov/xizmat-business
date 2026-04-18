@@ -1,6 +1,7 @@
 export * from "./components";
 export * from "./icons/x.icon";
 export * from "./icons/eye.icon";
+export * from "./icons/plus.icon";
 export * from "./icons/check.icon";
 export * from "./icons/queue.icon";
 export * from "./icons/trash.icon";

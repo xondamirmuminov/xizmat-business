@@ -2,18 +2,13 @@ import { useRef } from "react";
 import { FlashList } from "@shopify/flash-list";
 import { StyleSheet } from "react-native-unistyles";
 import { View, useWindowDimensions } from "react-native";
-import {
-  ApolloClient,
-  ObservableQuery,
-  OperationVariables,
-} from "@apollo/client";
 import Animated, {
   useSharedValue,
   useAnimatedScrollHandler,
 } from "react-native-reanimated";
 
+import { BookingType } from "@/types";
 import { Flex, Empty } from "@/components";
-import { BookingType, PageInfoType } from "@/types";
 
 import { AnimatedQueueCard, QueueCardSkeleton } from "../animated-queue-card";
 
@@ -25,41 +20,11 @@ const AnimatedFlashList = Animated.createAnimatedComponent(FlashList);
 
 type Props = {
   loading?: boolean;
-  refreshing?: boolean;
-  pageInfo?: PageInfoType;
   bookings: BookingType[];
   onCancel: (bookingId: string) => void;
-  fetchMore: <
-    TFetchData = {
-      businessBookings: {
-        items: BookingType[];
-        pageInfo: PageInfoType;
-      };
-    },
-    TFetchVars extends OperationVariables = OperationVariables,
-  >(
-    fetchMoreOptions: ObservableQuery.FetchMoreOptions<
-      {
-        businessBookings: {
-          items: BookingType[];
-          pageInfo: PageInfoType;
-        };
-      },
-      OperationVariables,
-      TFetchData,
-      TFetchVars
-    >,
-  ) => Promise<ApolloClient.QueryResult<TFetchData>>;
 };
 
-export function QueueList({
-  loading,
-  pageInfo,
-  bookings,
-  onCancel,
-  fetchMore,
-  refreshing,
-}: Props) {
+export function QueueList({ loading, bookings, onCancel }: Props) {
   const listRef = useRef(null);
 
   const { height: windowHeight } = useWindowDimensions();
@@ -80,33 +45,33 @@ export function QueueList({
     );
   };
 
-  const handleReachListEnd = () => {
-    if (pageInfo?.hasNextPage && !refreshing && !loading) {
-      fetchMore({
-        variables: {
-          limit: 20,
-          page: (pageInfo?.currentPage || 0) + 1,
-        },
-        updateQuery: (previousResult, { fetchMoreResult }) => {
-          if (
-            !fetchMoreResult ||
-            fetchMoreResult.businessBookings?.items?.length === 0
-          ) {
-            return previousResult;
-          }
+  // const handleReachListEnd = () => {
+  //   if (pageInfo?.hasNextPage && !refreshing && !loading) {
+  //     fetchMore({
+  //       variables: {
+  //         limit: 30,
+  //         page: (pageInfo?.currentPage || 0) + 1,
+  //       },
+  //       updateQuery: (previousResult, { fetchMoreResult }) => {
+  //         if (
+  //           !fetchMoreResult ||
+  //           fetchMoreResult.businessBookings?.items?.length === 0
+  //         ) {
+  //           return previousResult;
+  //         }
 
-          return {
-            businessBookings: {
-              pageInfo: fetchMoreResult?.businessBookings?.pageInfo,
-              items: previousResult.businessBookings?.items?.concat(
-                fetchMoreResult?.businessBookings?.items,
-              ),
-            },
-          };
-        },
-      });
-    }
-  };
+  //         return {
+  //           businessBookings: {
+  //             pageInfo: fetchMoreResult?.businessBookings?.pageInfo,
+  //             items: previousResult.businessBookings?.items?.concat(
+  //               fetchMoreResult?.businessBookings?.items,
+  //             ),
+  //           },
+  //         };
+  //       },
+  //     });
+  //   }
+  // };
 
   return (
     <AnimatedFlashList
@@ -115,9 +80,9 @@ export function QueueList({
       onScroll={handleScroll}
       decelerationRate="fast"
       scrollEventThrottle={16}
-      onEndReachedThreshold={0.4}
+      // onEndReachedThreshold={0.4}
       snapToInterval={itemFullSize}
-      onEndReached={handleReachListEnd}
+      // onEndReached={handleReachListEnd}
       keyExtractor={(booking) => (booking as BookingType)?._id}
       ListEmptyComponent={loading ? renderSkeleton() : <Empty />}
       ItemSeparatorComponent={() => <View style={{ height: spacing }}></View>}
@@ -143,6 +108,8 @@ export function QueueList({
 
 const styles = StyleSheet.create(({ space }) => ({
   listContainer: {
+    top: -220,
+    position: "relative",
     paddingInline: space(2),
   },
 }));

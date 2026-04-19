@@ -20,7 +20,9 @@ export type BookingType = {
   dateKey: string;
   bookingId: string;
   isStandBy: boolean;
+  guestPhone?: string;
   service: ServiceType;
+  guestFullName?: string;
   business: BusinessType;
   durationMinutes: number;
   status: BookingStatusEnum;

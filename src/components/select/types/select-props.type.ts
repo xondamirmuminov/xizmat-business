@@ -4,6 +4,7 @@ export type SelectOptionType<T = string> = { value: T; label: string };
 
 export type SelectPropsType = {
   value?: string;
+  loading?: boolean;
   sheetTitle: string;
   size?: InputSizeEnum;
   inputProps?: InputPropsType;

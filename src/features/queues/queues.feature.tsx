@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "@apollo/client/react";
 import { useRef, useState, useEffect } from "react";
 import { StyleSheet } from "react-native-unistyles";
@@ -12,7 +13,7 @@ import { PlusIcon, SearchIcon } from "@/assets";
 import { Flex, Input, Button, Typography } from "@/components";
 import { BookingType, PageInfoType, BookingStatusEnum } from "@/types";
 
-import { QueueList } from "./components";
+import { QueueList, AddBookingModal } from "./components";
 import { BookingCancelModal } from "./components/cancel-modal";
 import { BOOKING_CREATED_SUBSCRIPTION } from "./api/subscriptions";
 import { BOOKING_CARD_FRAGMENT, BUSINESS_BOOKINGS_QUERY } from "./api";
@@ -22,7 +23,10 @@ fragmentRegistry.register(BOOKING_CARD_FRAGMENT);
 export function Queues() {
   const { user, businessId } = useAuthStore();
   const cancelModalRef = useRef<BottomSheetModal>(null);
+  const addBookingModalRef = useRef<BottomSheetModal>(null);
   const [selectedBookingId, setSelectedBookingId] = useState<string>("");
+
+  const { t } = useTranslation();
 
   const { data, loading, subscribeToMore } = useQuery<{
     businessBookings: { items: BookingType[]; pageInfo: PageInfoType };
@@ -47,6 +51,10 @@ export function Queues() {
   const handleCancelBooking = (bookingId: string) => {
     setSelectedBookingId(bookingId);
     cancelModalRef?.current?.present();
+  };
+
+  const handleAddBooking = () => {
+    addBookingModalRef?.current?.present();
   };
 
   useEffect(() => {
@@ -113,15 +121,24 @@ export function Queues() {
             onCancel={handleCancelBooking}
           />
           <Flex alignItems="center" style={styles.footerContainer}>
-            <Button color="secondary" startIcon={<PlusIcon />}>
-              Add Booking
-            </Button>
+            <View style={styles.footerActionWrapper}>
+              <Button
+                size="lg"
+                radius="circular"
+                color="secondary"
+                startIcon={<PlusIcon />}
+                onPress={handleAddBooking}
+              >
+                {t("bookings.actions.add_booking")}
+              </Button>
+            </View>
           </Flex>
         </View>
         <BookingCancelModal
           ref={cancelModalRef}
           bookingId={selectedBookingId}
         />
+        <AddBookingModal ref={addBookingModalRef} />
       </SafeAreaView>
     </View>
   );
@@ -139,18 +156,21 @@ const styles = StyleSheet.create(({ space, colors }) => ({
     flex: 1,
     backgroundColor: colors.background,
   },
+  footerActionWrapper: {
+    borderRadius: 20,
+    boxShadow: `0px 0px 16px 0px ${colors.slate8}`,
+  },
+  footerContainer: {
+    width: "100%",
+    bottom: space(2.5),
+    position: "absolute",
+    backgroundColor: "transparent",
+  },
   headerContainer: {
     borderBottomWidth: 1,
     paddingTop: space(1),
     paddingInline: space(2),
     paddingBottom: space(2.5),
     borderBottomColor: colors.slate4,
-  },
-  footerContainer: {
-    borderTopWidth: 1,
-    paddingBlock: space(2),
-    paddingInline: space(2),
-    borderTopColor: colors.slate4,
-    boxShadow: `0px -4px 20px 0px ${colors.slate4}`,
   },
 }));

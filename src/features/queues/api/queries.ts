@@ -33,3 +33,31 @@ export const BUSINESS_BOOKINGS_QUERY = gql`
     }
   }
 `;
+
+export const SERVICES_QUERY = gql`
+  query Services($businessId: ID, $page: Int, $limit: Int) {
+    services(businessId: $businessId, page: $page, limit: $limit) {
+      items {
+        _id
+        title {
+          en
+          uz
+          ru
+        }
+      }
+    }
+  }
+`;
+
+export const GET_AVAILABLE_TIME_SLOTS_QUERY = gql`
+  query GetAvailableTimeSlots($businessId: ID!, $serviceId: ID, $date: String) {
+    getAvailableTimeSlots(
+      businessId: $businessId
+      serviceId: $serviceId
+      date: $date
+    ) {
+      endAt
+      startAt
+    }
+  }
+`;

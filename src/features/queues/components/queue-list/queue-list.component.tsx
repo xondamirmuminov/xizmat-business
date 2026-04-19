@@ -1,7 +1,7 @@
 import { useRef } from "react";
+import { View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { StyleSheet } from "react-native-unistyles";
-import { View, useWindowDimensions } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedScrollHandler,
@@ -26,9 +26,6 @@ type Props = {
 
 export function QueueList({ loading, bookings, onCancel }: Props) {
   const listRef = useRef(null);
-
-  const { height: windowHeight } = useWindowDimensions();
-  const safeHeight = windowHeight;
 
   const scrollY = useSharedValue(0);
   const handleScroll = useAnimatedScrollHandler((e) => {
@@ -83,13 +80,10 @@ export function QueueList({ loading, bookings, onCancel }: Props) {
       // onEndReachedThreshold={0.4}
       snapToInterval={itemFullSize}
       // onEndReached={handleReachListEnd}
+      contentContainerStyle={[styles.listContainer]}
       keyExtractor={(booking) => (booking as BookingType)?._id}
       ListEmptyComponent={loading ? renderSkeleton() : <Empty />}
       ItemSeparatorComponent={() => <View style={{ height: spacing }}></View>}
-      contentContainerStyle={[
-        styles.listContainer,
-        { paddingVertical: (safeHeight - itemFullSize) / 2 },
-      ]}
       renderItem={({ item, index }) => {
         const booking = item as BookingType;
 
@@ -108,8 +102,9 @@ export function QueueList({ loading, bookings, onCancel }: Props) {
 
 const styles = StyleSheet.create(({ space }) => ({
   listContainer: {
-    top: -220,
     position: "relative",
+    paddingTop: space(3),
     paddingInline: space(2),
+    paddingBottom: space(20),
   },
 }));

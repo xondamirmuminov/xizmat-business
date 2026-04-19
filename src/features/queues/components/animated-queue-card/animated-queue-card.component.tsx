@@ -66,7 +66,7 @@ export function AnimatedQueueCard({
   });
 
   const handleCall = () => {
-    Linking.openURL(`tel:${booking?.user?.phone}`);
+    Linking.openURL(`tel:${booking?.user?.phone || booking?.guestPhone}`);
   };
 
   const [updateBookingStatus] = useMutation<{
@@ -159,10 +159,12 @@ export function AnimatedQueueCard({
                 />
                 <Flex>
                   <Typography weight="medium">
-                    {booking?.user?.fullName}
+                    {booking?.user?.fullName || booking?.guestFullName}
                   </Typography>
                   <Typography size="text-sm" color="secondary">
-                    {formatPhoneNumberForDisplay(booking?.user?.phone || "")}
+                    {formatPhoneNumberForDisplay(
+                      booking?.user?.phone || booking?.guestPhone || "",
+                    )}
                   </Typography>
                 </Flex>
               </Flex>

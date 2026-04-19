@@ -11,3 +11,11 @@ export const UPDATE_BOOKING_STATUS_MUTATION = gql`
     }
   }
 `;
+
+export const CREATE_BOOKING_BY_PROVIDER_MUTATION = gql`
+  mutation CreateBookingByProvider($data: CreateBookingByProviderInput!) {
+    createBookingByProvider(data: $data) {
+      ...BookingCardFragment
+    }
+  }
+`;

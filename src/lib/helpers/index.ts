@@ -1,4 +1,5 @@
 export * from "./icon.helpers";
+export * from "./date.helpers";
 export * from "./form.helpers";
 export * from "./phone.helpers";
 export * from "./token.helpers";

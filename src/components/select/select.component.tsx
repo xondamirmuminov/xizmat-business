@@ -1,5 +1,5 @@
-import { Keyboard } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { Keyboard, ActivityIndicator } from "react-native";
 import { useRef, useState, useEffect, useCallback } from "react";
 
 import { ChevronDownIcon } from "@/assets";
@@ -12,6 +12,7 @@ import { SelectPropsType, SelectOptionType } from "./types";
 export function Select({
   value,
   options,
+  loading,
   onChange,
   inputProps,
   sheetTitle,
@@ -43,16 +44,22 @@ export function Select({
         {...inputProps}
         select
         size={size}
+        disabled={loading}
         onPress={handlePresentModal}
         value={selectedOption?.label}
         actionIconButton={
-          <Button
-            variant="text"
-            radius="circular"
-            color="secondary"
-            onPress={handlePresentModal}
-            startIcon={<ChevronDownIcon />}
-          />
+          !loading ? (
+            <Button
+              variant="text"
+              radius="circular"
+              color="secondary"
+              disabled={loading}
+              onPress={handlePresentModal}
+              startIcon={<ChevronDownIcon />}
+            />
+          ) : (
+            <ActivityIndicator />
+          )
         }
       />
       <SelectModal

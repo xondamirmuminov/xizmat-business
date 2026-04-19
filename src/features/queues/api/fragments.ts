@@ -17,6 +17,8 @@ export const BOOKING_CARD_FRAGMENT = gql`
     }
     startAt
     status
+    guestFullName
+    guestPhone
     user {
       _id
       avatar

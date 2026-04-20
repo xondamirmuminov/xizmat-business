@@ -1,13 +1,23 @@
 import { t } from "i18next";
 import { toast } from "sonner-native";
+import { createClient } from "graphql-ws";
+import { OperationTypeNode } from "graphql";
 import { ErrorLink } from "@apollo/client/link/error";
 import { SetContextLink } from "@apollo/client/link/context";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import UploadHttpLink from "apollo-upload-client/UploadHttpLink.mjs";
-import { ApolloLink, ApolloClient, InMemoryCache } from "@apollo/client";
+import {
+  ApolloLink,
+  ApolloClient,
+  InMemoryCache,
+  defaultDataIdFromObject,
+} from "@apollo/client";
 
 import { useAuthStore } from "@/store";
 import { ERROR_KEYS } from "@/lib/constants";
 import { getToken, deleteToken, ReactNativeFile } from "@/lib/helpers";
+
+import { fragmentRegistry } from "./fragment-registry.helper";
 
 const handleSignOut = async () => {
   useAuthStore.getState().signOut();
@@ -44,7 +54,41 @@ const uploadLink = new UploadHttpLink({
   uri: process.env.EXPO_PUBLIC_BACKEND_URL,
 });
 
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: process.env.EXPO_PUBLIC_BACKEND_URL || "",
+    on: {
+      closed: () => console.log("GraphQLWsLink closed"),
+      connected: () => console.log("GraphQLWsLink connected"),
+    },
+    connectionParams: async () => {
+      const token = await getToken();
+
+      return {
+        authToken: token ? `Bearer ${token}` : "",
+      };
+    },
+  }),
+);
+
+const link = ApolloLink.from([errorLink, authLink, uploadLink]);
+
+const splitLink = ApolloLink.split(
+  ({ operationType }) => {
+    return operationType === OperationTypeNode.SUBSCRIPTION;
+  },
+  wsLink,
+  link,
+);
+
 export const graphqlClient = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: ApolloLink.from([errorLink, authLink, uploadLink]),
+  link: splitLink,
+  cache: new InMemoryCache({
+    fragments: fragmentRegistry,
+    dataIdFromObject(responseObject) {
+      return responseObject._id
+        ? `${responseObject.__typename}:${responseObject._id}`
+        : defaultDataIdFromObject(responseObject);
+    },
+  }),
 });

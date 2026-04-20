@@ -41,6 +41,7 @@
     "expo-system-ui": "~55.0.10",
     "expo-web-browser": "~55.0.10",
     "graphql": "^16.13.2",
+    "graphql-ws": "^6.0.8",
     "i18next": "^26.0.3",
     "lodash": "^4.17.23",
     "react": "19.2.0",

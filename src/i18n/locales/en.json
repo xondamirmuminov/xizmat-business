@@ -26,12 +26,17 @@
     "from": "From",
     "to": "To",
     "categories": "Categories",
-    "coords": "Coordinates"
+    "coords": "Coordinates",
+    "customerFullName": "Customer name",
+    "customerPhone": "Customer phone",
+    "serviceId": "Service"
   },
   "placeholders": {
     "phone": "Enter your phone",
+    "customerPhone": "Enter customer phone",
     "password": "Enter your password",
     "fullName": "Enter your name",
+    "customerFullName": "Enter customer name",
     "address": "Enter your address",
     "newPassword": "Enter your new password",
     "oldPassword": "Enter your old password",
@@ -51,7 +56,11 @@
     "remove": "Remove",
     "open": "Open",
     "show_results": "Show results",
-    "upload": "Upload"
+    "upload": "Upload",
+    "decline": "Decline",
+    "add": "Add",
+    "next": "Next",
+    "back": "Back"
   },
   "form_errors": {
     "disabled": "",
@@ -203,6 +212,43 @@
       "friday": "Friday",
       "saturday": "Saturday",
       "sunday": "Sunday"
+    }
+  },
+  "businesses_list": {
+    "title": "Choose business",
+    "description": "Select one of your businesses to start working.",
+    "action": "Start working"
+  },
+  "no_business": {
+    "title": "No business yet",
+    "description": "You do not have any business to work with, create a new business.",
+    "action": "Create business"
+  },
+  "tab_bar": {
+    "queues": "Queues"
+  },
+  "bookings": {
+    "actions": {
+      "add_booking": "Add booking"
+    },
+    "cancel": {
+      "why": "Why do you want to decline?",
+      "comment_placeholder": "Your comment"
+    },
+    "add_modal": {
+      "success_message": "Booking successfully added to the queue.",
+      "date_time_warning": "Select date and time to add this booking to the queue."
+    }
+  },
+  "cancel_reasons": {
+    "customer_asked_cancel": "Customer asked to cancel",
+    "customer_not_responding": "Customer not responding"
+  },
+  "booking_time_picker": {
+    "time_picker_label": "What time can customer arrive?",
+    "empty": {
+      "title": "No time available this day",
+      "description": "There’s no available time slots this day. Please inform customer or try pressing refresh button."
     }
   }
 }

@@ -52,6 +52,9 @@ export default function SlideToConfirm({
   styles.useVariants({ disabled });
   const maxSlide = width - THUMB_SIZE - PADDING * 2;
 
+  const startX = useRef(0);
+  const confirmedRef = useRef(false);
+  const disabledRef = useRef(disabled);
   const translateX = useRef(new Animated.Value(0)).current;
   const [confirmed, setConfirmed] = useState(false);
   const [dragging, setDragging] = useState(false);
@@ -88,16 +91,29 @@ export default function SlideToConfirm({
 
   const handleCreatePanResponder = (): PanResponderCallbacks => {
     return {
-      onMoveShouldSetPanResponder: () => !confirmed && !disabled,
-      onStartShouldSetPanResponder: () => !confirmed && !disabled,
+      onPanResponderTerminationRequest: () => false,
+
+      onStartShouldSetPanResponderCapture: () =>
+        !confirmedRef.current && !disabledRef.current,
 
       onPanResponderGrant: () => {
+        translateX.stopAnimation((v) => {
+          startX.current = v;
+        });
         setDragging(true);
-        translateX.stopAnimation();
       },
 
+      onMoveShouldSetPanResponderCapture: (_, g) =>
+        !confirmedRef.current &&
+        !disabledRef.current &&
+        Math.abs(g.dx) > Math.abs(g.dy) * 1.5,
+
       onPanResponderMove: (_, gestureState) => {
-        const newX = Math.max(0, Math.min(gestureState.dx, maxSlide));
+        const newX = Math.max(
+          0,
+          Math.min(startX.current + gestureState.dx, maxSlide),
+        );
+
         translateX.setValue(newX);
       },
 
@@ -143,8 +159,16 @@ export default function SlideToConfirm({
   }, [reset]);
 
   useEffect(() => {
+    confirmedRef.current = confirmed;
+  }, [confirmed]);
+
+  useEffect(() => {
+    disabledRef.current = disabled;
+  }, [disabled]);
+
+  useEffect(() => {
     panResponder.current = PanResponder.create(handleCreatePanResponder());
-  }, [onConfirm]);
+  }, [onConfirm, confirmed, disabled]);
 
   return (
     <View style={[style]}>

@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { Image } from "expo-image";
-import { Linking } from "react-native";
 import { useRef, useState } from "react";
+import { View, Linking } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/client/react";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
@@ -154,18 +154,21 @@ export function AnimatedQueueCard({
             </Chip>
           </Flex>
           <Flex gap={2.5}>
-            <Flex gap={0.5} style={styles.infoWrapper}>
-              <Typography size="text-sm" weight="medium">
-                {booking?.service?.title[locale]}
-              </Typography>
-              <Typography size="text-sm" weight="medium">
-                {booking?.price?.toLocaleString("uz-UZ", {
-                  currency: "UZS",
-                  style: "currency",
-                  minimumFractionDigits: 0,
-                })}
-              </Typography>
-            </Flex>
+            <View style={styles.infoBorderWrapper}>
+              <Flex gap={0.5} style={styles.infoWrapper}>
+                <Typography size="text-sm" weight="medium">
+                  {booking?.service?.title[locale]}
+                </Typography>
+                <Typography size="text-sm" weight="medium">
+                  {booking?.price?.toLocaleString("uz-UZ", {
+                    currency: "UZS",
+                    style: "currency",
+                    minimumFractionDigits: 0,
+                  })}
+                </Typography>
+              </Flex>
+            </View>
+
             <Flex gap={2} style={styles.customerWrapper}>
               <Flex gap={1} direction="row" alignItems="center">
                 <Image
@@ -245,6 +248,13 @@ const styles = StyleSheet.create(({ space, colors }) => ({
     height: 44,
     borderRadius: 44,
   },
+  infoWrapper: {
+    paddingBlock: space(1),
+    paddingInline: space(2),
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+    backgroundColor: colors.primary2,
+  },
   customerWrapper: {
     borderWidth: 1,
     borderRadius: 8,
@@ -252,6 +262,16 @@ const styles = StyleSheet.create(({ space, colors }) => ({
     paddingInline: space(2),
     borderColor: colors.slate4,
     backgroundColor: colors.slate2,
+  },
+  infoBorderWrapper: {
+    borderWidth: 1,
+    borderRadius: 8,
+    borderLeftWidth: 4,
+    overflow: "hidden",
+    borderTopLeftRadius: 4,
+    borderBottomLeftRadius: 4,
+    borderColor: colors.slate4,
+    borderLeftColor: colors.primary,
   },
   card: {
     height: 420,
@@ -263,17 +283,5 @@ const styles = StyleSheet.create(({ space, colors }) => ({
     borderColor: colors.slate5,
     backgroundColor: colors.background,
     boxShadow: `${colors.slate4} 0px 4px 12px`,
-  },
-  infoWrapper: {
-    borderWidth: 1,
-    borderRadius: 8,
-    borderLeftWidth: 4,
-    paddingBlock: space(1),
-    borderTopLeftRadius: 4,
-    paddingInline: space(2),
-    borderBottomLeftRadius: 4,
-    borderColor: colors.slate4,
-    borderLeftColor: colors.primary,
-    backgroundColor: colors.primary2,
   },
 }));

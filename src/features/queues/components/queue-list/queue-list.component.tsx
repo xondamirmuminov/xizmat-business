@@ -1,4 +1,3 @@
-import { RefObject } from "react";
 import { View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { StyleSheet } from "react-native-unistyles";
@@ -84,6 +83,6 @@ const styles = StyleSheet.create(({ space }) => ({
     position: "relative",
     paddingTop: space(3),
     paddingInline: space(2),
-    paddingBottom: space(26),
+    paddingBottom: space(12),
   },
 }));

@@ -102,7 +102,8 @@ export function Queues() {
           if (
             prev?.businessBookings?.items?.find(
               (item) => item?._id === newItem?._id,
-            )
+            ) ||
+            dayjs(newItem?.dateKey)?.isSame(dayjs(), "date")
           ) {
             return prev;
           }

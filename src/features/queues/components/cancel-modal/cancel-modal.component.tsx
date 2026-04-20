@@ -59,6 +59,22 @@ export function BookingCancelModal({ ref, bookingId }: Props) {
                 ...data?.updateBookingStatus,
               },
             });
+
+            if (
+              data?.updateBookingStatus?.status === BookingStatusEnum.DECLINED
+            ) {
+              cache.modify({
+                fields: {
+                  businessBookings(existingBookings = {}) {
+                    return {
+                      ...existingBookings,
+                      completedBookingsCount:
+                        existingBookings?.completedBookingsCount + 1,
+                    };
+                  },
+                },
+              });
+            }
           }
         },
       });

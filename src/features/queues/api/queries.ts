@@ -9,6 +9,7 @@ export const BUSINESS_BOOKINGS_QUERY = gql`
     $limit: Int
     $startDate: DateTime
     $endDate: DateTime
+    $search: String
   ) {
     businessBookings(
       providerId: $providerId
@@ -18,7 +19,9 @@ export const BUSINESS_BOOKINGS_QUERY = gql`
       limit: $limit
       startDate: $startDate
       endDate: $endDate
+      search: $search
     ) {
+      completedBookingsCount
       items {
         ...BookingCardFragment
       }
@@ -39,6 +42,7 @@ export const SERVICES_QUERY = gql`
     services(businessId: $businessId, page: $page, limit: $limit) {
       items {
         _id
+        price
         title {
           en
           uz
@@ -58,6 +62,14 @@ export const GET_AVAILABLE_TIME_SLOTS_QUERY = gql`
     ) {
       endAt
       startAt
+    }
+  }
+`;
+
+export const ACTIVE_IN_PROGRESS_BOOKING_QUERY = gql`
+  query ActiveInProgressBooking($providerId: ID!, $businessId: ID) {
+    activeInProgressBooking(providerId: $providerId, businessId: $businessId) {
+      _id
     }
   }
 `;

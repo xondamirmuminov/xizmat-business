@@ -1,10 +1,11 @@
 import dayjs from "dayjs";
+import { debounce } from "lodash";
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@apollo/client/react";
-import { useRef, useState, useEffect } from "react";
 import { StyleSheet } from "react-native-unistyles";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { useRef, useMemo, useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useAuthStore } from "@/store";
@@ -16,7 +17,11 @@ import { BookingType, PageInfoType, BookingStatusEnum } from "@/types";
 import { QueueList, AddBookingModal } from "./components";
 import { BookingCancelModal } from "./components/cancel-modal";
 import { BOOKING_CREATED_SUBSCRIPTION } from "./api/subscriptions";
-import { BOOKING_CARD_FRAGMENT, BUSINESS_BOOKINGS_QUERY } from "./api";
+import {
+  BOOKING_CARD_FRAGMENT,
+  BUSINESS_BOOKINGS_QUERY,
+  ACTIVE_IN_PROGRESS_BOOKING_QUERY,
+} from "./api";
 
 fragmentRegistry.register(BOOKING_CARD_FRAGMENT);
 
@@ -24,12 +29,17 @@ export function Queues() {
   const { user, businessId } = useAuthStore();
   const cancelModalRef = useRef<BottomSheetModal>(null);
   const addBookingModalRef = useRef<BottomSheetModal>(null);
+  const [searchInputValue, setSearchInputValue] = useState<string>();
   const [selectedBookingId, setSelectedBookingId] = useState<string>("");
 
   const { t } = useTranslation();
 
   const { data, loading, subscribeToMore } = useQuery<{
-    businessBookings: { items: BookingType[]; pageInfo: PageInfoType };
+    businessBookings: {
+      items: BookingType[];
+      pageInfo: PageInfoType;
+      completedBookingsCount: number;
+    };
   }>(BUSINESS_BOOKINGS_QUERY, {
     notifyOnNetworkStatusChange: true,
     variables: {
@@ -38,13 +48,22 @@ export function Queues() {
       providerId: user?._id,
       endDate: dayjs().endOf("hour"),
       startDate: dayjs().startOf("hour"),
+      search: searchInputValue || undefined,
       status: [
         BookingStatusEnum.IN_PROGRESS,
         BookingStatusEnum.CONFIRMED,
-        BookingStatusEnum.IN_PROGRESS,
         BookingStatusEnum.COMPLETED,
         BookingStatusEnum.DECLINED,
       ],
+    },
+  });
+
+  const { data: activeInProgressBookingData } = useQuery<{
+    activeInProgressBooking: BookingType;
+  }>(ACTIVE_IN_PROGRESS_BOOKING_QUERY, {
+    variables: {
+      businessId,
+      providerId: user?._id,
     },
   });
 
@@ -55,6 +74,19 @@ export function Queues() {
 
   const handleAddBooking = () => {
     addBookingModalRef?.current?.present();
+  };
+
+  const debouncedSetSearchInputValue = useMemo(
+    () => debounce((value) => setSearchInputValue(value), 500),
+    [],
+  );
+
+  const handleChangeSearchInput = (value: string) => {
+    if (!value) {
+      setSearchInputValue("");
+    }
+
+    debouncedSetSearchInputValue(value);
   };
 
   useEffect(() => {
@@ -79,6 +111,11 @@ export function Queues() {
             businessBookings: {
               ...prev?.businessBookings,
               items: [...(prev?.businessBookings?.items || []), newItem],
+              pageInfo: {
+                ...prev?.businessBookings?.pageInfo,
+                totalItems:
+                  (prev?.businessBookings?.pageInfo?.totalItems || 0) + 1,
+              },
             },
           } as any;
         },
@@ -89,8 +126,16 @@ export function Queues() {
     }
   }, [data, subscribeToMore]);
 
+  useEffect(() => {
+    return () => debouncedSetSearchInputValue.cancel();
+  }, [debouncedSetSearchInputValue]);
+
   const pageInfo = data?.businessBookings?.pageInfo;
   const bookings = data?.businessBookings?.items || [];
+  const activeInProgressBooking =
+    activeInProgressBookingData?.activeInProgressBooking;
+  const completedBookingsCount =
+    data?.businessBookings?.completedBookingsCount ?? 0;
 
   return (
     <View style={styles.screenContainer}>
@@ -106,12 +151,13 @@ export function Queues() {
                 {dayjs().format("dddd, MMMM DD")}
               </Typography>
               <Typography size="display-xs" weight="semibold">
-                {pageInfo?.totalItems}/10
+                {completedBookingsCount}/{pageInfo?.totalItems}
               </Typography>
             </Flex>
             <Input
               size="lg"
               icon={<SearchIcon />}
+              onChange={handleChangeSearchInput}
               placeholder="Search with booking number, customer name or phone"
             />
           </Flex>
@@ -119,6 +165,7 @@ export function Queues() {
             loading={loading}
             bookings={bookings}
             onCancel={handleCancelBooking}
+            activeInProgressBooking={activeInProgressBooking}
           />
           <Flex alignItems="center" style={styles.footerContainer}>
             <View style={styles.footerActionWrapper}>

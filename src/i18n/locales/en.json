@@ -28,7 +28,8 @@
     "categories": "Categories",
     "coords": "Coordinates",
     "customerFullName": "Customer name",
-    "customerPhone": "Customer phone"
+    "customerPhone": "Customer phone",
+    "serviceId": "Service"
   },
   "placeholders": {
     "phone": "Enter your phone",
@@ -57,7 +58,9 @@
     "show_results": "Show results",
     "upload": "Upload",
     "decline": "Decline",
-    "add": "Add"
+    "add": "Add",
+    "next": "Next",
+    "back": "Back"
   },
   "form_errors": {
     "disabled": "",

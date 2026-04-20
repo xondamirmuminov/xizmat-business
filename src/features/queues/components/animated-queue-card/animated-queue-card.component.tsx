@@ -36,7 +36,9 @@ export function AnimatedQueueCard({
   booking,
   onCancel,
 }: Props) {
-  const [isStarted, setIsStarted] = useState(false);
+  const [isStarted, setIsStarted] = useState(
+    booking?.status === BookingStatusEnum.IN_PROGRESS,
+  );
   const slideButtonRef = useRef<{ reset: VoidFunction }>(null);
 
   const {
@@ -89,6 +91,22 @@ export function AnimatedQueueCard({
                 ...data?.updateBookingStatus,
               },
             });
+
+            if (
+              data?.updateBookingStatus?.status === BookingStatusEnum.COMPLETED
+            ) {
+              cache.modify({
+                fields: {
+                  businessBookings(existingBookings = {}) {
+                    return {
+                      ...existingBookings,
+                      completedBookingsCount:
+                        existingBookings?.completedBookingsCount + 1,
+                    };
+                  },
+                },
+              });
+            }
           }
         },
       });

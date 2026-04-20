@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { RefObject } from "react";
 import { View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { StyleSheet } from "react-native-unistyles";
@@ -21,12 +21,16 @@ const AnimatedFlashList = Animated.createAnimatedComponent(FlashList);
 type Props = {
   loading?: boolean;
   bookings: BookingType[];
+  activeInProgressBooking?: BookingType;
   onCancel: (bookingId: string) => void;
 };
 
-export function QueueList({ loading, bookings, onCancel }: Props) {
-  const listRef = useRef(null);
-
+export function QueueList({
+  loading,
+  bookings,
+  onCancel,
+  activeInProgressBooking,
+}: Props) {
   const scrollY = useSharedValue(0);
   const handleScroll = useAnimatedScrollHandler((e) => {
     scrollY.value = e.contentOffset.y / itemFullSize;
@@ -42,45 +46,20 @@ export function QueueList({ loading, bookings, onCancel }: Props) {
     );
   };
 
-  // const handleReachListEnd = () => {
-  //   if (pageInfo?.hasNextPage && !refreshing && !loading) {
-  //     fetchMore({
-  //       variables: {
-  //         limit: 30,
-  //         page: (pageInfo?.currentPage || 0) + 1,
-  //       },
-  //       updateQuery: (previousResult, { fetchMoreResult }) => {
-  //         if (
-  //           !fetchMoreResult ||
-  //           fetchMoreResult.businessBookings?.items?.length === 0
-  //         ) {
-  //           return previousResult;
-  //         }
-
-  //         return {
-  //           businessBookings: {
-  //             pageInfo: fetchMoreResult?.businessBookings?.pageInfo,
-  //             items: previousResult.businessBookings?.items?.concat(
-  //               fetchMoreResult?.businessBookings?.items,
-  //             ),
-  //           },
-  //         };
-  //       },
-  //     });
-  //   }
-  // };
+  const activeInProgressBookingIndex =
+    bookings?.findIndex(
+      (booking) => booking?._id === activeInProgressBooking?._id,
+    ) || 0;
 
   return (
     <AnimatedFlashList
-      ref={listRef}
       data={bookings}
       onScroll={handleScroll}
       decelerationRate="fast"
       scrollEventThrottle={16}
-      // onEndReachedThreshold={0.4}
       snapToInterval={itemFullSize}
-      // onEndReached={handleReachListEnd}
       contentContainerStyle={[styles.listContainer]}
+      initialScrollIndex={activeInProgressBookingIndex}
       keyExtractor={(booking) => (booking as BookingType)?._id}
       ListEmptyComponent={loading ? renderSkeleton() : <Empty />}
       ItemSeparatorComponent={() => <View style={{ height: spacing }}></View>}
@@ -105,6 +84,6 @@ const styles = StyleSheet.create(({ space }) => ({
     position: "relative",
     paddingTop: space(3),
     paddingInline: space(2),
-    paddingBottom: space(20),
+    paddingBottom: space(26),
   },
 }));

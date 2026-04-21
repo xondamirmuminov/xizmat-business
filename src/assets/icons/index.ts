@@ -11,6 +11,7 @@ export * from "./icons/search.icon";
 export * from "./icons/upload.icon";
 export * from "./icons/tiktok.icon";
 export * from "./icons/user-x.icon";
+export * from "./icons/history.icon";
 export * from "./icons/refresh.icon";
 export * from "./icons/eye-off.icon";
 export * from "./icons/youtube.icon";

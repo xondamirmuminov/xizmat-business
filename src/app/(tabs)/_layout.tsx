@@ -2,7 +2,7 @@ import { Tabs } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
-import { QueueIcon, QueueFilledIcon } from "@/assets";
+import { QueueIcon, HistoryIcon, QueueFilledIcon } from "@/assets";
 
 export default function TabLayout() {
   const { t } = useTranslation();
@@ -32,6 +32,13 @@ export default function TabLayout() {
             ) : (
               <QueueIcon size={24} color={color} />
             ),
+        }}
+      />
+      <Tabs.Screen
+        name="history/index"
+        options={{
+          title: t("tab_bar.history"),
+          tabBarIcon: ({ color }) => <HistoryIcon size={24} color={color} />,
         }}
       />
     </Tabs>

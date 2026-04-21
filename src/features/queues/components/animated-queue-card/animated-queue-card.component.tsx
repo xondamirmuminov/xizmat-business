@@ -1,13 +1,15 @@
 import dayjs from "dayjs";
 import { Image } from "expo-image";
-import { useRef, useState } from "react";
 import { View, Linking } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/client/react";
+import { useRef, useState, useEffect } from "react";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import Animated, {
+  withTiming,
   interpolate,
   SharedValue,
+  useSharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
 
@@ -36,6 +38,7 @@ export function AnimatedQueueCard({
   booking,
   onCancel,
 }: Props) {
+  const animatedIndex = useSharedValue(index);
   const [isStarted, setIsStarted] = useState(
     booking?.status === BookingStatusEnum.IN_PROGRESS,
   );
@@ -45,21 +48,29 @@ export function AnimatedQueueCard({
     theme: { colors },
   } = useUnistyles();
 
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const locale = i18n.language as keyof LocalizedTextType;
+
+  useEffect(() => {
+    animatedIndex.value = withTiming(index, { duration: 300 });
+  }, [index]);
 
   const animationStyles = useAnimatedStyle(() => {
     return {
       opacity: interpolate(
         scrollY.value,
-        [index - 1, index, index + 1],
+        [animatedIndex.value - 1, animatedIndex.value, animatedIndex.value + 1],
         [0.4, 1, 0.4],
       ),
       transform: [
         {
           scale: interpolate(
             scrollY.value,
-            [index - 1, index, index + 1],
+            [
+              animatedIndex.value - 1,
+              animatedIndex.value,
+              animatedIndex.value + 1,
+            ],
             [0.95, 1, 0.95],
           ),
         },
@@ -150,7 +161,7 @@ export function AnimatedQueueCard({
               icon={BOOKING_STATUS[booking?.status]?.icon}
               color={BOOKING_STATUS[booking?.status]?.color}
             >
-              {booking?.status}
+              {t(`bookings.status.${booking?.status?.toLowerCase()}`)}
             </Chip>
           </Flex>
           <Flex gap={2.5}>

@@ -1,7 +1,9 @@
 import { View } from "react-native";
+import { useImperativeHandle } from "react";
 import { FlashList } from "@shopify/flash-list";
 import { StyleSheet } from "react-native-unistyles";
 import Animated, {
+  withTiming,
   useSharedValue,
   useAnimatedScrollHandler,
 } from "react-native-reanimated";
@@ -18,6 +20,7 @@ const itemFullSize = itemSize + spacing;
 const AnimatedFlashList = Animated.createAnimatedComponent(FlashList);
 
 type Props = {
+  ref?: any;
   loading?: boolean;
   bookings: BookingType[];
   activeInProgressBooking?: BookingType;
@@ -25,6 +28,7 @@ type Props = {
 };
 
 export function QueueList({
+  ref,
   loading,
   bookings,
   onCancel,
@@ -49,6 +53,14 @@ export function QueueList({
     bookings?.findIndex(
       (booking) => booking?._id === activeInProgressBooking?._id,
     ) || 0;
+
+  useImperativeHandle(ref, () => ({
+    adjustScrollForInsert: (insertIndex: number) => {
+      if (insertIndex !== -1 && insertIndex <= Math.round(scrollY.value)) {
+        scrollY.value = withTiming(scrollY.value + 1, { duration: 300 });
+      }
+    },
+  }));
 
   return (
     <AnimatedFlashList

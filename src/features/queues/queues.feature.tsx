@@ -27,7 +27,9 @@ fragmentRegistry.register(BOOKING_CARD_FRAGMENT);
 
 export function Queues() {
   const { user, businessId } = useAuthStore();
+  const queueListRef = useRef<any>(null);
   const cancelModalRef = useRef<BottomSheetModal>(null);
+  const pendingInsertIndex = useRef<null | number>(null);
   const addBookingModalRef = useRef<BottomSheetModal>(null);
   const [searchInputValue, setSearchInputValue] = useState<string>();
   const [selectedBookingId, setSelectedBookingId] = useState<string>("");
@@ -41,14 +43,15 @@ export function Queues() {
       completedBookingsCount: number;
     };
   }>(BUSINESS_BOOKINGS_QUERY, {
+    fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
     variables: {
       limit: 30,
       businessId,
       providerId: user?._id,
-      endDate: dayjs().endOf("hour"),
-      startDate: dayjs().startOf("hour"),
       search: searchInputValue || undefined,
+      endDate: dayjs().endOf("hour")?.toISOString(),
+      startDate: dayjs().startOf("hour")?.toISOString(),
       status: [
         BookingStatusEnum.IN_PROGRESS,
         BookingStatusEnum.CONFIRMED,
@@ -103,15 +106,29 @@ export function Queues() {
             prev?.businessBookings?.items?.find(
               (item) => item?._id === newItem?._id,
             ) ||
-            dayjs(newItem?.dateKey)?.isSame(dayjs(), "date")
+            !dayjs(newItem?.startAt)?.isSame(dayjs(), "date")
           ) {
             return prev;
           }
 
+          const items = [...(prev?.businessBookings?.items || [])];
+
+          const insertIndex = items.findLastIndex((item) =>
+            dayjs(item?.startAt).isAfter(dayjs(newItem?.startAt)),
+          );
+
+          if (insertIndex === -1) {
+            items.push(newItem);
+          } else {
+            items.splice(insertIndex, 0, newItem);
+          }
+
+          pendingInsertIndex.current = insertIndex;
+
           return {
             businessBookings: {
               ...prev?.businessBookings,
-              items: [...(prev?.businessBookings?.items || []), newItem],
+              items,
               pageInfo: {
                 ...prev?.businessBookings?.pageInfo,
                 totalItems:
@@ -126,6 +143,13 @@ export function Queues() {
       };
     }
   }, [data, subscribeToMore]);
+
+  useEffect(() => {
+    if (pendingInsertIndex.current !== null) {
+      queueListRef.current?.adjustScrollForInsert(pendingInsertIndex.current);
+      pendingInsertIndex.current = null;
+    }
+  }, [data]);
 
   useEffect(() => {
     return () => debouncedSetSearchInputValue.cancel();
@@ -164,6 +188,7 @@ export function Queues() {
           </Flex>
           <QueueList
             loading={loading}
+            ref={queueListRef}
             bookings={bookings}
             onCancel={handleCancelBooking}
             activeInProgressBooking={activeInProgressBooking}

@@ -225,11 +225,23 @@
     "action": "Create business"
   },
   "tab_bar": {
-    "queues": "Queues"
+    "queues": "Queues",
+    "history": "History"
   },
   "bookings": {
     "actions": {
+      "view": "View details",
       "add_booking": "Add booking"
+    },
+    "status": {
+      "upcoming": "Upcoming",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "confirmed": "Confirmed",
+      "pending": "Pending",
+      "declined": "Declined",
+      "standby": "Waitlisted",
+      "in_progress": "In progress"
     },
     "cancel": {
       "why": "Why do you want to decline?",

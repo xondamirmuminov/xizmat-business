@@ -60,7 +60,8 @@
     "decline": "Decline",
     "add": "Add",
     "next": "Next",
-    "back": "Back"
+    "back": "Back",
+    "clear": "Clear"
   },
   "form_errors": {
     "disabled": "",
@@ -250,7 +251,8 @@
     "add_modal": {
       "success_message": "Booking successfully added to the queue.",
       "date_time_warning": "Select date and time to add this booking to the queue."
-    }
+    },
+    "select_date": "Select date"
   },
   "cancel_reasons": {
     "customer_asked_cancel": "Customer asked to cancel",

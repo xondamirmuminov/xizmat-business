@@ -17,6 +17,7 @@ export * from "./icons/eye-off.icon";
 export * from "./icons/youtube.icon";
 export * from "./icons/facebook.icon";
 export * from "./icons/telegram.icon";
+export * from "./icons/calendar.icon";
 export * from "./icons/phone-off.icon";
 export * from "./icons/instagram.icon";
 export * from "./icons/chevron-up.icon";

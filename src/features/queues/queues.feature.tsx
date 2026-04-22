@@ -113,7 +113,7 @@ export function Queues() {
 
           const items = [...(prev?.businessBookings?.items || [])];
 
-          const insertIndex = items.findLastIndex((item) =>
+          const insertIndex = items.findIndex((item) =>
             dayjs(item?.startAt).isAfter(dayjs(newItem?.startAt)),
           );
 
@@ -123,7 +123,8 @@ export function Queues() {
             items.splice(insertIndex, 0, newItem);
           }
 
-          pendingInsertIndex.current = insertIndex;
+          pendingInsertIndex.current =
+            insertIndex === -1 ? items.length - 1 : insertIndex;
 
           return {
             businessBookings: {

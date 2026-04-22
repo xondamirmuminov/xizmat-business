@@ -39,10 +39,10 @@ export function AnimatedQueueCard({
   onCancel,
 }: Props) {
   const animatedIndex = useSharedValue(index);
+  const slideButtonRef = useRef<{ reset: VoidFunction }>(null);
   const [isStarted, setIsStarted] = useState(
     booking?.status === BookingStatusEnum.IN_PROGRESS,
   );
-  const slideButtonRef = useRef<{ reset: VoidFunction }>(null);
 
   const {
     theme: { colors },
@@ -61,6 +61,7 @@ export function AnimatedQueueCard({
         scrollY.value,
         [animatedIndex.value - 1, animatedIndex.value, animatedIndex.value + 1],
         [0.4, 1, 0.4],
+        "clamp",
       ),
       transform: [
         {
@@ -72,6 +73,7 @@ export function AnimatedQueueCard({
               animatedIndex.value + 1,
             ],
             [0.95, 1, 0.95],
+            "clamp",
           ),
         },
       ],

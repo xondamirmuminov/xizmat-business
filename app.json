@@ -9,7 +9,10 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon",
-      "bundleIdentifier": "uz.xizmat.business"
+      "bundleIdentifier": "uz.xizmat.business",
+      "infoPlist": {
+        "UIDesignRequiresCompatibility": true
+      }
     },
     "android": {
       "adaptiveIcon": {

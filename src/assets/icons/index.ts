@@ -7,6 +7,7 @@ export * from "./icons/queue.icon";
 export * from "./icons/trash.icon";
 export * from "./icons/globe.icon";
 export * from "./icons/phone.icon";
+export * from "./icons/clock.icon";
 export * from "./icons/search.icon";
 export * from "./icons/upload.icon";
 export * from "./icons/tiktok.icon";

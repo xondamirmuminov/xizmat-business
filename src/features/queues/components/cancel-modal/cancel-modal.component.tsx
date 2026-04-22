@@ -1,4 +1,7 @@
+import { isNil } from "lodash";
+import { toast } from "sonner-native";
 import { useState, RefObject } from "react";
+import { ApolloCache } from "@apollo/client";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@apollo/client/react";
 import { View, TouchableOpacity } from "react-native";
@@ -24,9 +27,22 @@ import {
 type Props = {
   bookingId: string;
   ref: RefObject<null | BottomSheetModal>;
+  onUpdateApolloCache?: (
+    cache: ApolloCache,
+    data:
+      | null
+      | undefined
+      | {
+          updateBookingStatus: BookingType;
+        },
+  ) => void;
 };
 
-export function BookingCancelModal({ ref, bookingId }: Props) {
+export function BookingCancelModal({
+  ref,
+  bookingId,
+  onUpdateApolloCache,
+}: Props) {
   const [selectedReason, setSelectedReason] = useState<string>("");
 
   const { t } = useTranslation();
@@ -39,6 +55,7 @@ export function BookingCancelModal({ ref, bookingId }: Props) {
   const handleCompleted = () => {
     ref?.current?.dismiss();
     setSelectedReason("");
+    toast.success(t("bookings.cancel_success_message"));
   };
 
   const handleCancel = () => {
@@ -51,6 +68,11 @@ export function BookingCancelModal({ ref, bookingId }: Props) {
           reason: selectedReason || undefined,
         },
         update(cache, { data }) {
+          if (!isNil(onUpdateApolloCache)) {
+            onUpdateApolloCache(cache, data);
+            return;
+          }
+
           if (data?.updateBookingStatus) {
             cache.writeFragment({
               fragment: BOOKING_CARD_FRAGMENT,

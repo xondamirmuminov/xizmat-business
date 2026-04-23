@@ -91,7 +91,6 @@ export function BookingInfo() {
       <Stack.Screen
         options={{
           title: "Booking Details",
-          headerBackButtonDisplayMode: "minimal",
         }}
       />
       <ScrollView

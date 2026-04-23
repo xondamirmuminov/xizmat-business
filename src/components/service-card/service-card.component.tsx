@@ -19,7 +19,7 @@ export function ServiceCard({ service }: { service: ServiceType }) {
         <Flex
           gap={2}
           direction="row"
-          alignItems="flex-start"
+          alignItems="center"
           style={styles.cardContent}
         >
           <Image
@@ -67,8 +67,8 @@ export function ServiceCard({ service }: { service: ServiceType }) {
 const styles = StyleSheet.create(({ space, colors }) => ({
   button: { minWidth: 88 },
   image: {
-    width: 90,
-    height: 90,
+    width: 80,
+    height: 80,
     borderRadius: 10,
   },
   infoItemIcon: {
@@ -80,6 +80,7 @@ const styles = StyleSheet.create(({ space, colors }) => ({
     height: "100%",
     maxWidth: "100%",
     padding: space(1.5),
+    paddingBottom: space(1.2),
   },
   card: {
     height: "auto",

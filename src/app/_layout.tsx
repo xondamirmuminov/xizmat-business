@@ -107,6 +107,10 @@ export default function RootLayout() {
               <Stack.Protected guard={!!token}>
                 <Stack.Screen name="index" options={{ headerShown: false }} />
                 <Stack.Screen
+                  name="booking-info/[id]/index"
+                  options={{ presentation: "containedModal" }}
+                />
+                <Stack.Screen
                   name="create-business/index"
                   options={{ headerShown: false }}
                 />
@@ -119,6 +123,7 @@ export default function RootLayout() {
                     name="(tabs)"
                     options={{ headerShown: false }}
                   />
+                  <Stack.Screen name="services/index" />
                 </Stack.Protected>
               </Stack.Protected>
             </Stack>

@@ -10,7 +10,7 @@ export function ServiceCardSkeleton() {
       <Flex
         gap={2}
         direction="row"
-        alignItems="flex-start"
+        alignItems="center"
         style={styles.cardContent}
       >
         <Skeleton style={styles.image} />
@@ -37,8 +37,8 @@ export function ServiceCardSkeleton() {
 
 const styles = StyleSheet.create(({ space, colors }) => ({
   image: {
-    width: 90,
-    height: 90,
+    width: 80,
+    height: 80,
     borderRadius: 10,
   },
   infoItemIcon: {

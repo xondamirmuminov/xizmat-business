@@ -270,5 +270,8 @@
       "title": "No time available this day",
       "description": "There’s no available time slots this day. Please inform customer or try pressing refresh button."
     }
+  },
+  "services": {
+    "title": "Services"
   }
 }

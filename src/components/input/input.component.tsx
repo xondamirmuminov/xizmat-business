@@ -69,6 +69,7 @@ export function Input({
         <TextInput
           {...props}
           ref={inputRef}
+          numberOfLines={1}
           onPress={onPress}
           aria-label={label}
           style={styles.input}

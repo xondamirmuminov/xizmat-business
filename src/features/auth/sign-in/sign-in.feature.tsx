@@ -8,9 +8,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useForm, Controller, FieldValues } from "react-hook-form";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
-import { UserType } from "@/types";
 import { useAuthStore } from "@/store";
 import { LogoHorizontal } from "@/assets";
+import { UserType, UserRoleEnum } from "@/types";
 import {
   saveToken,
   getErrorMessage,
@@ -24,10 +24,10 @@ import {
   PasswordInput,
 } from "@/components";
 
-import { SIGN_IN_QUERY } from "./api";
+import { SIGN_IN_AS_PROVIDER_QUERY } from "./api";
 
 type SignInOutputType = {
-  signIn: { token: string; user: UserType };
+  signInAsProvider: { token: string; user: UserType };
 };
 
 export function SignIn() {
@@ -38,19 +38,20 @@ export function SignIn() {
   const router = useRouter();
   const { t } = useTranslation();
 
-  const [signIn, { data, loading }] =
-    useLazyQuery<SignInOutputType>(SIGN_IN_QUERY);
+  const [signInAsProvider, { data, loading }] = useLazyQuery<SignInOutputType>(
+    SIGN_IN_AS_PROVIDER_QUERY,
+  );
 
   const handleSignIn = (values: FieldValues) => {
     values.phone = formatPhoneNumberForSubmit(values?.phone);
 
-    signIn({ variables: { data: values } });
+    signInAsProvider({ variables: { data: values } });
   };
 
   const handleSignInCompleted = async () => {
-    const user = data?.signIn?.user;
-    const token = data?.signIn?.token;
-    if (token && user) {
+    const user = data?.signInAsProvider?.user;
+    const token = data?.signInAsProvider?.token;
+    if (token && user && user?.role === UserRoleEnum.SERVICE_PROVIDER) {
       setUser(user);
       setToken(token);
       await saveToken(token);

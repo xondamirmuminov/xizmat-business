@@ -182,6 +182,7 @@ export function Queues() {
             </Flex>
             <Input
               size="lg"
+              numberOfLines={1}
               icon={<SearchIcon />}
               onChange={handleChangeSearchInput}
               placeholder="Search with booking number, customer name or phone"

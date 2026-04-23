@@ -131,7 +131,8 @@
     "telegramBotUrlIsNotConfigured": "Telegram bot URL not set.",
     "phoneOrPasswordIsIncorrect": "Phone or password incorrect.",
     "standByBookingAlreadyExists": "You're already joined to waitlist.",
-    "bookingTimeOverlaps": "This booking overlaps with an existing appointment."
+    "bookingTimeOverlaps": "This booking overlaps with an existing appointment.",
+    "signInAsProviderRequiresProviderAccount": "You need a service provider account to log in. If you already have a customer account, enter customer app and become a provider."
   },
   "create_business": {
     "actions": {

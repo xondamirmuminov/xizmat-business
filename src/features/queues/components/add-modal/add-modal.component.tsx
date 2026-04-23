@@ -16,7 +16,6 @@ import { getErrorMessage, formatPhoneNumberForSubmit } from "@/lib/helpers";
 import {
   Flex,
   Input,
-  Empty,
   Button,
   PhoneInput,
   Typography,
@@ -49,7 +48,7 @@ export function AddBookingModal({ ref }: Props) {
   const { t, i18n } = useTranslation();
   const locale = i18n?.language as keyof LocalizedTextType;
 
-  const [getServices, { data, loading }] = useLazyQuery<{
+  const [getServices, { data }] = useLazyQuery<{
     services: { items: ServiceType[] };
   }>(SERVICES_QUERY);
 
@@ -189,12 +188,10 @@ export function AddBookingModal({ ref }: Props) {
               <FlashList
                 data={services}
                 keyExtractor={(service) => service?._id}
+                ListEmptyComponent={renderCategoriesSkeleton}
                 ItemSeparatorComponent={() => (
                   <View style={{ height: 16 }}></View>
                 )}
-                ListEmptyComponent={
-                  loading ? renderCategoriesSkeleton() : <Empty />
-                }
                 renderItem={({ item: service }) => {
                   const isSelected = field?.value === service?._id;
 

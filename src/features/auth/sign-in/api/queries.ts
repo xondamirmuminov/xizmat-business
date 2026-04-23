@@ -1,8 +1,10 @@
 import { gql } from "@apollo/client";
 
-export const SIGN_IN_QUERY = gql`
-  query SignIn($data: SignInInput!) {
-    signIn(data: $data) {
+export const SIGN_IN_AS_PROVIDER_QUERY = gql`
+  query SignInAsProvider($data: SignInInput!) {
+    signInAsProvider(data: $data) {
+      role
+      token
       user {
         _id
         avatar
@@ -18,7 +20,6 @@ export const SIGN_IN_QUERY = gql`
         role
         telegramId
       }
-      token
     }
   }
 `;

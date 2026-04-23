@@ -60,7 +60,8 @@
     "decline": "Decline",
     "add": "Add",
     "next": "Next",
-    "back": "Back"
+    "back": "Back",
+    "clear": "Clear"
   },
   "form_errors": {
     "disabled": "",
@@ -130,7 +131,8 @@
     "telegramBotUrlIsNotConfigured": "Telegram bot URL not set.",
     "phoneOrPasswordIsIncorrect": "Phone or password incorrect.",
     "standByBookingAlreadyExists": "You're already joined to waitlist.",
-    "bookingTimeOverlaps": "This booking overlaps with an existing appointment."
+    "bookingTimeOverlaps": "This booking overlaps with an existing appointment.",
+    "signInAsProviderRequiresProviderAccount": "You need a service provider account to log in. If you already have a customer account, enter customer app and become a provider."
   },
   "create_business": {
     "actions": {
@@ -225,20 +227,38 @@
     "action": "Create business"
   },
   "tab_bar": {
-    "queues": "Queues"
+    "queues": "Queues",
+    "history": "History"
   },
   "bookings": {
     "actions": {
-      "add_booking": "Add booking"
+      "view": "View details",
+      "add_booking": "Add booking",
+      "cancel": "Decline Booking"
+    },
+
+    "status": {
+      "upcoming": "Upcoming",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "confirmed": "Confirmed",
+      "pending": "Pending",
+      "declined": "Declined",
+      "standby": "Waitlisted",
+      "in_progress": "In progress"
     },
     "cancel": {
       "why": "Why do you want to decline?",
-      "comment_placeholder": "Your comment"
+      "comment_placeholder": "Your comment",
+      "title": "Are you sure you want to cancel?",
+      "description": "If you decline now, the customer might not be able to book again for that time."
     },
     "add_modal": {
       "success_message": "Booking successfully added to the queue.",
       "date_time_warning": "Select date and time to add this booking to the queue."
-    }
+    },
+    "select_date": "Select date",
+    "cancel_success_message": "Booking declined successfully."
   },
   "cancel_reasons": {
     "customer_asked_cancel": "Customer asked to cancel",

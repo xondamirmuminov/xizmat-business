@@ -27,9 +27,10 @@ export const useAuthStore = create<AuthState>()(
       language: null,
       businessId: null,
       hasBusiness: false,
-      signOut: () => set({ user: null, token: null, language: null }),
       setUser: (user: null | UserType) => set((state) => ({ ...state, user })),
       setToken: (token: null | string) => set((state) => ({ ...state, token })),
+      signOut: () =>
+        set({ user: null, token: null, language: null, businessId: null }),
       setLanguage: (lang: null | string) =>
         set((state) => ({ ...state, language: lang })),
       setHasBusiness: (hasBusiness: boolean) =>

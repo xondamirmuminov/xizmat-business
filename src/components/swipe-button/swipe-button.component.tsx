@@ -281,8 +281,8 @@ const styles = StyleSheet.create(({ colors }) => ({
   icon: {
     width: 22,
     height: 22,
+    color: colors.black,
     position: "absolute",
-    color: colors.textPrimary,
     variants: {
       disabled: {
         true: {

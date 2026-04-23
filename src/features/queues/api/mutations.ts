@@ -8,6 +8,7 @@ export const UPDATE_BOOKING_STATUS_MUTATION = gql`
   ) {
     updateBookingStatus(id: $id, status: $status, reason: $reason) {
       ...BookingCardFragment
+      ...BookingInfoFragment
     }
   }
 `;

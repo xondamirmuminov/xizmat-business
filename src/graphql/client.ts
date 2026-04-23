@@ -90,5 +90,33 @@ export const graphqlClient = new ApolloClient({
         ? `${responseObject.__typename}:${responseObject._id}`
         : defaultDataIdFromObject(responseObject);
     },
+    typePolicies: {
+      Query: {
+        fields: {
+          businessBookings: {
+            keyArgs: [
+              "providerId",
+              "businessId",
+              "startDate",
+              "endDate",
+              "search",
+              "status",
+            ],
+            merge(existing, incoming, { args }) {
+              if (!args?.page || args?.page === 1) {
+                return incoming;
+              }
+
+              const existingItems = existing?.items ?? [];
+              const incomingItems = incoming?.items ?? [];
+              return {
+                ...incoming,
+                items: [...existingItems, ...incomingItems],
+              };
+            },
+          },
+        },
+      },
+    },
   }),
 });

@@ -64,7 +64,7 @@ export function BusinessAddressFormStep() {
           />
         )}
       />
-      <Controller
+      {/* <Controller
         name="coords"
         control={control}
         rules={{ required: true }}
@@ -106,7 +106,7 @@ export function BusinessAddressFormStep() {
             )}
           </Flex>
         )}
-      />
+      /> */}
     </Flex>
   );
 }

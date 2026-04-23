@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { Stack } from "expo-router";
 import { Toaster } from "sonner-native";
+import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StyleSheet } from "react-native-unistyles";
 import { ApolloProvider } from "@apollo/client/react";
@@ -20,9 +20,11 @@ import "../i18n";
 
 import { Inter_600SemiBold_Italic } from "@expo-google-fonts/inter/600SemiBold_Italic";
 
+import { Button } from "@/components";
 import { useAuthStore } from "@/store";
 import { getToken } from "@/lib/helpers";
 import { graphqlClient } from "@/graphql";
+import { ChevronLeftIcon } from "@/assets";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -38,6 +40,8 @@ export default function RootLayout() {
     "Inter Medium Italic": Inter_500Medium_Italic,
     "Inter Semibold Italic": Inter_600SemiBold_Italic,
   });
+
+  const router = useRouter();
 
   const handleLoadToken = async () => {
     const savedToken = await getToken();
@@ -61,12 +65,42 @@ export default function RootLayout() {
     return null;
   }
 
+  const handleBack = ({
+    href,
+    canGoBack,
+  }: {
+    href?: string;
+    canGoBack?: boolean;
+  }) => {
+    if (canGoBack) {
+      router.back();
+    } else {
+      router.replace((href as any) || "/");
+    }
+  };
+
   return (
     <KeyboardProvider>
       <GestureHandlerRootView style={styles.gestureRootView}>
         <BottomSheetModalProvider>
           <ApolloProvider client={graphqlClient}>
-            <Stack>
+            <Stack
+              screenOptions={{
+                headerTitleAlign: "center",
+                headerShadowVisible: false,
+                headerStyle: styles.screenHeader,
+                headerTitleStyle: styles.screenHeaderTitle,
+                headerLeft: ({ href, canGoBack }) => (
+                  <Button
+                    radius="circular"
+                    color="secondary"
+                    variant="outlined"
+                    startIcon={<ChevronLeftIcon />}
+                    onPress={() => handleBack({ href, canGoBack })}
+                  />
+                ),
+              }}
+            >
               <Stack.Protected guard={!token}>
                 <Stack.Screen name="(auth)" options={{ headerShown: false }} />
               </Stack.Protected>
@@ -96,6 +130,11 @@ export default function RootLayout() {
   );
 }
 
-const styles = StyleSheet.create(() => ({
+const styles = StyleSheet.create(({ colors }) => ({
   gestureRootView: { flex: 1 },
+  screenHeader: { backgroundColor: colors.background },
+  screenHeaderTitle: {
+    color: colors.textPrimary,
+    fontFamily: "Inter Semibold",
+  },
 }));

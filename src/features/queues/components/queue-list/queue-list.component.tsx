@@ -1,5 +1,5 @@
-import { View } from "react-native";
-import { FlashList } from "@shopify/flash-list";
+import { View, FlatList } from "react-native";
+import { useRef, useImperativeHandle } from "react";
 import { StyleSheet } from "react-native-unistyles";
 import Animated, {
   useSharedValue,
@@ -15,9 +15,8 @@ const spacing = 16;
 const itemSize = 420;
 const itemFullSize = itemSize + spacing;
 
-const AnimatedFlashList = Animated.createAnimatedComponent(FlashList);
-
 type Props = {
+  ref?: any;
   loading?: boolean;
   bookings: BookingType[];
   activeInProgressBooking?: BookingType;
@@ -25,12 +24,15 @@ type Props = {
 };
 
 export function QueueList({
+  ref,
   loading,
   bookings,
   onCancel,
   activeInProgressBooking,
 }: Props) {
   const scrollY = useSharedValue(0);
+  const flatListRef = useRef<FlatList<BookingType>>(null);
+
   const handleScroll = useAnimatedScrollHandler((e) => {
     scrollY.value = e.contentOffset.y / itemFullSize;
   });
@@ -50,9 +52,25 @@ export function QueueList({
       (booking) => booking?._id === activeInProgressBooking?._id,
     ) || 0;
 
+  useImperativeHandle(ref, () => ({
+    adjustScrollForInsert: (insertIndex: number) => {
+      const currentIndex = Math.round(scrollY.value);
+
+      if (insertIndex !== -1 && insertIndex <= currentIndex) {
+        requestAnimationFrame(() => {
+          flatListRef.current?.scrollToOffset({
+            animated: false,
+            offset: (currentIndex + 1) * itemFullSize,
+          });
+        });
+      }
+    },
+  }));
+
   return (
-    <AnimatedFlashList
+    <Animated.FlatList
       data={bookings}
+      ref={flatListRef}
       onScroll={handleScroll}
       decelerationRate="fast"
       scrollEventThrottle={16}
@@ -62,6 +80,11 @@ export function QueueList({
       keyExtractor={(booking) => (booking as BookingType)?._id}
       ListEmptyComponent={loading ? renderSkeleton() : <Empty />}
       ItemSeparatorComponent={() => <View style={{ height: spacing }}></View>}
+      getItemLayout={(_, index) => ({
+        index,
+        length: itemFullSize,
+        offset: itemFullSize * index,
+      })}
       renderItem={({ item, index }) => {
         const booking = item as BookingType;
 

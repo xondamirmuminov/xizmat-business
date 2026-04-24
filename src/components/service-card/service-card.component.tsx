@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native-unistyles";
 
+import { formatPrice } from "@/lib/helpers";
 import { ClockIcon, ImagePlaceholder } from "@/assets";
 import { ServiceType, LocalizedTextType } from "@/types";
 
@@ -50,11 +51,7 @@ export function ServiceCard({ service }: { service: ServiceType }) {
               justifyContent="space-between"
             >
               <Typography size={"text-md"} numberOfLines={1}>
-                {service?.price?.toLocaleString("uz-UZ", {
-                  currency: "UZS",
-                  style: "currency",
-                  minimumFractionDigits: 0,
-                })}
+                {formatPrice(service?.price)}
               </Typography>
             </Flex>
           </Flex>

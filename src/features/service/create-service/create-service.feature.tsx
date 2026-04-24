@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { View } from "react-native";
 import { toast } from "sonner-native";
@@ -10,9 +9,10 @@ import { useForm, FormProvider } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
+import { useAuthStore } from "@/store";
 import { ChevronLeftIcon } from "@/assets";
-import { BusinessFormValuesType } from "@/types";
-import { DEFAULT_WORKING_DAYS } from "@/lib/constants";
+import { fragmentRegistry } from "@/graphql";
+import { ServiceType, PageInfoType, ServiceFormValuesType } from "@/types";
 import {
   Flex,
   Button,
@@ -21,29 +21,29 @@ import {
   CircularProgress,
 } from "@/components";
 
-import { CREATE_BUSINESS_MUTATION } from "./api";
-import { BUSINESS_FORM_STEPS } from "./constants";
-import { normalizeBusinessFormValuesForSubmission } from "./helpers";
+import { CREATE_SERVICE_MUTATION } from "./api";
+import { SERVICE_FORM_STEPS } from "./constants";
+import { normalizeServiceFormValuesForSubmission } from "./helpers";
+import { SERVICES_QUERY, SERVICE_CARD_FRAGMENT } from "../services/api";
 
-export function CreateBusiness() {
+fragmentRegistry.register(SERVICE_CARD_FRAGMENT);
+
+export function CreateService() {
+  const { businessId } = useAuthStore();
   const [step, setStep] = useState(0);
 
-  const formMethods = useForm<BusinessFormValuesType>({
+  const formMethods = useForm<ServiceFormValuesType>({
     mode: "onChange",
-    defaultValues: {
-      workingDays: DEFAULT_WORKING_DAYS,
-      workingHours: {
-        to: dayjs().set("hour", 19).set("minute", 0),
-        from: dayjs().set("hour", 9).set("minute", 0),
-      },
-    },
+    defaultValues: { price: 0, hours: 0, minutes: 0 },
   });
   const { trigger, handleSubmit } = formMethods;
 
   const router = useRouter();
   const { t } = useTranslation();
 
-  const [createBusiness, { loading }] = useMutation(CREATE_BUSINESS_MUTATION);
+  const [createService, { loading }] = useMutation<{
+    createService: ServiceType;
+  }>(CREATE_SERVICE_MUTATION);
 
   const handlePressPrevious = () => {
     setStep((prev) => prev - 1);
@@ -57,35 +57,52 @@ export function CreateBusiness() {
   };
 
   const handleCreateBusinessCompleted = () => {
-    toast.success(t("create_business.success_message"));
-    router.navigate("/");
-    formMethods.reset({
-      workingDays: DEFAULT_WORKING_DAYS,
-      workingHours: {
-        to: dayjs().set("hour", 19).set("minute", 0),
-        from: dayjs().set("hour", 9).set("minute", 0),
+    toast.success(t("create_service.success_message"));
+    router.navigate("/services");
+    formMethods.reset({});
+  };
+
+  const handleFinish = (values: ServiceFormValuesType) => {
+    const normalizedValues = normalizeServiceFormValuesForSubmission(values);
+
+    createService({
+      onCompleted: handleCreateBusinessCompleted,
+      variables: { data: { ...normalizedValues, businessId } },
+      update: (cache, { data }) => {
+        const newService = data?.createService;
+        const existingServices = cache.readQuery<{
+          services: {
+            items: ServiceType[];
+            pageInfo: PageInfoType;
+          };
+        }>({ query: SERVICES_QUERY, variables: { limit: 30, businessId } });
+
+        cache.writeQuery({
+          query: SERVICES_QUERY,
+          data: {
+            services: {
+              items: [newService, ...(existingServices?.services?.items || [])],
+              pageInfo: {
+                ...existingServices?.services?.pageInfo,
+                totalItems:
+                  (existingServices?.services?.pageInfo?.totalItems || 0) + 1,
+              },
+            },
+          },
+        });
       },
     });
   };
 
-  const handleFinish = (values: BusinessFormValuesType) => {
-    const normalizedValues = normalizeBusinessFormValuesForSubmission(values);
-
-    createBusiness({
-      variables: { data: normalizedValues },
-      onCompleted: handleCreateBusinessCompleted,
-    });
-  };
-
-  const activeStep = BUSINESS_FORM_STEPS[step];
+  const activeStep = SERVICE_FORM_STEPS[step];
 
   return (
     <View style={styles.screenContainer}>
       <SafeAreaView style={styles.safeArea}>
         <KeyboardAwareScrollView
           bottomOffset={40}
-          style={styles.container}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.container}
         >
           <Flex
             gap={2}
@@ -106,10 +123,10 @@ export function CreateBusiness() {
               size={64}
               textSize={14}
               strokeWidth={6}
-              progressPercent={((step + 1) * 100) / BUSINESS_FORM_STEPS?.length}
+              progressPercent={((step + 1) * 100) / SERVICE_FORM_STEPS?.length}
               text={t("labels.step_count", {
                 active: step + 1,
-                total: BUSINESS_FORM_STEPS?.length,
+                total: SERVICE_FORM_STEPS?.length,
               })}
             />
           </Flex>
@@ -135,28 +152,28 @@ export function CreateBusiness() {
               onPress={handlePressPrevious}
               startIcon={<ChevronLeftIcon />}
             >
-              {t("create_business.actions.back")}
+              {t("create_service.actions.back")}
             </Button>
           )}
-          {step !== BUSINESS_FORM_STEPS?.length - 1 ? (
+          {step !== SERVICE_FORM_STEPS?.length - 1 ? (
             <Button
               fullWidth
               size="lg"
               color="secondary"
-              disabled={loading}
+              loading={loading}
               onPress={handlePressNext}
             >
-              {t("create_business.actions.next")}
+              {t("create_service.actions.next")}
             </Button>
           ) : (
             <Button
               fullWidth
               size="lg"
-              loading={loading}
               color="secondary"
+              loading={loading}
               onPress={handleSubmit(handleFinish)}
             >
-              {t("create_business.actions.finish")}
+              {t("create_service.actions.finish")}
             </Button>
           )}
         </Flex>

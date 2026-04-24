@@ -40,7 +40,7 @@ const timeToFloat = (time: Dayjs) => {
   return time?.hour() + time?.minute() / 60;
 };
 
-export const normalizeFormValuesForSubmission = (
+export const normalizeBusinessFormValuesForSubmission = (
   values: BusinessFormValuesType,
 ) => {
   const {

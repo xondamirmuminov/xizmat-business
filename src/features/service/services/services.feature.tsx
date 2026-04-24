@@ -1,10 +1,11 @@
 import { View } from "react-native";
-import { Stack } from "expo-router";
+import { useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { NetworkStatus } from "@apollo/client";
 import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@apollo/client/react";
 import { StyleSheet } from "react-native-unistyles";
+import { Link, Stack, useFocusEffect } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { PlusIcon } from "@/assets";
@@ -25,17 +26,27 @@ fragmentRegistry.register(SERVICE_CARD_FRAGMENT);
 
 export function Services() {
   const { businessId } = useAuthStore();
+  const isMounted = useRef(false);
+  const isManualRefetch = useRef(false);
 
   const { t } = useTranslation();
 
   const { data, loading, refetch, networkStatus } = useQuery<{
     services: { items: ServiceType[]; pageInfo: PageInfoType };
   }>(SERVICES_QUERY, {
+    fetchPolicy: "cache-and-network",
     notifyOnNetworkStatusChange: true,
     variables: {
+      limit: 30,
       businessId,
     },
   });
+
+  const handleRefresh = async () => {
+    isManualRefetch.current = true;
+    await refetch();
+    isManualRefetch.current = false;
+  };
 
   const renderServicesSkeleton = () => {
     return (
@@ -47,8 +58,20 @@ export function Services() {
     );
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      if (!isMounted.current) {
+        isMounted.current = true;
+        return;
+      }
+
+      refetch();
+    }, [refetch]),
+  );
+
   const services = data?.services?.items;
-  const refreshing = networkStatus === NetworkStatus.refetch;
+  const refreshing =
+    isManualRefetch.current && networkStatus === NetworkStatus.refetch;
 
   return (
     <View style={styles.screenContainer}>
@@ -58,19 +81,22 @@ export function Services() {
             headerShown: true,
             headerTitle: t("services.title"),
             headerRight: () => (
-              <Button
-                color="secondary"
-                radius="circular"
-                variant="outlined"
-                startIcon={<PlusIcon />}
-              />
+              <Link asChild href="/create-service">
+                <Button
+                  color="secondary"
+                  radius="circular"
+                  variant="outlined"
+                  startIcon={<PlusIcon />}
+                />
+              </Link>
             ),
           }}
         />
         <FlashList
           data={services}
-          onRefresh={refetch}
+          initialScrollIndex={0}
           refreshing={refreshing}
+          onRefresh={handleRefresh}
           keyExtractor={(service) => service?._id}
           contentContainerStyle={styles.listContainer}
           ItemSeparatorComponent={() => <View style={{ height: 16 }}></View>}

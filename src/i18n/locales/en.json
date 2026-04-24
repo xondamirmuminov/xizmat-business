@@ -26,10 +26,16 @@
     "from": "From",
     "to": "To",
     "categories": "Categories",
+    "categoryIds": "Categories",
+    "categoryId": "Category",
     "coords": "Coordinates",
     "customerFullName": "Customer name",
     "customerPhone": "Customer phone",
-    "serviceId": "Service"
+    "serviceId": "Service",
+    "title": "Title",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "durationMinutes": "Duration"
   },
   "placeholders": {
     "phone": "Enter your phone",
@@ -273,5 +279,39 @@
   },
   "services": {
     "title": "Services"
+  },
+  "create_service": {
+    "actions": {
+      "next": "Next step",
+      "finish": "Finish",
+      "back": "Go back"
+    },
+    "success_message": "Service successfully created.",
+    "steps": {
+      "general": {
+        "title": "General Information",
+        "reset": "Reset to default",
+        "hours": "hours",
+        "min": "min",
+        "title_helper_text": "The service title is pre-filled from its category name — edit it below if you'd like something more specific."
+      },
+      "images": {
+        "title": "Images",
+        "next": "Finish and make it public",
+        "primary_image": {
+          "title": "Primary image",
+          "description": "Primary image will appear where this service is presented on Xizmat."
+        },
+        "images": {
+          "title": "Images of this service",
+          "description": "These images will appear in the service info."
+        }
+      },
+      "category": {
+        "title": "Category",
+        "services_count": "services",
+        "description": "Select category that best describes this service."
+      }
+    }
   }
 }

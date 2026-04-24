@@ -1,4 +1,7 @@
+import { ImagePickerAsset } from "expo-image-picker";
+
 import { BusinessType } from "./business.types";
+import { CategoryType } from "./category.types";
 import { LocalizedTextType } from "./common.types";
 
 export type ServiceType = {
@@ -30,4 +33,16 @@ export type ServicesFiltersType = {
   distance?: number;
   priceFrom?: number;
   sortBy?: ServiceSortByEnum;
+};
+
+export type ServiceFormValuesType = {
+  price: number;
+  hours: number;
+  minutes: number;
+  categoryId: string;
+  durationMinutes: number;
+  category?: CategoryType;
+  title: LocalizedTextType;
+  images?: ImagePickerAsset[];
+  primaryImage?: ImagePickerAsset;
 };

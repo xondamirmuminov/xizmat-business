@@ -13,6 +13,7 @@ export * from "./skeleton";
 export * from "./otp-input";
 export * from "./typography";
 export * from "./phone-input";
+export * from "./price-input";
 export * from "./service-card";
 export * from "./password-input";
 export * from "./selectable-card";

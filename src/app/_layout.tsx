@@ -124,6 +124,10 @@ export default function RootLayout() {
                     options={{ headerShown: false }}
                   />
                   <Stack.Screen name="services/index" />
+                  <Stack.Screen
+                    name="create-service/index"
+                    options={{ headerShown: false }}
+                  />
                 </Stack.Protected>
               </Stack.Protected>
             </Stack>

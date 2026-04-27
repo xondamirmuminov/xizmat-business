@@ -1,4 +1,39 @@
 {
+  "tab_bar": {
+    "profile": "Profil"
+  },
+  "profile": {
+    "screen_title": "Biznes profili",
+    "section_provider": "Provayder",
+    "section_business": "Biznes",
+    "section_support": "Yordam",
+    "section_preferences": "Sozlamalar",
+    "section_account": "Hisob",
+    "row_business_details": "Biznes tafsilotlari",
+    "row_services": "Xizmatlar",
+    "row_contact_us": "Bog‘lanish",
+    "row_how_payments_work": "To‘lovlar qanday ishlaydi",
+    "row_change_language": "Til",
+    "row_theme": "Mavzu",
+    "row_theme_subtitle": "Ilova uchun qorong‘i ko‘rinish",
+    "theme_value_light": "Yorug‘",
+    "theme_value_dark": "Qorong‘i",
+    "exit_business": "Biznesdan chiqish",
+    "sign_out": "Chiqish",
+    "sign_out_confirm_title": "Chiqyapsizmi?",
+    "sign_out_confirm_message": "Provayder sifatida qayta kirish uchun qayta tizimga kirishingiz kerak bo‘ladi.",
+    "sign_out_confirm": "Chiqish",
+    "sign_out_cancel": "Bekor qilish",
+    "load_error": "Biznesingizni yuklab bo‘lmadi. Qayta urinib ko‘ring.",
+    "placeholder_body": "Tez orada bu yerda batafsil ma’lumot bo‘ladi.",
+    "change_language_title": "Til",
+    "lang_en": "English",
+    "lang_uz": "O‘zbek",
+    "lang_ru": "Русский",
+    "business_details_title": "Biznes tafsilotlari",
+    "contact_us_title": "Bog‘lanish",
+    "how_payments_title": "To‘lovlar qanday ishlaydi"
+  },
   "sign_in": {
     "title": "Log in",
     "description": "Welcome back! Please enter your details."

@@ -1,4 +1,39 @@
 {
+  "tab_bar": {
+    "profile": "Профиль"
+  },
+  "profile": {
+    "screen_title": "Профиль бизнеса",
+    "section_provider": "Исполнитель",
+    "section_business": "Бизнес",
+    "section_support": "Поддержка",
+    "section_preferences": "Настройки",
+    "section_account": "Аккаунт",
+    "row_business_details": "Данные бизнеса",
+    "row_services": "Услуги",
+    "row_contact_us": "Связаться с нами",
+    "row_how_payments_work": "Как устроены платежи",
+    "row_change_language": "Язык",
+    "row_theme": "Оформление",
+    "row_theme_subtitle": "Тёмное оформление приложения",
+    "theme_value_light": "Светлая",
+    "theme_value_dark": "Тёмная",
+    "exit_business": "Выйти из бизнеса",
+    "sign_out": "Выйти из аккаунта",
+    "sign_out_confirm_title": "Выйти из аккаунта?",
+    "sign_out_confirm_message": "Чтобы снова работать как исполнитель, потребуется войти в аккаунт снова.",
+    "sign_out_confirm": "Выйти",
+    "sign_out_cancel": "Отмена",
+    "load_error": "Не удалось загрузить бизнес. Попробуйте снова.",
+    "placeholder_body": "Скоро здесь появится подробная информация.",
+    "change_language_title": "Язык",
+    "lang_en": "English",
+    "lang_uz": "O‘zbek",
+    "lang_ru": "Русский",
+    "business_details_title": "Данные бизнеса",
+    "contact_us_title": "Связаться с нами",
+    "how_payments_title": "Как устроены платежи"
+  },
   "sign_in": {
     "title": "Log in",
     "description": "Welcome back! Please enter your details."

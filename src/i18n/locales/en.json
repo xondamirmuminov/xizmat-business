@@ -236,7 +236,40 @@
   },
   "tab_bar": {
     "queues": "Queues",
-    "history": "History"
+    "history": "History",
+    "profile": "Profile"
+  },
+  "profile": {
+    "screen_title": "Business profile",
+    "section_provider": "Provider",
+    "section_business": "Business",
+    "section_support": "Support",
+    "section_preferences": "Preferences",
+    "section_account": "Account",
+    "row_business_details": "Business details",
+    "row_services": "Services",
+    "row_contact_us": "Contact us",
+    "row_how_payments_work": "How payments work",
+    "row_change_language": "Language",
+    "row_theme": "Theme",
+    "row_theme_subtitle": "Use dark appearance for the app",
+    "theme_value_light": "Light",
+    "theme_value_dark": "Dark",
+    "exit_business": "Exit business",
+    "sign_out": "Sign out",
+    "sign_out_confirm_title": "Sign out?",
+    "sign_out_confirm_message": "You will need to sign in again to use the app as a provider.",
+    "sign_out_confirm": "Sign out",
+    "sign_out_cancel": "Cancel",
+    "load_error": "We could not load your business. Try again.",
+    "placeholder_body": "More information will appear here soon.",
+    "change_language_title": "Language",
+    "lang_en": "English",
+    "lang_uz": "O‘zbek",
+    "lang_ru": "Русский",
+    "business_details_title": "Business details",
+    "contact_us_title": "Contact us",
+    "how_payments_title": "How payments work"
   },
   "bookings": {
     "actions": {

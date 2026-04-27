@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { View, ActivityIndicator } from "react-native";
 import { Toaster } from "sonner-native";
 import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StyleSheet } from "react-native-unistyles";
 import { ApolloProvider } from "@apollo/client/react";
+import { View, ActivityIndicator } from "react-native";
 import { useFonts } from "@expo-google-fonts/inter/useFonts";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { Inter_700Bold } from "@expo-google-fonts/inter/700Bold";
@@ -22,11 +22,11 @@ import "../i18n";
 import { Inter_600SemiBold_Italic } from "@expo-google-fonts/inter/600SemiBold_Italic";
 
 import { Button } from "@/components";
-import { SessionUserRestorer } from "@/features/auth";
 import { useAuthStore } from "@/store";
 import { getToken } from "@/lib/helpers";
 import { graphqlClient } from "@/graphql";
 import { ChevronLeftIcon } from "@/assets";
+import { SessionUserRestorer } from "@/features/auth";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -55,12 +55,17 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (fontsLoaded || fontsError) {
-      void SplashScreen.hideAsync();
+      SplashScreen.hideAsync().catch(() => {
+        // splash may already be hidden
+      });
     }
   }, [fontsLoaded, fontsError]);
 
   useEffect(() => {
-    void handleLoadToken();
+    handleLoadToken().catch(() => {
+      // token load is best-effort on boot
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- sync secure store token once on mount
   }, []);
 
   if (!fontsLoaded && !fontsError) {
@@ -143,6 +148,10 @@ export default function RootLayout() {
                     name="services/[id]/index"
                     options={{ headerShown: false }}
                   />
+                  <Stack.Screen name="business-details/index" />
+                  <Stack.Screen name="change-language/index" />
+                  <Stack.Screen name="contact-us/index" />
+                  <Stack.Screen name="how-payments-work/index" />
                 </Stack.Protected>
               </Stack.Protected>
             </Stack>
@@ -155,16 +164,16 @@ export default function RootLayout() {
 }
 
 const styles = StyleSheet.create(({ colors }) => ({
-  bootPlaceholder: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.background,
-  },
   gestureRootView: { flex: 1 },
   screenHeader: { backgroundColor: colors.background },
   screenHeaderTitle: {
     color: colors.textPrimary,
     fontFamily: "Inter Semibold",
+  },
+  bootPlaceholder: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.background,
   },
 }));

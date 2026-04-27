@@ -12,7 +12,11 @@ import { useQuery, useMutation, useLazyQuery } from "@apollo/client/react";
 import { useAuthStore } from "@/store";
 import { PlusIcon, ChevronLeftIcon, ChevronRightIcon } from "@/assets";
 import { ServiceType, TimeSlotType, LocalizedTextType } from "@/types";
-import { getErrorMessage, formatPhoneNumberForSubmit } from "@/lib/helpers";
+import {
+  formatPrice,
+  getErrorMessage,
+  formatPhoneNumberForSubmit,
+} from "@/lib/helpers";
 import {
   Flex,
   Input,
@@ -202,11 +206,7 @@ export function AddBookingModal({ ref }: Props) {
                       onSelect={() => field?.onChange(service?._id)}
                       item={{
                         title: service?.title[locale],
-                        subTitle: service?.price?.toLocaleString("uz-UZ", {
-                          currency: "UZS",
-                          style: "currency",
-                          minimumFractionDigits: 0,
-                        }),
+                        subTitle: formatPrice(service?.price),
                       }}
                     />
                   );

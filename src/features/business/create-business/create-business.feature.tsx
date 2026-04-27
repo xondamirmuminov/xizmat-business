@@ -1,13 +1,14 @@
 import dayjs from "dayjs";
 import { useState } from "react";
+import { View } from "react-native";
 import { toast } from "sonner-native";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { View, ScrollView } from "react-native";
 import { useMutation } from "@apollo/client/react";
 import { StyleSheet } from "react-native-unistyles";
 import { useForm, FormProvider } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 import { ChevronLeftIcon } from "@/assets";
 import { BusinessFormValuesType } from "@/types";
@@ -22,7 +23,7 @@ import {
 
 import { CREATE_BUSINESS_MUTATION } from "./api";
 import { BUSINESS_FORM_STEPS } from "./constants";
-import { normalizeFormValuesForSubmission } from "./helpers";
+import { normalizeBusinessFormValuesForSubmission } from "./helpers";
 
 export function CreateBusiness() {
   const [step, setStep] = useState(0);
@@ -68,7 +69,7 @@ export function CreateBusiness() {
   };
 
   const handleFinish = (values: BusinessFormValuesType) => {
-    const normalizedValues = normalizeFormValuesForSubmission(values);
+    const normalizedValues = normalizeBusinessFormValuesForSubmission(values);
 
     createBusiness({
       variables: { data: normalizedValues },
@@ -81,7 +82,11 @@ export function CreateBusiness() {
   return (
     <View style={styles.screenContainer}>
       <SafeAreaView style={styles.safeArea}>
-        <ScrollView style={styles.container}>
+        <KeyboardAwareScrollView
+          bottomOffset={40}
+          style={styles.container}
+          showsVerticalScrollIndicator={false}
+        >
           <Flex
             gap={2}
             direction="row"
@@ -112,7 +117,7 @@ export function CreateBusiness() {
           <View style={styles.formContainer}>
             <FormProvider {...formMethods}>{activeStep.component}</FormProvider>
           </View>
-        </ScrollView>
+        </KeyboardAwareScrollView>
         <Divider space={0} />
         <Flex
           gap={2}

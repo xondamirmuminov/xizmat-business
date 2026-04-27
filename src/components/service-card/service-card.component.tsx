@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native-unistyles";
 
+import { formatPrice } from "@/lib/helpers";
 import { ClockIcon, ImagePlaceholder } from "@/assets";
 import { ServiceType, LocalizedTextType } from "@/types";
 
@@ -19,7 +20,7 @@ export function ServiceCard({ service }: { service: ServiceType }) {
         <Flex
           gap={2}
           direction="row"
-          alignItems="flex-start"
+          alignItems="center"
           style={styles.cardContent}
         >
           <Image
@@ -50,11 +51,7 @@ export function ServiceCard({ service }: { service: ServiceType }) {
               justifyContent="space-between"
             >
               <Typography size={"text-md"} numberOfLines={1}>
-                {service?.price?.toLocaleString("uz-UZ", {
-                  currency: "UZS",
-                  style: "currency",
-                  minimumFractionDigits: 0,
-                })}
+                {formatPrice(service?.price)}
               </Typography>
             </Flex>
           </Flex>
@@ -67,8 +64,8 @@ export function ServiceCard({ service }: { service: ServiceType }) {
 const styles = StyleSheet.create(({ space, colors }) => ({
   button: { minWidth: 88 },
   image: {
-    width: 90,
-    height: 90,
+    width: 80,
+    height: 80,
     borderRadius: 10,
   },
   infoItemIcon: {
@@ -80,6 +77,7 @@ const styles = StyleSheet.create(({ space, colors }) => ({
     height: "100%",
     maxWidth: "100%",
     padding: space(1.5),
+    paddingBottom: space(1.2),
   },
   card: {
     height: "auto",

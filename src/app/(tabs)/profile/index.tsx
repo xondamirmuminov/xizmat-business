@@ -1,3 +1,4 @@
+import { Link } from "expo-router";
 import { View } from "react-native";
 
 import { Button } from "@/components";
@@ -14,6 +15,7 @@ function ProfileScreen() {
 
   return (
     <View>
+      <Link href="/services">Services</Link>
       <Button color="error" onPress={handleSignOut}>
         Sign Out
       </Button>

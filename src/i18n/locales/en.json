@@ -26,10 +26,16 @@
     "from": "From",
     "to": "To",
     "categories": "Categories",
+    "categoryIds": "Categories",
+    "categoryId": "Category",
     "coords": "Coordinates",
     "customerFullName": "Customer name",
     "customerPhone": "Customer phone",
-    "serviceId": "Service"
+    "serviceId": "Service",
+    "title": "Title",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "durationMinutes": "Duration"
   },
   "placeholders": {
     "phone": "Enter your phone",
@@ -219,7 +225,9 @@
   "businesses_list": {
     "title": "Choose business",
     "description": "Select one of your businesses to start working.",
-    "action": "Start working"
+    "action": "Start working",
+    "load_error": "Could not check your businesses. Try again.",
+    "retry": "Retry"
   },
   "no_business": {
     "title": "No business yet",
@@ -269,6 +277,81 @@
     "empty": {
       "title": "No time available this day",
       "description": "There’s no available time slots this day. Please inform customer or try pressing refresh button."
+    }
+  },
+  "services": {
+    "title": "Services"
+  },
+  "status": {
+    "recommended": "Recommended"
+  },
+  "service_info": {
+    "screen_title": "Service",
+    "more_actions": "More actions",
+    "section_status": "Status",
+    "status_active": "Active",
+    "status_inactive": "Inactive",
+    "section_pricing": "Pricing",
+    "duration_minutes_one": "{{count}} minute",
+    "duration_minutes_other": "{{count}} minutes",
+    "section_titles": "Titles",
+    "section_category": "Category",
+    "label_category_name": "Name",
+    "label_category_id": "Category ID",
+    "photos": "Photos",
+    "photos_empty": "No photos yet",
+    "section_internal": "Internal",
+    "label_service_id": "Service ID",
+    "label_created": "Created",
+    "label_updated": "Last updated",
+    "actions_section": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "delete_title": "Delete this service?",
+    "delete_message": "This action cannot be undone. Customers will no longer see this service.",
+    "delete_cancel": "Cancel",
+    "delete_confirm": "Delete",
+    "delete_success": "Service deleted",
+    "unsaved_title": "Discard changes?",
+    "unsaved_message": "You have unsaved changes. Leave without saving?",
+    "unsaved_stay": "Stay",
+    "unsaved_leave": "Leave",
+    "update_success": "Service updated",
+    "load_error": "We could not load this service. Go back and try again."
+  },
+  "create_service": {
+    "actions": {
+      "next": "Next step",
+      "create": "Create",
+      "edit": "Update",
+      "back": "Go back"
+    },
+    "success_message": "Service successfully created.",
+    "steps": {
+      "general": {
+        "title": "General Information",
+        "reset": "Reset to default",
+        "hours": "hours",
+        "min": "min",
+        "title_helper_text": "The service title is pre-filled from its category name — edit it below if you'd like something more specific."
+      },
+      "images": {
+        "title": "Images",
+        "next": "Finish and make it public",
+        "primary_image": {
+          "title": "Primary image",
+          "description": "Primary image will appear where this service is presented on Xizmat."
+        },
+        "images": {
+          "title": "Images of this service",
+          "description": "These images will appear in the service info."
+        }
+      },
+      "category": {
+        "title": "Category",
+        "services_count": "services",
+        "description": "Select category that best describes this service."
+      }
     }
   }
 }

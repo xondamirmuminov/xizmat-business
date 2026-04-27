@@ -1,3 +1,4 @@
+import { isArray } from "lodash";
 import { TFunction } from "i18next";
 import { FieldError } from "react-hook-form";
 
@@ -20,3 +21,19 @@ export const getErrorMessage = (t: TFunction<"translation", undefined>) => {
     return undefined;
   };
 };
+
+export function cleanTypeName(obj: any): any {
+  if (isArray(obj)) {
+    return obj.map((value) => cleanTypeName(value));
+  }
+
+  if (obj && typeof obj === "object") {
+    const { __typename, ...rest } = obj;
+
+    return Object.fromEntries(
+      Object.entries(rest).map(([key, value]) => [key, cleanTypeName(value)]),
+    );
+  }
+
+  return obj;
+}

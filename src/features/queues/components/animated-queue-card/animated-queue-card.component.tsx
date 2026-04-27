@@ -14,9 +14,9 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { BOOKING_STATUS } from "@/lib/constants";
-import { formatPhoneNumberForDisplay } from "@/lib/helpers";
 import { Flex, Chip, Button, Typography } from "@/components";
 import { XIcon, PhoneIcon, AvatarPlaceholder } from "@/assets";
+import { formatPrice, formatPhoneNumberForDisplay } from "@/lib/helpers";
 import { BookingType, BookingStatusEnum, LocalizedTextType } from "@/types";
 import SlideToConfirm from "@/components/swipe-button/swipe-button.component";
 
@@ -173,11 +173,7 @@ export function AnimatedQueueCard({
                   {booking?.service?.title[locale]}
                 </Typography>
                 <Typography size="text-sm" weight="medium">
-                  {booking?.price?.toLocaleString("uz-UZ", {
-                    currency: "UZS",
-                    style: "currency",
-                    minimumFractionDigits: 0,
-                  })}
+                  {formatPrice(booking?.price)}
                 </Typography>
               </Flex>
             </View>

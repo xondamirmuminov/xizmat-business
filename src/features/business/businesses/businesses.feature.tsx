@@ -5,7 +5,12 @@ import { Redirect, useRouter } from "expo-router";
 import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native-unistyles";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, ScrollView, RefreshControl } from "react-native";
+import {
+  View,
+  ScrollView,
+  RefreshControl,
+  ActivityIndicator,
+} from "react-native";
 
 import { useAuthStore } from "@/store";
 import { BusinessType } from "@/types";
@@ -24,16 +29,21 @@ export function Businesses() {
   const router = useRouter();
   const { t } = useTranslation();
 
-  const { data: hasBusinessData, loading: hasBusinessLoading } = useQuery<{
+  const {
+    data: hasBusinessData,
+    loading: hasBusinessLoading,
+    error: hasBusinessError,
+    refetch: refetchHasBusiness,
+  } = useQuery<{
     hasBusiness: boolean;
   }>(HAS_BUSINESS_QUERY, {
     skip: !user?._id,
     variables: {
-      providerId: user?._id,
+      providerId: user?._id!,
     },
   });
 
-  const hasBusiness = hasBusinessData?.hasBusiness || false;
+  const hasBusiness = hasBusinessData?.hasBusiness ?? false;
 
   const {
     data: businessesData,
@@ -65,12 +75,35 @@ export function Businesses() {
   };
 
   useEffect(() => {
-    if (!hasBusinessLoading && hasBusinessData) {
-      setHasBusiness(hasBusiness);
+    if (!hasBusinessLoading && hasBusinessData != null) {
+      setHasBusiness(hasBusinessData.hasBusiness);
     }
-  }, [hasBusinessData, hasBusinessLoading]);
+  }, [hasBusinessData, hasBusinessLoading, setHasBusiness]);
 
-  if (hasBusinessData && !hasBusiness) {
+  if (hasBusinessLoading) {
+    return (
+      <View style={styles.loadingScreen}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
+  if (hasBusinessError) {
+    return (
+      <View style={styles.loadingScreen}>
+        <Flex gap={2} style={styles.errorBlock}>
+          <Typography size="text-sm" color="secondary">
+            {t("businesses_list.load_error")}
+          </Typography>
+          <Button color="secondary" onPress={() => void refetchHasBusiness()}>
+            {t("businesses_list.retry")}
+          </Button>
+        </Flex>
+      </View>
+    );
+  }
+
+  if (!hasBusiness) {
     return <Redirect href="/no-business" />;
   }
 
@@ -134,6 +167,13 @@ export function Businesses() {
 }
 
 const styles = StyleSheet.create(({ space, colors }) => ({
+  loadingScreen: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.background,
+  },
+  errorBlock: { paddingInline: space(2), alignItems: "center" },
   safeArea: { flex: 1 },
   footerAction: {
     padding: space(2),

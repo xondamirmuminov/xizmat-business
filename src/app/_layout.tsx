@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { View, ActivityIndicator } from "react-native";
 import { Toaster } from "sonner-native";
 import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -21,6 +22,7 @@ import "../i18n";
 import { Inter_600SemiBold_Italic } from "@expo-google-fonts/inter/600SemiBold_Italic";
 
 import { Button } from "@/components";
+import { SessionUserRestorer } from "@/features/auth";
 import { useAuthStore } from "@/store";
 import { getToken } from "@/lib/helpers";
 import { graphqlClient } from "@/graphql";
@@ -53,16 +55,20 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (fontsLoaded || fontsError) {
-      SplashScreen.hideAsync();
+      void SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontsError]);
 
   useEffect(() => {
-    handleLoadToken();
+    void handleLoadToken();
   }, []);
 
   if (!fontsLoaded && !fontsError) {
-    return null;
+    return (
+      <View style={styles.bootPlaceholder}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
 
   const handleBack = ({
@@ -84,6 +90,7 @@ export default function RootLayout() {
       <GestureHandlerRootView style={styles.gestureRootView}>
         <BottomSheetModalProvider>
           <ApolloProvider client={graphqlClient}>
+            <SessionUserRestorer />
             <Stack
               screenOptions={{
                 headerTitleAlign: "center",
@@ -128,6 +135,14 @@ export default function RootLayout() {
                     name="create-service/index"
                     options={{ headerShown: false }}
                   />
+                  <Stack.Screen
+                    name="services/[id]/edit"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="services/[id]/index"
+                    options={{ headerShown: false }}
+                  />
                 </Stack.Protected>
               </Stack.Protected>
             </Stack>
@@ -140,6 +155,12 @@ export default function RootLayout() {
 }
 
 const styles = StyleSheet.create(({ colors }) => ({
+  bootPlaceholder: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.background,
+  },
   gestureRootView: { flex: 1 },
   screenHeader: { backgroundColor: colors.background },
   screenHeaderTitle: {

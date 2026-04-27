@@ -2,5 +2,44 @@
   "sign_in": {
     "title": "Log in",
     "description": "Welcome back! Please enter your details."
+  },
+  "status": {
+    "recommended": "Рекомендуем"
+  },
+  "service_info": {
+    "screen_title": "Услуга",
+    "more_actions": "Другие действия",
+    "section_status": "Статус",
+    "status_active": "Активна",
+    "status_inactive": "Неактивна",
+    "section_pricing": "Цена",
+    "duration_minutes_one": "{{count}} минута",
+    "duration_minutes_few": "{{count}} минуты",
+    "duration_minutes_many": "{{count}} минут",
+    "duration_minutes_other": "{{count}} минут",
+    "section_titles": "Названия",
+    "section_category": "Категория",
+    "label_category_name": "Название",
+    "label_category_id": "ID категории",
+    "photos": "Фото",
+    "photos_empty": "Пока нет фото",
+    "section_internal": "Служебная информация",
+    "label_service_id": "ID услуги",
+    "label_created": "Создано",
+    "label_updated": "Обновлено",
+    "actions_section": "Действия",
+    "edit": "Изменить",
+    "delete": "Удалить",
+    "delete_title": "Удалить эту услугу?",
+    "delete_message": "Это действие нельзя отменить. Клиенты больше не увидят эту услугу.",
+    "delete_cancel": "Отмена",
+    "delete_confirm": "Удалить",
+    "delete_success": "Услуга удалена",
+    "unsaved_title": "Отменить изменения?",
+    "unsaved_message": "Есть несохранённые изменения. Выйти без сохранения?",
+    "unsaved_stay": "Остаться",
+    "unsaved_leave": "Выйти",
+    "update_success": "Услуга обновлена",
+    "load_error": "Не удалось загрузить услугу. Вернитесь назад и попробуйте снова."
   }
 }

@@ -55,7 +55,7 @@ export function ServiceGeneralFormStep() {
             </Typography>
           </Typography>
           <Typography size="text-xs" color="secondary">
-            {t("create_service.general.title_helper_text")}
+            {t("create_service.steps.general.title_helper_text")}
           </Typography>
         </Flex>
         <Flex gap={2} alignItems="flex-start">
@@ -104,7 +104,7 @@ export function ServiceGeneralFormStep() {
             color="primary"
             onPress={handleResetTitleToDefault}
           >
-            {t("create_service.general.reset")}
+            {t("create_service.steps.general.reset")}
           </Button>
         </Flex>
       </Flex>
@@ -130,7 +130,7 @@ export function ServiceGeneralFormStep() {
                   placeholder="00"
                   keyboardType="number-pad"
                   value={field?.value?.toString()}
-                  suffix={t("create_service.general.hours")}
+                  suffix={t("create_service.steps.general.hours")}
                   helperText={handleGetErrorMessage(error, { min: 0 })}
                   onChange={(value) => {
                     const number = parseInt(
@@ -167,7 +167,7 @@ export function ServiceGeneralFormStep() {
                   placeholder="00"
                   keyboardType="number-pad"
                   value={field?.value?.toString()}
-                  suffix={t("create_service.general.min")}
+                  suffix={t("create_service.steps.general.min")}
                   helperText={handleGetErrorMessage(error, {
                     min: 0,
                     max: 59,

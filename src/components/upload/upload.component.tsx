@@ -69,7 +69,7 @@ export function Upload({
           <View style={styles.removeButton}>
             <Button
               size="sm"
-              color="error"
+              color="secondary"
               variant="ghost"
               radius="circular"
               startIcon={<TrashIcon />}

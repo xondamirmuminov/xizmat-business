@@ -225,7 +225,9 @@
   "businesses_list": {
     "title": "Choose business",
     "description": "Select one of your businesses to start working.",
-    "action": "Start working"
+    "action": "Start working",
+    "load_error": "Could not check your businesses. Try again.",
+    "retry": "Retry"
   },
   "no_business": {
     "title": "No business yet",
@@ -280,10 +282,48 @@
   "services": {
     "title": "Services"
   },
+  "status": {
+    "recommended": "Recommended"
+  },
+  "service_info": {
+    "screen_title": "Service",
+    "more_actions": "More actions",
+    "section_status": "Status",
+    "status_active": "Active",
+    "status_inactive": "Inactive",
+    "section_pricing": "Pricing",
+    "duration_minutes_one": "{{count}} minute",
+    "duration_minutes_other": "{{count}} minutes",
+    "section_titles": "Titles",
+    "section_category": "Category",
+    "label_category_name": "Name",
+    "label_category_id": "Category ID",
+    "photos": "Photos",
+    "photos_empty": "No photos yet",
+    "section_internal": "Internal",
+    "label_service_id": "Service ID",
+    "label_created": "Created",
+    "label_updated": "Last updated",
+    "actions_section": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "delete_title": "Delete this service?",
+    "delete_message": "This action cannot be undone. Customers will no longer see this service.",
+    "delete_cancel": "Cancel",
+    "delete_confirm": "Delete",
+    "delete_success": "Service deleted",
+    "unsaved_title": "Discard changes?",
+    "unsaved_message": "You have unsaved changes. Leave without saving?",
+    "unsaved_stay": "Stay",
+    "unsaved_leave": "Leave",
+    "update_success": "Service updated",
+    "load_error": "We could not load this service. Go back and try again."
+  },
   "create_service": {
     "actions": {
       "next": "Next step",
-      "finish": "Finish",
+      "create": "Create",
+      "edit": "Update",
       "back": "Go back"
     },
     "success_message": "Service successfully created.",

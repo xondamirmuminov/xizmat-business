@@ -8,6 +8,8 @@ export type ServiceType = {
   _id: string;
   price: number;
   isActive: boolean;
+  /** Gallery image URLs (may overlap with primary). Omitted in list views that do not request it. */
+  images?: string[];
   businessId: string;
   providerId: string;
   categoryId?: string;
@@ -16,8 +18,12 @@ export type ServiceType = {
   description?: string;
   business: BusinessType;
   isRecommended: boolean;
+  category?: CategoryType;
   durationMinutes: number;
   title: LocalizedTextType;
+  /** ISO strings from GraphQL `Date` */
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export enum ServiceSortByEnum {
@@ -33,6 +39,11 @@ export type ServicesFiltersType = {
   distance?: number;
   priceFrom?: number;
   sortBy?: ServiceSortByEnum;
+};
+
+export type ServiceImageSnapshot = {
+  images: string[];
+  primaryImage?: string;
 };
 
 export type ServiceFormValuesType = {

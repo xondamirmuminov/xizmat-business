@@ -2,5 +2,42 @@
   "sign_in": {
     "title": "Log in",
     "description": "Welcome back! Please enter your details."
+  },
+  "status": {
+    "recommended": "Tavsiya etilgan"
+  },
+  "service_info": {
+    "screen_title": "Xizmat",
+    "more_actions": "Boshqa amallar",
+    "section_status": "Holat",
+    "status_active": "Faol",
+    "status_inactive": "Nofaol",
+    "section_pricing": "Narx",
+    "duration_minutes_one": "{{count}} daqiqa",
+    "duration_minutes_other": "{{count}} daqiqa",
+    "section_titles": "Nomlar",
+    "section_category": "Kategoriya",
+    "label_category_name": "Nomi",
+    "label_category_id": "Kategoriya ID",
+    "photos": "Rasmlar",
+    "photos_empty": "Hozircha rasm yo‘q",
+    "section_internal": "Texnik ma’lumot",
+    "label_service_id": "Xizmat ID",
+    "label_created": "Yaratilgan",
+    "label_updated": "Yangilangan",
+    "actions_section": "Amallar",
+    "edit": "Tahrirlash",
+    "delete": "O‘chirish",
+    "delete_title": "Bu xizmatni o‘chirasizmi?",
+    "delete_message": "Buni qaytarib bo‘lmaydi. Mijozlar endi bu xizmatni ko‘rmaydi.",
+    "delete_cancel": "Bekor qilish",
+    "delete_confirm": "O‘chirish",
+    "delete_success": "Xizmat o‘chirildi",
+    "unsaved_title": "O‘zgarishlarni bekor qilasizmi?",
+    "unsaved_message": "Saqlanmagan o‘zgarishlar bor. Saqlamasdan chiqasizmi?",
+    "unsaved_stay": "Qolish",
+    "unsaved_leave": "Chiqish",
+    "update_success": "Xizmat yangilandi",
+    "load_error": "Xizmatni yuklab bo‘lmadi. Orqaga qayting va qayta urinib ko‘ring."
   }
 }

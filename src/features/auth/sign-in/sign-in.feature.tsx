@@ -31,12 +31,21 @@ type SignInOutputType = {
 };
 
 export function SignIn() {
-  const { setUser, setToken } = useAuthStore((state) => state);
+  const { setUser, setToken, token: existingToken } = useAuthStore(
+    (state) => state,
+  );
 
   const { control, handleSubmit } = useForm();
 
   const router = useRouter();
   const { t } = useTranslation();
+
+  // Session restored from SecureStore after first paint; leave auth stack when already signed in
+  useEffect(() => {
+    if (existingToken) {
+      router.replace("/");
+    }
+  }, [existingToken, router]);
 
   const [signInAsProvider, { data, loading }] = useLazyQuery<SignInOutputType>(
     SIGN_IN_AS_PROVIDER_QUERY,

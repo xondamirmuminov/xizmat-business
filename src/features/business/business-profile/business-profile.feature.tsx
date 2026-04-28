@@ -284,11 +284,6 @@ const styles = StyleSheet.create(({ space, colors }) => ({
   inlineSectionLabel: {
     marginBottom: space(0.5),
   },
-  scrollContent: {
-    paddingTop: space(2),
-    paddingBottom: space(3),
-    paddingHorizontal: space(2),
-  },
   headerCard: {
     borderRadius: 12,
     padding: space(2),
@@ -310,6 +305,11 @@ const styles = StyleSheet.create(({ space, colors }) => ({
     height: 48,
     borderRadius: 24,
     backgroundColor: colors.slate3,
+  },
+  scrollContent: {
+    paddingTop: space(2),
+    paddingBottom: space(3),
+    paddingHorizontal: space(2),
   },
   centered: {
     flex: 1,

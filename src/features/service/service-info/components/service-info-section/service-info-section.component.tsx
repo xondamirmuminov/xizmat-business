@@ -40,9 +40,9 @@ export function ServiceInfoRow({ label, value }: RowProps) {
 const styles = StyleSheet.create(({ space, colors }) => ({
   card: {
     width: "100%",
-    padding: space(2),
-    borderRadius: 12,
     borderWidth: 1,
+    borderRadius: 12,
+    padding: space(2),
     borderColor: colors.slate4,
     backgroundColor: colors.background,
   },

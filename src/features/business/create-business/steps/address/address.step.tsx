@@ -1,13 +1,10 @@
-import { isEmpty } from "lodash";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { Controller, useFormContext } from "react-hook-form";
-import { Camera, MapView, MarkerView } from "@maplibre/maplibre-react-native";
 
-import { MapPinFilledIcon } from "@/assets";
-import { Flex, Input, Typography } from "@/components";
+import { Flex, Input } from "@/components";
 import { LocalizedTextType, BusinessFormValuesType } from "@/types";
 import { getErrorMessage, getAddressFromCoords } from "@/lib/helpers";
 
@@ -110,7 +107,6 @@ export function BusinessAddressFormStep() {
     </Flex>
   );
 }
-
 const styles = StyleSheet.create(() => ({
   mapPinIcon: { width: 20, height: 20, color: "red" },
   map: { height: 340, width: "100%", borderRadius: 12, overflow: "hidden" },

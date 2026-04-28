@@ -12,6 +12,9 @@ export type ServiceType = {
   images?: string[];
   businessId: string;
   providerId: string;
+  /** ISO strings from GraphQL `Date` */
+  createdAt?: string;
+  updatedAt?: string;
   categoryId?: string;
   isFavorite: boolean;
   primaryImage: string;
@@ -21,9 +24,6 @@ export type ServiceType = {
   category?: CategoryType;
   durationMinutes: number;
   title: LocalizedTextType;
-  /** ISO strings from GraphQL `Date` */
-  createdAt?: string;
-  updatedAt?: string;
 };
 
 export enum ServiceSortByEnum {

@@ -271,6 +271,36 @@
     "contact_us_title": "Contact us",
     "how_payments_title": "How payments work"
   },
+  "business_details": {
+    "gallery": "Gallery",
+    "working_hours": "Working hours",
+    "section_provider_insights": "Only visible to you",
+    "tab_provider_insights": "Private",
+    "group_status": "Status",
+    "group_details": "Details",
+    "copy_business_id": "Copy business ID",
+    "copied_business_id": "Business ID copied",
+    "copy_failed": "Could not copy",
+    "row_listing_active": "Listing active",
+    "row_recommended": "Recommended",
+    "row_created_by_admin": "Created by admin",
+    "row_account_blocked": "Account blocked",
+    "row_business_id": "Business ID",
+    "row_created_at": "Created",
+    "row_updated_at": "Last updated",
+    "row_coordinates": "Coordinates",
+    "value_yes": "Yes",
+    "value_no": "No",
+    "delete_title": "Delete this business?",
+    "delete_message": "This cannot be undone. You can create a new business or choose another one from your list.",
+    "delete_success": "Business deleted"
+  },
+  "edit_business": {
+    "success_message": "Business updated",
+    "actions": {
+      "save": "Save changes"
+    }
+  },
   "bookings": {
     "actions": {
       "view": "View details",
@@ -316,7 +346,9 @@
     "title": "Services"
   },
   "status": {
-    "recommended": "Recommended"
+    "recommended": "Recommended",
+    "available_now": "Available now",
+    "not_available": "Not available"
   },
   "service_info": {
     "screen_title": "Service",

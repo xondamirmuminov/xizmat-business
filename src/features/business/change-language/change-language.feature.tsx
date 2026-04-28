@@ -65,7 +65,7 @@ export function ChangeLanguage() {
 const styles = StyleSheet.create(({ space, colors }) => ({
   rowPressed: { opacity: 0.9 },
   safe: { flex: 1, backgroundColor: colors.background },
-  list: { paddingTop: space(1), paddingHorizontal: space(2) },
+  list: { paddingTop: space(2), paddingHorizontal: space(2) },
   rowActive: {
     backgroundColor: colors.primarySubtle,
   },

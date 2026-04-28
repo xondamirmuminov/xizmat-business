@@ -2,19 +2,19 @@ import { Image } from "expo-image";
 import { ScrollView } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
-import { ImagePlaceholder } from "@/assets";
 import { Flex } from "@/components";
+import { ImagePlaceholder } from "@/assets";
 
 import { buildServiceImageSlideUris } from "../../helpers";
 
 type Props = {
-  primaryImage?: string;
   images?: string[];
+  primaryImage?: string;
 };
 
 const THUMB_SIZE = 100;
 
-export function ServiceInfoMediaRow({ primaryImage, images }: Props) {
+export function ServiceInfoMediaRow({ images, primaryImage }: Props) {
   const uris = buildServiceImageSlideUris(primaryImage, images);
   if (uris.length === 0) return null;
 
@@ -24,15 +24,15 @@ export function ServiceInfoMediaRow({ primaryImage, images }: Props) {
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.scrollInner}
     >
-      <Flex direction="row" gap={1.5} alignItems="center">
+      <Flex gap={1.5} direction="row" alignItems="center">
         {uris.map((uri) => (
           <Image
             key={uri}
             source={{ uri }}
             contentFit="cover"
             style={styles.image}
-            placeholder={ImagePlaceholder}
             placeholderContentFit="cover"
+            placeholder={ImagePlaceholder}
           />
         ))}
       </Flex>
@@ -45,8 +45,8 @@ const styles = StyleSheet.create(({ space }) => ({
     paddingVertical: space(0.25),
   },
   image: {
+    borderRadius: 8,
     width: THUMB_SIZE,
     height: THUMB_SIZE,
-    borderRadius: 8,
   },
 }));

@@ -1,5 +1,5 @@
-import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";
+import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native-unistyles";
 
 import { Flex, Skeleton } from "@/components";
@@ -21,23 +21,23 @@ export function ServiceInfoScreenSkeleton() {
   return (
     <ScrollView
       style={styles.scroll}
-      contentContainerStyle={styles.scrollContent}
       showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.scrollContent}
     >
       <Flex gap={2.5} style={styles.body}>
         <ServiceInfoSection title={t("service_info.section_status")}>
-          <Flex gap={1} direction="row" alignItems="center" flexWrap="wrap">
+          <Flex gap={1} direction="row" flexWrap="wrap" alignItems="center">
             <Skeleton
-              style={styles.chip}
               width={88}
               height={24}
               radius="rounded"
+              style={styles.chip}
             />
             <Skeleton
-              style={styles.chip}
               width={104}
               height={24}
               radius="rounded"
+              style={styles.chip}
             />
           </Flex>
         </ServiceInfoSection>
@@ -65,7 +65,7 @@ export function ServiceInfoScreenSkeleton() {
         </ServiceInfoSection>
 
         <ServiceInfoSection title={t("service_info.photos")}>
-          <Skeleton style={styles.photoBlock} width="100%" height={120} />
+          <Skeleton width="100%" height={120} style={styles.photoBlock} />
         </ServiceInfoSection>
 
         <ServiceInfoSection title={t("service_info.section_internal")}>
@@ -87,18 +87,18 @@ const styles = StyleSheet.create(({ space }) => ({
   scroll: {
     flex: 1,
   },
-  scrollContent: {
-    flexGrow: 1,
-    paddingBottom: space(4),
-  },
-  body: {
-    paddingHorizontal: space(2),
-    paddingTop: space(2),
-  },
   chip: {
     borderRadius: 9999,
   },
   photoBlock: {
     borderRadius: 10,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: space(4),
+  },
+  body: {
+    paddingTop: space(2),
+    paddingHorizontal: space(2),
   },
 }));

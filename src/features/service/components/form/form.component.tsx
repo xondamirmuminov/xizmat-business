@@ -145,7 +145,7 @@ export function ServiceForm({ type, loading, onFinish, defaultValues }: Props) {
               onPress={handleHeaderBack}
               startIcon={<ChevronLeftIcon />}
             />
-            <Flex gap={0.5} flex={1} flexShrink={1} style={{ minWidth: 0 }}>
+            <Flex flex={1} gap={0.5} flexShrink={1} style={{ minWidth: 0 }}>
               <Typography size="text-lg" weight="semibold" numberOfLines={1}>
                 {t(activeStep?.title)}
               </Typography>

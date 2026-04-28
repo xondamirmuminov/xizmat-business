@@ -7,3 +7,12 @@ export const CREATE_BUSINESS_MUTATION = gql`
     }
   }
 `;
+
+export const UPDATE_BUSINESS_MUTATION = gql`
+  mutation UpdateBusiness($id: ID!, $data: UpdateBusinessInput!) {
+    updateBusiness(id: $id, data: $data) {
+      _id
+    }
+  }
+`;
+

@@ -148,7 +148,14 @@ export default function RootLayout() {
                     name="services/[id]/index"
                     options={{ headerShown: false }}
                   />
-                  <Stack.Screen name="business-details/index" />
+                  <Stack.Screen
+                    name="business-details/index"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="edit-business/index"
+                    options={{ headerShown: false }}
+                  />
                   <Stack.Screen name="change-language/index" />
                   <Stack.Screen name="contact-us/index" />
                   <Stack.Screen name="how-payments-work/index" />

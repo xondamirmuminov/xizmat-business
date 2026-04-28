@@ -1,6 +1,6 @@
 import type { ApolloCache } from "@apollo/client";
 
-import { PageInfoType, ServiceType } from "@/types";
+import { ServiceType, PageInfoType } from "@/types";
 
 import { SERVICES_QUERY } from "../../services/api";
 

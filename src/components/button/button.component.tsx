@@ -21,6 +21,7 @@ export function Button({
   color = "primary",
   radius = "rounded",
   variant = "filled",
+  accessibilityLabel,
 }: ButtonProps) {
   const { theme } = useUnistyles();
 
@@ -45,6 +46,7 @@ export function Button({
       onPress={onPress}
       disabled={disabled || loading}
       style={styles.container(fullWidth)}
+      accessibilityLabel={accessibilityLabel}
     >
       {({ pressed }) => {
         const state: ButtonStateEnum =

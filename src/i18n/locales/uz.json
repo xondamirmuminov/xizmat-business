@@ -34,12 +34,44 @@
     "contact_us_title": "Bog‘lanish",
     "how_payments_title": "To‘lovlar qanday ishlaydi"
   },
+  "business_details": {
+    "gallery": "Galereya",
+    "working_hours": "Ish vaqti",
+    "section_provider_insights": "Faqat siz ko‘rasiz",
+    "tab_provider_insights": "Shaxsiy",
+    "group_status": "Holat",
+    "group_details": "Batafsil",
+    "copy_business_id": "Biznes ID nusxalash",
+    "copied_business_id": "Biznes ID nusxalandi",
+    "copy_failed": "Nusxalab bo‘lmadi",
+    "row_listing_active": "Ro‘yxatda faol",
+    "row_recommended": "Tavsiya etilgan",
+    "row_created_by_admin": "Admin yaratgan",
+    "row_account_blocked": "Hisob bloklangan",
+    "row_business_id": "Biznes ID",
+    "row_created_at": "Yaratilgan",
+    "row_updated_at": "Yangilangan",
+    "row_coordinates": "Koordinatalar",
+    "value_yes": "Ha",
+    "value_no": "Yo‘q",
+    "delete_title": "Bu biznesni o‘chirasizmi?",
+    "delete_message": "Buni qaytarib bo‘lmaydi. Yangi biznes yaratishingiz yoki ro‘yxatdan boshqasini tanlashingiz mumkin.",
+    "delete_success": "Biznes o‘chirildi"
+  },
+  "edit_business": {
+    "success_message": "Biznes yangilandi",
+    "actions": {
+      "save": "O‘zgarishlarni saqlash"
+    }
+  },
   "sign_in": {
     "title": "Log in",
     "description": "Welcome back! Please enter your details."
   },
   "status": {
-    "recommended": "Tavsiya etilgan"
+    "recommended": "Tavsiya etilgan",
+    "available_now": "Hozir mavjud",
+    "not_available": "Mavjud emas"
   },
   "service_info": {
     "screen_title": "Xizmat",
@@ -74,5 +106,19 @@
     "unsaved_leave": "Chiqish",
     "update_success": "Xizmat yangilandi",
     "load_error": "Xizmatni yuklab bo‘lmadi. Orqaga qayting va qayta urinib ko‘ring."
+  },
+  "date": {
+    "week_days": {
+      "monday": "Dushanba",
+      "tuesday": "Seshanba",
+      "wednesday": "Chorshanba",
+      "thursday": "Payshanba",
+      "friday": "Juma",
+      "saturday": "Shanba",
+      "sunday": "Yakshanba"
+    }
+  },
+  "labels": {
+    "closed": "Yopiq"
   }
 }

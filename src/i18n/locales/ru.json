@@ -34,12 +34,44 @@
     "contact_us_title": "Связаться с нами",
     "how_payments_title": "Как устроены платежи"
   },
+  "business_details": {
+    "gallery": "Галерея",
+    "working_hours": "Часы работы",
+    "section_provider_insights": "Видно только вам",
+    "tab_provider_insights": "Скрыто",
+    "group_status": "Статус",
+    "group_details": "Сведения",
+    "copy_business_id": "Копировать ID бизнеса",
+    "copied_business_id": "ID скопирован",
+    "copy_failed": "Не удалось скопировать",
+    "row_listing_active": "Активно в каталоге",
+    "row_recommended": "Рекомендуем",
+    "row_created_by_admin": "Создано администратором",
+    "row_account_blocked": "Аккаунт заблокирован",
+    "row_business_id": "ID бизнеса",
+    "row_created_at": "Создано",
+    "row_updated_at": "Обновлено",
+    "row_coordinates": "Координаты",
+    "value_yes": "Да",
+    "value_no": "Нет",
+    "delete_title": "Удалить этот бизнес?",
+    "delete_message": "Это действие нельзя отменить. Вы сможете создать новый бизнес или выбрать другой из списка.",
+    "delete_success": "Бизнес удалён"
+  },
+  "edit_business": {
+    "success_message": "Бизнес обновлён",
+    "actions": {
+      "save": "Сохранить изменения"
+    }
+  },
   "sign_in": {
     "title": "Log in",
     "description": "Welcome back! Please enter your details."
   },
   "status": {
-    "recommended": "Рекомендуем"
+    "recommended": "Рекомендуем",
+    "available_now": "Доступен сейчас",
+    "not_available": "Недоступен"
   },
   "service_info": {
     "screen_title": "Услуга",
@@ -76,5 +108,19 @@
     "unsaved_leave": "Выйти",
     "update_success": "Услуга обновлена",
     "load_error": "Не удалось загрузить услугу. Вернитесь назад и попробуйте снова."
+  },
+  "date": {
+    "week_days": {
+      "monday": "Понедельник",
+      "tuesday": "Вторник",
+      "wednesday": "Среда",
+      "thursday": "Четвер",
+      "friday": "Пятница",
+      "saturday": "Суббота",
+      "sunday": "Воскресенье"
+    }
+  },
+  "labels": {
+    "closed": "Закрыто"
   }
 }

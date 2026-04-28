@@ -1,10 +1,10 @@
 import dayjs from "dayjs";
+import { useRef } from "react";
 import { toast } from "sonner-native";
 import { useTranslation } from "react-i18next";
-import { useRef } from "react";
 import { StyleSheet } from "react-native-unistyles";
-import { View, Alert, ScrollView, RefreshControl } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
+import { View, Alert, ScrollView, RefreshControl } from "react-native";
 import { useQuery, useMutation, useApolloClient } from "@apollo/client/react";
 import {
   SafeAreaView,
@@ -16,22 +16,22 @@ import { formatPrice } from "@/lib/helpers";
 import { ServiceType, LocalizedTextType } from "@/types";
 import { Flex, Chip, Button, Typography, DropdownMenu } from "@/components";
 import {
+  TrashIcon,
+  SquarePenIcon,
   ChevronLeftIcon,
   EllipsisVerticalIcon,
-  SquarePenIcon,
-  TrashIcon,
 } from "@/assets";
 
 import { SERVICE_QUERY, DELETE_SERVICE_MUTATION } from "./api";
 import {
-  buildServiceImageSlideUris,
   evictServiceFromListCache,
+  buildServiceImageSlideUris,
 } from "./helpers";
 import {
-  ServiceInfoScreenSkeleton,
-  ServiceInfoSection,
   ServiceInfoRow,
+  ServiceInfoSection,
   ServiceInfoMediaRow,
+  ServiceInfoScreenSkeleton,
 } from "./components";
 
 function formatDate(iso: string | undefined) {
@@ -50,7 +50,7 @@ export function ServiceInfo() {
   const locale = i18n.language as keyof LocalizedTextType;
   const { businessId } = useAuthStore();
 
-  const { data, loading, error, refetch, networkStatus } = useQuery<{
+  const { data, error, loading, refetch, networkStatus } = useQuery<{
     service: ServiceType;
   }>(SERVICE_QUERY, {
     skip: !id,
@@ -120,9 +120,9 @@ export function ServiceInfo() {
       <SafeAreaView style={styles.safeArea} edges={["right", "left"]}>
         <View style={[styles.topBar, { paddingTop: insets.top }]}>
           <Flex
+            gap={1.5}
             direction="row"
             alignItems="center"
-            gap={1.5}
             style={styles.topBarRow}
           >
             <Button
@@ -141,22 +141,6 @@ export function ServiceInfo() {
             </Flex>
             <DropdownMenu
               anchorAccessibilityLabel={t("service_info.more_actions")}
-              items={[
-                {
-                  key: "edit",
-                  label: t("service_info.edit"),
-                  onPress: handleEdit,
-                  icon: <SquarePenIcon />,
-                },
-                {
-                  key: "delete",
-                  label: t("service_info.delete"),
-                  destructive: true,
-                  disabled: deleteLoading,
-                  onPress: handleDelete,
-                  icon: <TrashIcon />,
-                },
-              ]}
               trigger={
                 <Button
                   variant="ghost"
@@ -165,12 +149,28 @@ export function ServiceInfo() {
                   startIcon={<EllipsisVerticalIcon />}
                 />
               }
+              items={[
+                {
+                  key: "edit",
+                  onPress: handleEdit,
+                  icon: <SquarePenIcon />,
+                  label: t("service_info.edit"),
+                },
+                {
+                  key: "delete",
+                  destructive: true,
+                  icon: <TrashIcon />,
+                  onPress: handleDelete,
+                  disabled: deleteLoading,
+                  label: t("service_info.delete"),
+                },
+              ]}
             />
           </Flex>
         </View>
 
         {error && !loading ? (
-          <Flex style={styles.centered} gap={2}>
+          <Flex gap={2} style={styles.centered}>
             <Typography
               size="text-sm"
               color="secondary"
@@ -191,6 +191,7 @@ export function ServiceInfo() {
         ) : (
           <ScrollView
             style={styles.scroll}
+            showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}
             refreshControl={
               <RefreshControl
@@ -200,15 +201,14 @@ export function ServiceInfo() {
                 }}
               />
             }
-            showsVerticalScrollIndicator={false}
           >
             <Flex gap={2.5} style={styles.body}>
               <ServiceInfoSection title={t("service_info.section_status")}>
                 <Flex
                   gap={1}
                   direction="row"
-                  alignItems="center"
                   flexWrap="wrap"
+                  alignItems="center"
                 >
                   <Chip
                     size="xs"
@@ -297,12 +297,12 @@ export function ServiceInfo() {
                     </Typography>
                   </Flex>
                   <ServiceInfoRow
-                    label={t("service_info.label_created")}
                     value={formatDate(service?.createdAt)}
+                    label={t("service_info.label_created")}
                   />
                   <ServiceInfoRow
-                    label={t("service_info.label_updated")}
                     value={formatDate(service?.updatedAt)}
+                    label={t("service_info.label_updated")}
                   />
                 </Flex>
               </ServiceInfoSection>
@@ -315,19 +315,11 @@ export function ServiceInfo() {
 }
 
 const styles = StyleSheet.create(({ space, colors }) => ({
-  screenContainer: {
+  scroll: {
     flex: 1,
-    backgroundColor: colors.background,
   },
   safeArea: {
     flex: 1,
-  },
-  topBar: {
-    borderBottomWidth: 1,
-    borderBottomColor: colors.slate4,
-    backgroundColor: colors.background,
-    paddingBottom: space(1.5),
-    paddingHorizontal: space(2),
   },
   topBarRow: {
     minHeight: 44,
@@ -335,24 +327,32 @@ const styles = StyleSheet.create(({ space, colors }) => ({
   topTitleWrap: {
     minWidth: 0,
   },
-  scroll: {
-    flex: 1,
+  centerText: {
+    textAlign: "center",
   },
   scrollContent: {
     flexGrow: 1,
     paddingBottom: space(4),
   },
   body: {
-    paddingHorizontal: space(2),
     paddingTop: space(2),
+    paddingHorizontal: space(2),
+  },
+  screenContainer: {
+    flex: 1,
+    backgroundColor: colors.background,
   },
   centered: {
     flex: 1,
+    padding: space(3),
     alignItems: "center",
     justifyContent: "center",
-    padding: space(3),
   },
-  centerText: {
-    textAlign: "center",
+  topBar: {
+    borderBottomWidth: 1,
+    paddingBottom: space(1.5),
+    paddingHorizontal: space(2),
+    borderBottomColor: colors.slate4,
+    backgroundColor: colors.background,
   },
 }));

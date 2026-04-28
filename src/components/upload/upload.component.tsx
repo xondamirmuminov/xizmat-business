@@ -69,8 +69,8 @@ export function Upload({
           <View style={styles.removeButton}>
             <Button
               size="sm"
-              color="secondary"
               variant="ghost"
+              color="secondary"
               radius="circular"
               startIcon={<TrashIcon />}
               onPress={() => handleRemoveImage(images[0]?.uri)}

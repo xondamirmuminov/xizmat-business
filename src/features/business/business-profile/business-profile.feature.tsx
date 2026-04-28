@@ -142,7 +142,7 @@ export function BusinessProfile() {
   }
 
   return (
-    <SafeAreaView style={styles.safe} edges={["top", "left", "right"]}>
+    <SafeAreaView style={styles.safe} edges={["left", "right"]}>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         refreshControl={
@@ -154,10 +154,6 @@ export function BusinessProfile() {
         }
       >
         <Flex gap={2}>
-          <Typography size="text-xl" weight="semibold">
-            {t("profile.screen_title")}
-          </Typography>
-
           <Flex
             gap={2}
             direction="row"
@@ -289,6 +285,7 @@ const styles = StyleSheet.create(({ space, colors }) => ({
     marginBottom: space(0.5),
   },
   scrollContent: {
+    paddingTop: space(2),
     paddingBottom: space(3),
     paddingHorizontal: space(2),
   },

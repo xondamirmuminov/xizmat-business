@@ -50,8 +50,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile/index"
         options={{
-          headerShown: false,
           title: t("tab_bar.profile"),
+          headerTitle: t("profile.screen_title"),
           tabBarIcon: ({ color, focused }) =>
             focused ? (
               <StoreFilledIcon size={24} color={color} />

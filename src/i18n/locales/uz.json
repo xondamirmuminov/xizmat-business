@@ -151,7 +151,8 @@
       "address": {
         "title": "Manzil",
         "coords_title": "Xaritada biznes joylashuvini tanlang",
-        "autocomplete_helper_text": "Quyidagi xaritada joyni belgilagach manzil avtomatik to‘ldiriladi."
+        "autocomplete_helper_text": "Quyidagi xaritada joyni belgilagach manzil avtomatik to‘ldiriladi.",
+        "map_web_hint": "Joylashuvni xaritada iOS yoki Android ilovasida tanlang; veb-ko‘rinishda xarita yo‘q."
       },
       "social_links": {
         "title": "Ijtimoiy tarmoqlar",

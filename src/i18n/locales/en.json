@@ -175,7 +175,8 @@
       "address": {
         "title": "Address",
         "coords_title": "Select business location on the map",
-        "autocomplete_helper_text": "Address will be filled automatically after you set your location on the map below."
+        "autocomplete_helper_text": "Address will be filled automatically after you set your location on the map below.",
+        "map_web_hint": "Choose a location on the map in the iOS or Android app; web preview does not include the map."
       },
       "social_links": {
         "title": "Social Links",

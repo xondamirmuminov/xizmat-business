@@ -1,16 +1,23 @@
 import { useState } from "react";
+import { isEmpty } from "lodash";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
+import { Platform, ActivityIndicator } from "react-native";
 import { Controller, useFormContext } from "react-hook-form";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
-import { Flex, Input } from "@/components";
+import { Flex, Input, Typography } from "@/components";
 import { LocalizedTextType, BusinessFormValuesType } from "@/types";
 import { getErrorMessage, getAddressFromCoords } from "@/lib/helpers";
 
-const INITIAL_COORDS = [67.823309, 40.133476];
-const MAP_TILER_STYLE_URL =
-  "https://api.maptiler.com/maps/openstreetmap/style.json";
+const INITIAL_LATITUDE = 40.133476;
+const INITIAL_LONGITUDE = 67.823309;
+const INITIAL_REGION = {
+  latitudeDelta: 0.02,
+  longitudeDelta: 0.02,
+  latitude: INITIAL_LATITUDE,
+  longitude: INITIAL_LONGITUDE,
+};
 
 export function BusinessAddressFormStep() {
   const [isAddressLoading, setIsAddressLoading] = useState(false);
@@ -61,53 +68,61 @@ export function BusinessAddressFormStep() {
           />
         )}
       />
-      {/* <Controller
+      <Controller
         name="coords"
         control={control}
-        rules={{ required: true }}
-        render={({ field, fieldState: { error } }) => (
-          <Flex gap={1}>
-            <Typography size="text-sm" weight="medium">
-              {t("create_business.steps.address.coords_title")}{" "}
-              <Typography color="error" size="text-sm" weight="medium">
-                *
-              </Typography>
+        rules={Platform.OS === "web" ? {} : { required: true }}
+        render={({ field, fieldState: { error } }) =>
+          Platform.OS === "web" ? (
+            <Typography size="text-xs" color="secondary">
+              {t("create_business.steps.address.map_web_hint")}
             </Typography>
-            <MapView
-              style={styles.map}
-              mapStyle={`${MAP_TILER_STYLE_URL}?key=${process.env.EXPO_PUBLIC_MAPTILER_API_KEY}`}
-              onPress={(feature) => {
-                const coords = (feature?.geometry as GeoJSON.Point)
-                  ?.coordinates;
-                field?.onChange({ latitude: coords[1], longitude: coords[0] });
-                handleAutoCompleteAddress(coords[1], coords[0]);
-              }}
-            >
-              <Camera
-                zoomLevel={15}
-                animationMode="flyTo"
-                centerCoordinate={INITIAL_COORDS}
-              />
-              {!isEmpty(field?.value) && (
-                <MarkerView
-                  coordinate={[field?.value?.longitude, field?.value?.latitude]}
-                >
-                  <MapPinFilledIcon style={styles.mapPinIcon} />
-                </MarkerView>
-              )}
-            </MapView>
-            {!!error && (
-              <Typography color="error" size="text-xs">
-                {handleGetErrorMessage(error)}
+          ) : (
+            <Flex gap={1}>
+              <Typography size="text-sm" weight="medium">
+                {t("create_business.steps.address.coords_title")}{" "}
+                <Typography color="error" size="text-sm" weight="medium">
+                  *
+                </Typography>
               </Typography>
-            )}
-          </Flex>
-        )}
-      /> */}
+              <MapView
+                poiClickEnabled
+                style={styles.map}
+                provider={PROVIDER_GOOGLE}
+                initialRegion={INITIAL_REGION}
+                onPress={(e) => {
+                  const { latitude, longitude } = e.nativeEvent.coordinate;
+                  field.onChange({ latitude, longitude });
+                  handleAutoCompleteAddress(latitude, longitude);
+                }}
+                onPoiClick={(e) => {
+                  const { latitude, longitude } = e.nativeEvent.coordinate;
+                  field.onChange({ latitude, longitude });
+                  handleAutoCompleteAddress(latitude, longitude);
+                }}
+              >
+                {!isEmpty(field.value) && (
+                  <Marker
+                    coordinate={{
+                      latitude: field.value!.latitude,
+                      longitude: field.value!.longitude,
+                    }}
+                  />
+                )}
+              </MapView>
+              {!!error && (
+                <Typography color="error" size="text-xs">
+                  {handleGetErrorMessage(error)}
+                </Typography>
+              )}
+            </Flex>
+          )
+        }
+      />
     </Flex>
   );
 }
+
 const styles = StyleSheet.create(() => ({
-  mapPinIcon: { width: 20, height: 20, color: "red" },
   map: { height: 340, width: "100%", borderRadius: 12, overflow: "hidden" },
 }));

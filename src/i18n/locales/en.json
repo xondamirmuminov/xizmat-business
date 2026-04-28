@@ -270,7 +270,27 @@
     "lang_ru": "Русский",
     "business_details_title": "Business details",
     "contact_us_title": "Contact us",
-    "how_payments_title": "How payments work"
+    "how_payments_title": "How payments work",
+    "how_payments_load_error": "Could not load the current fee. Please try again later.",
+    "how_payments_sec_billing_title": "Billing cycle",
+    "how_payments_sec_billing_body": "Roughly once per month we issue a charge for <em>the previous full calendar month</em> of qualifying activity. What you pay reflects <em>that month of work</em>, not the month when you send payment.",
+    "how_payments_fee_eyebrow": "Current rate",
+    "how_payments_fee_subtitle": "Your fee is this share of qualifying service revenue for the billed month.",
+    "how_payments_formula_caption": "Fee formula",
+    "how_payments_formula_line": "Sum of qualifying booking prices × this rate, rounded to whole UZS.",
+    "how_payments_sec_how_title": "How the amount is calculated",
+    "how_payments_sec_how_lead": "In <em>three short steps</em>:",
+    "how_payments_step_1": "We take each qualifying booking’s service price — the amount captured when the booking was placed.",
+    "how_payments_step_2": "We total those prices for the billing month only.",
+    "how_payments_step_3": "We multiply that total by your platform fee rate and round; the result is the line on your invoice (partial payments toward it are tracked separately).",
+    "how_payments_sec_status_title": "Which bookings count",
+    "how_payments_status_lead": "Only bookings that represent genuine customer visits:",
+    "how_payments_status_confirmed": "Confirmed",
+    "how_payments_status_in_progress": "In progress",
+    "how_payments_status_completed": "Completed",
+    "how_payments_sec_notes_title": "Trial period & deadlines",
+    "how_payments_note_trial": "The <em>month your first business was created</em> may count as a trial with <em>no platform charge</em> for that month.",
+    "how_payments_note_deadline": "Every invoice shows a <em>due date</em> — pay on time to stay in good standing. Late payment may affect <em>your account status and reminders</em>."
   },
   "business_details": {
     "gallery": "Gallery",
@@ -317,7 +337,6 @@
       "add_booking": "Add booking",
       "cancel": "Decline Booking"
     },
-
     "status": {
       "upcoming": "Upcoming",
       "completed": "Completed",

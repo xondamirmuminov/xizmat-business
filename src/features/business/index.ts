@@ -6,3 +6,4 @@ export * from "./edit-business";
 export * from "./change-language";
 export * from "./business-details";
 export * from "./business-profile";
+export * from "./how-payments-work";

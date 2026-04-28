@@ -1,10 +1,5 @@
-import { ProfileContentPlaceholder } from "@/features/business/business-profile";
+import { HowPaymentsWork } from "@/features";
 
 export default function HowPaymentsWorkScreen() {
-  return (
-    <ProfileContentPlaceholder
-      bodyKey="profile.placeholder_body"
-      titleKey="profile.how_payments_title"
-    />
-  );
+  return <HowPaymentsWork />;
 }

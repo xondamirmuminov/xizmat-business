@@ -52,4 +52,5 @@ export * from "./icons/circle-x-filled.icon";
 export * from "./icons/ellipsis-vertical.icon";
 export * from "./icons/badge-check-filled.icon";
 export * from "./icons/circle-check-filled.icon";
+export * from "./icons/circle-question-mark.icon";
 export * from "./icons/clipboard-clock-filled.icon";

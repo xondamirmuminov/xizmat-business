@@ -1,5 +1,5 @@
-import { CreateBusiness } from "@/features";
+import { EditBusiness } from "@/features";
 
 export default function EditBusinessScreen() {
-  return <CreateBusiness variant="edit" />;
+  return <EditBusiness />;
 }

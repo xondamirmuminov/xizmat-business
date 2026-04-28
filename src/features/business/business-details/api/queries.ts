@@ -1,48 +1,12 @@
 import { gql } from "@apollo/client";
 
+import { BUSINESS_DETAILS_FRAGMENT } from "./fragments";
+
 export const BUSINESS_DETAILS_QUERY = gql`
+  ${BUSINESS_DETAILS_FRAGMENT}
   query BusinessDetails($id: ID!) {
     business(id: $id) {
-      _id
-      name
-      logo
-      thumbnail
-      images
-      address
-      city
-      province
-      description
-      phoneNumbers
-      workingDays
-      workingHours {
-        from
-        to
-      }
-      isProviderAvailable
-      isActive
-      isRecommended
-      createdByAdmin
-      isBlocked
-      createdAt
-      updatedAt
-      coords {
-        latitude
-        longitude
-      }
-      categories {
-        _id
-        childrenCount
-        title {
-          en
-          uz
-          ru
-        }
-      }
-      provider {
-        _id
-        fullName
-        avatar
-      }
+      ...BusinessDetailsFragment
     }
   }
 `;

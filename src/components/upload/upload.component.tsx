@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { View, Pressable } from "react-native";
 import { useTranslation } from "react-i18next";
 import * as ImagePicker from "expo-image-picker";
-import { isNil, isArray, isEqual } from "lodash";
+import { isNil, isArray } from "lodash";
 import { StyleSheet } from "react-native-unistyles";
 
 import { TrashIcon, UploadIcon, ImagePlaceholder } from "@/assets";
@@ -54,12 +54,9 @@ export function Upload({
   };
 
   useEffect(() => {
-    const initialImages =
+    const next =
       !isNil(value) && !isArray(value) ? [value] : value || [];
-
-    if (initialImages?.length && isEqual(initialImages, images)) {
-      setImages(initialImages);
-    }
+    setImages(next);
   }, [value]);
 
   return (

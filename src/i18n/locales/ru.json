@@ -2,6 +2,64 @@
   "tab_bar": {
     "profile": "Профиль"
   },
+  "labels": {
+    "phone": "Телефон",
+    "password": "Пароль",
+    "fullName": "Полное имя",
+    "code": "Код",
+    "address": "Адрес",
+    "sort_by": "Сортировка",
+    "price_range": "Диапазон цен",
+    "distance": "Расстояние",
+    "duration": "Длительность",
+    "availability": "Доступность",
+    "open_now": "Открыто сейчас",
+    "closed": "Закрыто",
+    "working_day": "Рабочий день",
+    "price": "Цена",
+    "service_provider": "Исполнитель",
+    "newPassword": "Новый пароль",
+    "oldPassword": "Старый пароль",
+    "next": "Далее",
+    "step_count": "{{active}} из {{total}}",
+    "businessName": "Название бизнеса",
+    "phoneNumbers": "Телефоны",
+    "working_days": "Рабочие дни",
+    "working_hours": "Часы работы",
+    "from": "С",
+    "to": "До",
+    "categories": "Категории",
+    "categoryIds": "Категории",
+    "categoryId": "Категория",
+    "coords": "Координаты",
+    "customerFullName": "Имя клиента",
+    "customerPhone": "Телефон клиента",
+    "serviceId": "Услуга",
+    "title": "Название",
+    "hours": "Часы",
+    "minutes": "Минуты",
+    "durationMinutes": "Длительность"
+  },
+  "placeholders": {
+    "phone": "Введите телефон",
+    "customerPhone": "Введите телефон клиента",
+    "password": "Введите пароль",
+    "fullName": "Введите имя",
+    "customerFullName": "Введите имя клиента",
+    "address": "Введите адрес",
+    "newPassword": "Введите новый пароль",
+    "oldPassword": "Введите старый пароль",
+    "businessName": "Введите название бизнеса или полное имя"
+  },
+  "form_errors": {
+    "disabled": "",
+    "required": "Укажите {{nameLowercased}}.",
+    "min": "{{name}} должно быть не меньше {{min}}.",
+    "max": "{{name}} должно быть не больше {{max}}.",
+    "maxLength": "{{name}} не может быть длиннее {{max}} символов.",
+    "minLength": "{{name}} должно быть не короче {{min}} символов.",
+    "validate": "Введите корректный {{nameLowercased}}"
+  },
   "profile": {
     "screen_title": "Профиль бизнеса",
     "section_provider": "Исполнитель",
@@ -58,10 +116,86 @@
     "delete_message": "Это действие нельзя отменить. Вы сможете создать новый бизнес или выбрать другой из списка.",
     "delete_success": "Бизнес удалён"
   },
+  "create_business": {
+    "actions": {
+      "next": "Следующий шаг",
+      "finish": "Готово",
+      "back": "Назад"
+    },
+    "success_message": "Бизнес успешно создан.",
+    "steps": {
+      "general": {
+        "title": "Общие сведения",
+        "add_phone": "Добавить телефон"
+      },
+      "images_media": {
+        "title": "Изображения и медиа",
+        "logo": {
+          "title": "Логотип",
+          "description": "Логотип отображается там, где ваш бизнес показан в Xizmat. (Рекомендуется не менее 98 × 98)"
+        },
+        "thumbnail": {
+          "title": "Баннер",
+          "description": "Это изображение отображается в верхней части профиля бизнеса."
+        },
+        "images": {
+          "title": "Фото работ",
+          "description": "Эти изображения появятся в галерее вашего бизнеса."
+        }
+      },
+      "categories": {
+        "title": "Категории",
+        "categories_count": "категорий",
+        "description": "Выберите категории, которые лучше всего описывают ваш бизнес."
+      },
+      "address": {
+        "title": "Адрес",
+        "coords_title": "Укажите местоположение бизнеса на карте",
+        "autocomplete_helper_text": "Адрес заполнится автоматически после выбора точки на карте ниже."
+      },
+      "social_links": {
+        "title": "Соцсети",
+        "next": "Завершите настройку и добавьте услуги",
+        "website": {
+          "label": "Сайт (URL)",
+          "placeholder": "например, xizmat.org"
+        },
+        "instagram": {
+          "label": "Имя пользователя Instagram",
+          "placeholder": "например, xizmat_official"
+        },
+        "telegram": {
+          "label": "Имя пользователя Telegram",
+          "placeholder": "например, xizmat_official"
+        },
+        "facebook": {
+          "label": "Имя пользователя Facebook",
+          "placeholder": "например, xizmat_official"
+        },
+        "youtube": {
+          "label": "Имя пользователя YouTube",
+          "placeholder": "например, xizmat_official"
+        },
+        "tiktok": {
+          "label": "Имя пользователя TikTok",
+          "placeholder": "например, xizmat_official"
+        }
+      }
+    }
+  },
   "edit_business": {
     "success_message": "Бизнес обновлён",
+    "unsaved_title": "Отменить изменения?",
+    "unsaved_message": "Есть несохранённые изменения. Выйти без сохранения?",
+    "unsaved_stay": "Остаться",
+    "unsaved_leave": "Выйти",
     "actions": {
       "save": "Сохранить изменения"
+    },
+    "steps": {
+      "social_links": {
+        "next": "Нажмите «Сохранить», чтобы применить изменения"
+      }
     }
   },
   "sign_in": {
@@ -119,8 +253,5 @@
       "saturday": "Суббота",
       "sunday": "Воскресенье"
     }
-  },
-  "labels": {
-    "closed": "Закрыто"
   }
 }

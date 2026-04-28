@@ -5,6 +5,9 @@ export const BUSINESS_FOR_EDIT_QUERY = gql`
     business(id: $id) {
       _id
       name
+      logo
+      thumbnail
+      images
       address
       phoneNumbers
       workingDays

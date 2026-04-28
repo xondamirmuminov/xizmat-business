@@ -297,8 +297,17 @@
   },
   "edit_business": {
     "success_message": "Business updated",
+    "unsaved_title": "Discard changes?",
+    "unsaved_message": "You have unsaved changes. Leave without saving?",
+    "unsaved_stay": "Stay",
+    "unsaved_leave": "Leave",
     "actions": {
       "save": "Save changes"
+    },
+    "steps": {
+      "social_links": {
+        "next": "Save to apply your changes"
+      }
     }
   },
   "bookings": {

@@ -2,6 +2,64 @@
   "tab_bar": {
     "profile": "Profil"
   },
+  "labels": {
+    "phone": "Telefon",
+    "password": "Parol",
+    "fullName": "To‘liq ism",
+    "code": "Kod",
+    "address": "Manzil",
+    "sort_by": "Saralash",
+    "price_range": "Narx oralig‘i",
+    "distance": "Masofa",
+    "duration": "Davomiyligi",
+    "availability": "Mavjudlik",
+    "open_now": "Hozir ochiq",
+    "closed": "Yopiq",
+    "working_day": "Ish kuni",
+    "price": "Narx",
+    "service_provider": "Xizmat ko‘rsatuvchi",
+    "newPassword": "Yangi parol",
+    "oldPassword": "Eski parol",
+    "next": "Keyingi",
+    "step_count": "{{active}} / {{total}}",
+    "businessName": "Biznes nomi",
+    "phoneNumbers": "Telefon raqamlari",
+    "working_days": "Ish kunlari",
+    "working_hours": "Ish vaqti",
+    "from": "Dan",
+    "to": "Gacha",
+    "categories": "Kategoriyalar",
+    "categoryIds": "Kategoriyalar",
+    "categoryId": "Kategoriya",
+    "coords": "Koordinatalar",
+    "customerFullName": "Mijoz ismi",
+    "customerPhone": "Mijoz telefoni",
+    "serviceId": "Xizmat",
+    "title": "Sarlavha",
+    "hours": "Soat",
+    "minutes": "Daqiqa",
+    "durationMinutes": "Davomiylik"
+  },
+  "placeholders": {
+    "phone": "Telefoningizni kiriting",
+    "customerPhone": "Mijoz telefonini kiriting",
+    "password": "Parolingizni kiriting",
+    "fullName": "Ismingizni kiriting",
+    "customerFullName": "Mijoz ismini kiriting",
+    "address": "Manzilingizni kiriting",
+    "newPassword": "Yangi parolni kiriting",
+    "oldPassword": "Eski parolni kiriting",
+    "businessName": "Biznes nomi yoki to‘liq ismingizni kiriting"
+  },
+  "form_errors": {
+    "disabled": "",
+    "required": "{{nameLowercased}} maydonini kiriting.",
+    "min": "{{name}} kamida {{min}} bo‘lishi kerak.",
+    "max": "{{name}} ko‘pi bilan {{max}} bo‘lishi kerak.",
+    "maxLength": "{{name}} {{max}} belgidan oshmasligi kerak.",
+    "minLength": "{{name}} kamida {{min}} belgidan iborat bo‘lishi kerak.",
+    "validate": "To‘g‘ri {{nameLowercased}} kiriting"
+  },
   "profile": {
     "screen_title": "Biznes profili",
     "section_provider": "Provayder",
@@ -58,10 +116,86 @@
     "delete_message": "Buni qaytarib bo‘lmaydi. Yangi biznes yaratishingiz yoki ro‘yxatdan boshqasini tanlashingiz mumkin.",
     "delete_success": "Biznes o‘chirildi"
   },
+  "create_business": {
+    "actions": {
+      "next": "Keyingi qadam",
+      "finish": "Yakunlash",
+      "back": "Orqaga"
+    },
+    "success_message": "Biznes muvaffaqiyatli yaratildi.",
+    "steps": {
+      "general": {
+        "title": "Umumiy ma’lumot",
+        "add_phone": "Telefon qo‘shish"
+      },
+      "images_media": {
+        "title": "Rasmlar va media",
+        "logo": {
+          "title": "Logotip",
+          "description": "Logotipingiz Xizmatda biznesingiz ko‘rinadigan joylarda chiqadi. (Tavsiya: kamida 98 x 98)"
+        },
+        "thumbnail": {
+          "title": "Banner rasmi",
+          "description": "Bu rasm biznes profilingizning yuqori qismida ko‘rinadi."
+        },
+        "images": {
+          "title": "Ishlaringiz rasmlari",
+          "description": "Bu rasmlar biznes galereyangizda chiqadi."
+        }
+      },
+      "categories": {
+        "title": "Kategoriyalar",
+        "categories_count": "kategoriya",
+        "description": "Biznesingizga mos kategoriyalarni tanlang."
+      },
+      "address": {
+        "title": "Manzil",
+        "coords_title": "Xaritada biznes joylashuvini tanlang",
+        "autocomplete_helper_text": "Quyidagi xaritada joyni belgilagach manzil avtomatik to‘ldiriladi."
+      },
+      "social_links": {
+        "title": "Ijtimoiy tarmoqlar",
+        "next": "Sozlamani yakunlang va xizmatlar qo‘shing",
+        "website": {
+          "label": "Veb-sayt URL",
+          "placeholder": "masalan, xizmat.org"
+        },
+        "instagram": {
+          "label": "Instagram foydalanuvchi nomi",
+          "placeholder": "masalan, xizmat_official"
+        },
+        "telegram": {
+          "label": "Telegram foydalanuvchi nomi",
+          "placeholder": "masalan, xizmat_official"
+        },
+        "facebook": {
+          "label": "Facebook foydalanuvchi nomi",
+          "placeholder": "masalan, xizmat_official"
+        },
+        "youtube": {
+          "label": "YouTube foydalanuvchi nomi",
+          "placeholder": "masalan, xizmat_official"
+        },
+        "tiktok": {
+          "label": "TikTok foydalanuvchi nomi",
+          "placeholder": "masalan, xizmat_official"
+        }
+      }
+    }
+  },
   "edit_business": {
     "success_message": "Biznes yangilandi",
+    "unsaved_title": "O‘zgarishlarni bekor qilasizmi?",
+    "unsaved_message": "Saqlanmagan o‘zgarishlar bor. Saqlamasdan chiqasizmi?",
+    "unsaved_stay": "Qolish",
+    "unsaved_leave": "Chiqish",
     "actions": {
       "save": "O‘zgarishlarni saqlash"
+    },
+    "steps": {
+      "social_links": {
+        "next": "O‘zgarishlarni saqlash uchun tugmani bosing"
+      }
     }
   },
   "sign_in": {
@@ -117,8 +251,5 @@
       "saturday": "Shanba",
       "sunday": "Yakshanba"
     }
-  },
-  "labels": {
-    "closed": "Yopiq"
   }
 }

@@ -19,6 +19,8 @@ type ProfileSettingsRowProps = {
   showChevron?: boolean;
   endContent?: ReactNode;
   startIcon?: ReactElement<IconPropsType>;
+  /** Overrides default secondary icon color (e.g. brand marks on Contact us) */
+  startIconTint?: string;
 };
 
 export function ProfileSettingsRow({
@@ -26,6 +28,7 @@ export function ProfileSettingsRow({
   value,
   onPress,
   startIcon,
+  startIconTint,
   endContent,
   showChevron = true,
   variant = "default",
@@ -40,6 +43,8 @@ export function ProfileSettingsRow({
     iconColor = theme.colors.error;
   } else if (isWarning) {
     iconColor = theme.colors.warning;
+  } else if (startIconTint) {
+    iconColor = startIconTint;
   }
 
   const titleColor = isDanger ? "error" : "textPrimary";
@@ -64,20 +69,26 @@ export function ProfileSettingsRow({
         style={styles.rowInner}
       >
         {iconNode ? <View style={styles.iconSlot}>{iconNode}</View> : null}
-        <Typography
-          weight="medium"
-          numberOfLines={1}
-          color={titleColor}
-          style={styles.titleShrink}
-        >
-          {title}
-        </Typography>
-        <View style={styles.grow} />
-        {value ? (
-          <Typography size="text-sm" color="secondary">
-            {value}
+        <View style={styles.titleSlot}>
+          <Typography weight="medium" numberOfLines={2} color={titleColor}>
+            {title}
           </Typography>
-        ) : null}
+        </View>
+        {value ? (
+          <View style={styles.valueSlot}>
+            <Typography
+              size="text-sm"
+              color="secondary"
+              numberOfLines={2}
+              ellipsizeMode="tail"
+              align="right"
+            >
+              {value}
+            </Typography>
+          </View>
+        ) : (
+          <View style={styles.grow} />
+        )}
         {endContent}
         {showChevron ? (
           <ChevronRightIcon size={20} color={theme.colors.textSecondary} />
@@ -91,8 +102,14 @@ const styles = StyleSheet.create(({ space }) => ({
   rowPressed: {
     opacity: 0.75,
   },
-  titleShrink: {
+  titleSlot: {
+    flexShrink: 0,
+  },
+  valueSlot: {
+    flex: 1,
     flexShrink: 1,
+    minWidth: 0,
+    alignItems: "flex-end",
   },
   grow: {
     flex: 1,

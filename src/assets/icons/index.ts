@@ -18,6 +18,7 @@ export * from "./icons/upload.icon";
 export * from "./icons/tiktok.icon";
 export * from "./icons/user-x.icon";
 export * from "./icons/ru-flag.icon";
+export * from "./icons/mail.icon";
 export * from "./icons/map-pin.icon";
 export * from "./icons/uz-flag.icon";
 export * from "./icons/us-flag.icon";

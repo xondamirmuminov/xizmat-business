@@ -1,4 +1,4 @@
-/* eslint-disable sonarjs/no-nested-conditional */
+ 
 import Svg from "react-native-svg";
 import { StyleSheet } from "react-native";
 import { Children, ReactNode, cloneElement } from "react";

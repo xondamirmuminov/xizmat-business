@@ -207,7 +207,7 @@ export function AnimatedQueueCard({
                   startIcon={<XIcon />}
                   disabled={isConfirmButtonDisabled}
                 >
-                  Cancel
+                  {t("bookings.queue_card.cancel")}
                 </Button>
                 <Button
                   fullWidth
@@ -216,7 +216,7 @@ export function AnimatedQueueCard({
                   onPress={handleCall}
                   startIcon={<PhoneIcon />}
                 >
-                  Call
+                  {t("bookings.queue_card.call")}
                 </Button>
               </Flex>
             </Flex>
@@ -228,21 +228,21 @@ export function AnimatedQueueCard({
               height={60}
               ref={slideButtonRef}
               onConfirm={handleStart}
-              label={"Start the work"}
-              confirmedText={"Started"}
               fillColor={colors.primary}
               trackColor={colors.primary}
               disabled={isConfirmButtonDisabled}
+              label={t("bookings.queue_card.slide_start")}
+              confirmedText={t("bookings.queue_card.slide_started")}
             />
           ) : (
             <SlideToConfirm
               height={60}
               onConfirm={handleComplete}
               fillColor={colors.success}
-              confirmedText={"Completed"}
               trackColor={colors.success}
-              label={"Complete the work"}
               disabled={isConfirmButtonDisabled}
+              label={t("bookings.queue_card.slide_complete")}
+              confirmedText={t("bookings.queue_card.slide_completed")}
             />
           )}
         </Flex>

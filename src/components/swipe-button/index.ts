@@ -1,1 +1,1 @@
-export * from "./swipe-button.component";
+export { default as SlideToConfirm } from "./swipe-button.component";

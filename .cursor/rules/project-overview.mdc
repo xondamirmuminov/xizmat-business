@@ -1,0 +1,72 @@
+---
+description: Business app role in the Xizmat ecosystem and cross-project mindset
+alwaysApply: true
+---
+
+# xizmat-business (the provider app)
+
+Expo SDK 55 + React Native 0.83 + expo-router + Apollo Client 4 (with **graphql-ws
+subscriptions**) + Zustand (MMKV) + react-native-unistyles 3 + i18next (en/uz/ru) +
+sonner-native toasts + react-native-maps (Google) + DateTimePicker.
+
+This is the **`SERVICE_PROVIDER`-role client** in the ecosystem. Providers manage
+their business profile, services, queues (today's bookings with realtime updates
+via subscriptions), bookings history, and walk-in customers (`createBookingByProvider`).
+
+## Ecosystem map
+
+- **`xizmat-app-backend`** — NestJS GraphQL API. HTTP at `EXPO_PUBLIC_BACKEND_URL`,
+  WS subscriptions at the same URL via `graphql-ws` (token sent as
+  `connectionParams.authToken`). Schema-first source of truth (`schema.gql`).
+- **`xizmat-app-mobile`** — sibling Expo app for `USER` role; consumes the same backend
+  and the same enums (`BookingStatusEnum`, `UserRoleEnum`, …). Many UI components
+  share names (Button, Typography, Flex, Tabs) but they are **independent copies**,
+  not a shared package — when you tweak shared UX, do it in both.
+
+## Cross-project mindset (read before any feature work)
+
+1. **Schema-first.** Any field/arg/enum/subscription change starts in the backend.
+   Pull the new `schema.gql`, then update mirrors here:
+   - Ops → `src/features/<x>/api/{queries,mutations,fragments,subscriptions}.ts`
+   - Types → `src/types/*.types.ts`
+   - Enums → mirror backend values byte-identically (`BookingStatusEnum`, `UserRoleEnum`)
+2. **Backend constants are the contract.** Don't invent operation names — copy them
+   from backend `src/constants/resolvers/{queries,mutations,subscriptions}.ts`. Don't
+   hardcode error strings — use `ERROR_KEYS` (`src/lib/constants/error-keys.constants.ts`)
+   and translate via `t(\`graphql_errors.${error.message}\`)`.
+3. **Touching shared concepts (Booking, User, Service, Business, Notification, Payment)
+   means checking the OTHER app too.** A new field on `Booking` likely needs the same
+   selection in `xizmat-app-mobile`'s `MY_BOOKINGS_QUERY`. Open both repos when planning.
+4. **Provider-only concepts** still live in the shared schema:
+   - `myBusinesses`, `createBusiness`, `updateBusiness`, `setBusinessRecommended`
+   - `services` (CRUD), `setServiceRecommended`
+   - `businessBookings`, `activeInProgressBooking`, `createBookingByProvider`
+   - `providerBookingCreated` subscription
+   - `payments`, `markPaymentPaid` (subscription gating via `OVERDUE` status)
+5. **i18n in three languages, always.** Every user-facing string goes through `t('key')`
+   with entries in `src/i18n/locales/{en,uz,ru}.json`.
+
+## Auth + active-business model
+
+- JWT in `expo-secure-store` (`getToken/saveToken/deleteToken`).
+- `useAuthStore` mirrors `token | user | language | businessId | hasBusiness`.
+- Routing gates on **both** `token` AND `businessId`:
+  ```tsx
+  <Stack.Protected guard={!!token}>
+    <Stack.Protected guard={!!businessId}>
+      <Stack.Screen name="(tabs)" ... />
+    </Stack.Protected>
+  </Stack.Protected>
+  ```
+  Providers without a business get routed to `no-business` / `create-business`.
+- Apollo `errorLink` auto-signs out on `error.message === ERROR_KEYS.INVALID_TOKEN`.
+
+## Run
+
+```bash
+yarn start        # expo start
+yarn ios          # native build
+yarn lint         # ESLint (expo + perfectionist line-length asc + sonarjs)
+```
+
+Native maps (`react-native-maps` + Google keys via `app.config.ts`): after changing the plugin or `EXPO_GOOGLE_MAPS_API_KEY`, run `npx expo prebuild` or `expo run:android` / `expo run:ios` so native projects pick up the Maps SDK. For EAS Build, configure `EXPO_GOOGLE_MAPS_API_KEY` as a secret or build-profile env var so `app.config.ts` receives it during `eas build`.

@@ -175,7 +175,8 @@
       "address": {
         "title": "Address",
         "coords_title": "Select business location on the map",
-        "autocomplete_helper_text": "Address will be filled automatically after you set your location on the map below."
+        "autocomplete_helper_text": "Address will be filled automatically after you set your location on the map below.",
+        "map_web_hint": "Choose a location on the map in the iOS or Android app; web preview does not include the map."
       },
       "social_links": {
         "title": "Social Links",
@@ -236,7 +237,129 @@
   },
   "tab_bar": {
     "queues": "Queues",
-    "history": "History"
+    "history": "History",
+    "profile": "Profile"
+  },
+  "profile": {
+    "screen_title": "Business profile",
+    "section_provider": "Provider",
+    "section_business": "Business",
+    "section_support": "Support",
+    "section_preferences": "Preferences",
+    "section_account": "Account",
+    "row_business_details": "Business details",
+    "row_services": "Services",
+    "row_contact_us": "Contact us",
+    "row_how_payments_work": "How payments work",
+    "row_change_language": "Language",
+    "row_theme": "Theme",
+    "row_theme_subtitle": "Use dark appearance for the app",
+    "theme_value_light": "Light",
+    "theme_value_dark": "Dark",
+    "exit_business": "Exit business",
+    "sign_out": "Sign out",
+    "sign_out_confirm_title": "Sign out?",
+    "sign_out_confirm_message": "You will need to sign in again to use the app as a provider.",
+    "sign_out_confirm": "Sign out",
+    "sign_out_cancel": "Cancel",
+    "load_error": "We could not load your business. Try again.",
+    "placeholder_body": "More information will appear here soon.",
+    "change_language_title": "Language",
+    "lang_en": "English",
+    "lang_uz": "O‘zbek",
+    "lang_ru": "Русский",
+    "business_details_title": "Business details",
+    "contact_us_title": "Contact us",
+    "contact_us_section_direct": "Direct contact",
+    "contact_us_section_social": "Social media",
+    "contact_us_phone": "Phone",
+    "contact_us_email": "Email",
+    "contact_us_telegram": "Telegram",
+    "contact_us_instagram": "Instagram",
+    "contact_us_youtube": "YouTube",
+    "contact_us_footer_since": "Since {{year}}",
+    "contact_us_logo_a11y": "Xizmat logo",
+    "how_payments_title": "How payments work",
+    "how_payments_load_error": "Could not load the current fee. Please try again later.",
+    "how_payments_sec_billing_title": "Billing cycle",
+    "how_payments_sec_billing_body": "At the end of each month, we automatically generate a payment for <em>that same calendar month</em>. The amount is based on <em>how many bookings you received through the app that month</em> (the ones that count toward your bill). For example, if you used the app in April, your charge at month end reflects <em>April’s bookings only</em> — not the month you pay the invoice.",
+    "how_payments_fee_eyebrow": "Current rate",
+    "how_payments_fee_subtitle": "This rate applies to the service price on each qualifying booking.",
+    "how_payments_sec_how_title": "How the amount is calculated",
+    "how_payments_sec_how_lead": "In <em>three short steps</em>:",
+    "how_payments_step_1": "We take the service price on each qualifying booking.",
+    "how_payments_step_2": "We only sum bookings for the month currently being billed.",
+    "how_payments_step_3": "We multiply that total by your platform commission rate.",
+    "how_payments_sec_status_title": "Which bookings count",
+    "how_payments_status_lead": "Only bookings that represent genuine customer visits:",
+    "how_payments_status_confirmed": "Confirmed",
+    "how_payments_status_in_progress": "In progress",
+    "how_payments_status_completed": "Completed",
+    "how_payments_sec_notes_title": "Trial period & deadlines",
+    "how_payments_note_trial": "The <em>month your first business was created</em> may count as a trial with <em>no platform charge</em> for that month.",
+    "how_payments_note_deadline": "Every invoice shows a <em>due date</em> — pay on time to stay in good standing. Late payment may affect <em>your account status and reminders</em>."
+  },
+  "business_details": {
+    "gallery": "Gallery",
+    "working_hours": "Working hours",
+    "section_provider_insights": "Only visible to you",
+    "tab_provider_insights": "Private",
+    "group_status": "Status",
+    "group_details": "Details",
+    "copy_business_id": "Copy business ID",
+    "copied_business_id": "Business ID copied",
+    "copy_failed": "Could not copy",
+    "row_listing_active": "Listing active",
+    "row_recommended": "Recommended",
+    "row_created_by_admin": "Created by admin",
+    "row_account_blocked": "Account blocked",
+    "row_business_id": "Business ID",
+    "row_created_at": "Created",
+    "row_updated_at": "Last updated",
+    "row_coordinates": "Coordinates",
+    "value_yes": "Yes",
+    "value_no": "No",
+    "delete_title": "Delete this business?",
+    "delete_message": "This cannot be undone. You can create a new business or choose another one from your list.",
+    "delete_success": "Business deleted",
+    "social_website_a11y": "Open website",
+    "social_instagram_a11y": "Open Instagram",
+    "social_telegram_a11y": "Open Telegram",
+    "social_facebook_a11y": "Open Facebook",
+    "social_youtube_a11y": "Open YouTube",
+    "social_tiktok_a11y": "Open TikTok",
+    "social_label_website": "Website",
+    "social_label_instagram": "Instagram",
+    "social_label_telegram": "Telegram",
+    "social_label_facebook": "Facebook",
+    "social_label_youtube": "YouTube",
+    "social_label_tiktok": "TikTok"
+  },
+  "edit_business": {
+    "success_message": "Business updated",
+    "unsaved_title": "Discard changes?",
+    "unsaved_message": "You have unsaved changes. Leave without saving?",
+    "unsaved_stay": "Stay",
+    "unsaved_leave": "Leave",
+    "actions": {
+      "save": "Save changes"
+    },
+    "steps": {
+      "social_links": {
+        "next": "Save to apply your changes"
+      }
+    }
+  },
+  "queues": {
+    "progress_caption": "Done / Total",
+    "progress_a11y": "{{done}} completed of {{total}} bookings today",
+    "search_placeholder_short": "Search booking, name, phone",
+    "search_a11y_label": "Search queue",
+    "search_a11y_hint": "Search by booking number, customer name, or phone number",
+    "empty": {
+      "title": "No bookings in queue",
+      "description": "When customers book you, they will appear here. You can also add a booking manually."
+    }
   },
   "bookings": {
     "actions": {
@@ -244,7 +367,6 @@
       "add_booking": "Add booking",
       "cancel": "Decline Booking"
     },
-
     "status": {
       "upcoming": "Upcoming",
       "completed": "Completed",
@@ -255,6 +377,14 @@
       "standby": "Waitlisted",
       "in_progress": "In progress"
     },
+    "queue_card": {
+      "cancel": "Cancel",
+      "call": "Call",
+      "slide_start": "Start the work",
+      "slide_started": "Started",
+      "slide_complete": "Complete the work",
+      "slide_completed": "Completed"
+    },
     "cancel": {
       "why": "Why do you want to decline?",
       "comment_placeholder": "Your comment",
@@ -262,6 +392,8 @@
       "description": "If you decline now, the customer might not be able to book again for that time."
     },
     "add_modal": {
+      "title": "Add booking manually",
+      "select_service": "Select service",
       "success_message": "Booking successfully added to the queue.",
       "date_time_warning": "Select date and time to add this booking to the queue."
     },
@@ -283,7 +415,9 @@
     "title": "Services"
   },
   "status": {
-    "recommended": "Recommended"
+    "recommended": "Recommended",
+    "available_now": "Available now",
+    "not_available": "Not available"
   },
   "service_info": {
     "screen_title": "Service",

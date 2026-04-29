@@ -31,8 +31,8 @@ export function Businesses() {
 
   const {
     data: hasBusinessData,
-    loading: hasBusinessLoading,
     error: hasBusinessError,
+    loading: hasBusinessLoading,
     refetch: refetchHasBusiness,
   } = useQuery<{
     hasBusiness: boolean;
@@ -167,23 +167,23 @@ export function Businesses() {
 }
 
 const styles = StyleSheet.create(({ space, colors }) => ({
-  loadingScreen: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.background,
-  },
-  errorBlock: { paddingInline: space(2), alignItems: "center" },
   safeArea: { flex: 1 },
   footerAction: {
     padding: space(2),
   },
+  errorBlock: { alignItems: "center", paddingInline: space(2) },
   container: {
     paddingBlock: space(3),
     paddingInline: space(2),
   },
   screenContainer: {
     flex: 1,
+    backgroundColor: colors.background,
+  },
+  loadingScreen: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: colors.background,
   },
 }));

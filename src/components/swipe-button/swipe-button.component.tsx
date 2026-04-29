@@ -1,24 +1,28 @@
 import { StyleSheet } from "react-native-unistyles";
+import { View, ViewStyle, Dimensions } from "react-native";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import React, {
-  useRef,
-  useState,
-  RefObject,
+  useMemo,
   useEffect,
   useCallback,
   useImperativeHandle,
 } from "react";
-import {
-  View,
-  Animated,
-  ViewStyle,
-  Dimensions,
-  PanResponder,
-  PanResponderCallbacks,
-} from "react-native";
+import Animated, {
+  runOnJS,
+  withSpring,
+  interpolate,
+  Extrapolation,
+  useSharedValue,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 
 import { CheckIcon, ChevronRightIcon } from "@/assets";
 
-interface SlideToConfirmProps {
+const THUMB_SIZE = 52;
+const PADDING = 4;
+const DEFAULT_WIDTH = Dimensions.get("window").width - 64;
+
+type SlideToConfirmProps = {
   label?: string;
   width?: number;
   height?: number;
@@ -29,20 +33,22 @@ interface SlideToConfirmProps {
   thumbColor?: string;
   confirmedText?: string;
   onConfirm?: () => void;
-  ref?: RefObject<null | { reset: VoidFunction }>;
-}
+  ref?: React.RefObject<null | { reset: VoidFunction }>;
+};
 
-const THUMB_SIZE = 52;
-const PADDING = 4;
-const WIDTH = Dimensions.get("window").width - 64;
+const springConfig = {
+  mass: 0.35,
+  damping: 20,
+  stiffness: 260,
+};
 
 export default function SlideToConfirm({
   ref,
   style,
   onConfirm,
   height = 60,
-  width = WIDTH,
   disabled = false,
+  width = DEFAULT_WIDTH,
   fillColor = "#00b7b5",
   trackColor = "#00b7b5",
   thumbColor = "#FFFFFF",
@@ -50,125 +56,126 @@ export default function SlideToConfirm({
   confirmedText = "Confirmed",
 }: SlideToConfirmProps) {
   styles.useVariants({ disabled });
+
   const maxSlide = width - THUMB_SIZE - PADDING * 2;
+  const minFillWidth = THUMB_SIZE + PADDING * 2;
 
-  const startX = useRef(0);
-  const confirmedRef = useRef(false);
-  const disabledRef = useRef(disabled);
-  const translateX = useRef(new Animated.Value(0)).current;
-  const [confirmed, setConfirmed] = useState(false);
-  const [dragging, setDragging] = useState(false);
+  const translateX = useSharedValue(0);
+  const startX = useSharedValue(0);
+  const locked = useSharedValue(0);
 
-  const fillWidth = translateX.interpolate({
-    extrapolate: "clamp",
-    inputRange: [0, maxSlide],
-    outputRange: [THUMB_SIZE + PADDING * 2, width],
-  });
+  const triggerConfirm = useCallback(() => {
+    onConfirm?.();
+  }, [onConfirm]);
 
-  const labelOpacity = translateX.interpolate({
-    outputRange: [1, 0],
-    extrapolate: "clamp",
-    inputRange: [0, maxSlide * 0.4],
-  });
-
-  const confirmedLabelOpacity = translateX.interpolate({
-    outputRange: [0, 1],
-    extrapolate: "clamp",
-    inputRange: [maxSlide * 0.5, maxSlide],
-  });
-
-  const checkOpacity = translateX.interpolate({
-    outputRange: [0, 1],
-    extrapolate: "clamp",
-    inputRange: [maxSlide * 0.85, maxSlide],
-  });
-
-  const arrowOpacity = translateX.interpolate({
-    outputRange: [1, 0],
-    extrapolate: "clamp",
-    inputRange: [0, maxSlide * 0.3],
-  });
-
-  const handleCreatePanResponder = (): PanResponderCallbacks => {
-    return {
-      onPanResponderTerminationRequest: () => false,
-
-      onStartShouldSetPanResponderCapture: () =>
-        !confirmedRef.current && !disabledRef.current,
-
-      onPanResponderGrant: () => {
-        translateX.stopAnimation((v) => {
-          startX.current = v;
-        });
-        setDragging(true);
-      },
-
-      onMoveShouldSetPanResponderCapture: (_, g) =>
-        !confirmedRef.current &&
-        !disabledRef.current &&
-        Math.abs(g.dx) > Math.abs(g.dy) * 1.5,
-
-      onPanResponderMove: (_, gestureState) => {
-        const newX = Math.max(
-          0,
-          Math.min(startX.current + gestureState.dx, maxSlide),
-        );
-
-        translateX.setValue(newX);
-      },
-
-      onPanResponderRelease: (_, gestureState) => {
-        setDragging(false);
-        const currentX = Math.max(0, Math.min(gestureState.dx, maxSlide));
-
-        if (currentX >= maxSlide * 0.85) {
-          Animated.spring(translateX, {
-            bounciness: 6,
-            toValue: maxSlide,
-            useNativeDriver: false,
-          }).start(() => {
-            setConfirmed(true);
-            onConfirm?.();
-          });
-        } else {
-          Animated.spring(translateX, {
-            toValue: 0,
-            bounciness: 8,
-            useNativeDriver: false,
-          }).start();
-        }
-      },
-    };
-  };
-
-  const panResponder = useRef(PanResponder.create(handleCreatePanResponder()));
+  useEffect(() => {
+    if (disabled) {
+      translateX.value = 0;
+      locked.value = 0;
+    }
+  }, [disabled, translateX, locked]);
 
   const reset = useCallback(() => {
-    setConfirmed(false);
-    Animated.spring(translateX, {
-      toValue: 0,
-      bounciness: 8,
-      useNativeDriver: false,
-    }).start();
-  }, [translateX]);
+    locked.value = 0;
+    translateX.value = withSpring(0, springConfig);
+  }, [locked, translateX]);
 
-  useImperativeHandle(ref, () => {
-    return {
+  useImperativeHandle(
+    ref,
+    () => ({
       reset,
-    };
-  }, [reset]);
+    }),
+    [reset],
+  );
 
-  useEffect(() => {
-    confirmedRef.current = confirmed;
-  }, [confirmed]);
+  const pan = useMemo(
+    () =>
+      Gesture.Pan()
+        .enabled(!disabled)
+        .activeOffsetX([-14, 14])
+        .failOffsetY([-22, 22])
+        .onBegin(() => {
+          if (locked.value === 1) {
+            return;
+          }
+          startX.value = translateX.value;
+        })
+        .onUpdate((e) => {
+          if (locked.value === 1) {
+            return;
+          }
+          const next = Math.max(
+            0,
+            Math.min(maxSlide, startX.value + e.translationX),
+          );
+          translateX.value = next;
+        })
+        .onEnd(() => {
+          if (locked.value === 1) {
+            return;
+          }
+          if (translateX.value >= maxSlide * 0.85) {
+            translateX.value = withSpring(maxSlide, springConfig, (finished) => {
+              if (finished) {
+                locked.value = 1;
+                if (onConfirm) {
+                  runOnJS(triggerConfirm)();
+                }
+              }
+            });
+          } else {
+            translateX.value = withSpring(0, springConfig);
+          }
+        }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- shared values are stable refs
+    [disabled, maxSlide, triggerConfirm],
+  );
 
-  useEffect(() => {
-    disabledRef.current = disabled;
-  }, [disabled]);
+  const fillStyle = useAnimatedStyle(() => ({
+    width:
+      minFillWidth +
+      (translateX.value / Math.max(maxSlide, 1)) * (width - minFillWidth),
+  }));
 
-  useEffect(() => {
-    panResponder.current = PanResponder.create(handleCreatePanResponder());
-  }, [onConfirm, confirmed, disabled]);
+  const thumbStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }],
+  }));
+
+  const labelStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      translateX.value,
+      [0, maxSlide * 0.4],
+      [1, 0],
+      Extrapolation.CLAMP,
+    ),
+  }));
+
+  const confirmedLabelStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      translateX.value,
+      [maxSlide * 0.5, maxSlide],
+      [0, 1],
+      Extrapolation.CLAMP,
+    ),
+  }));
+
+  const arrowStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      translateX.value,
+      [0, maxSlide * 0.3],
+      [1, 0],
+      Extrapolation.CLAMP,
+    ),
+  }));
+
+  const checkStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      translateX.value,
+      [maxSlide * 0.85, maxSlide],
+      [0, 1],
+      Extrapolation.CLAMP,
+    ),
+  }));
 
   return (
     <View style={[style]}>
@@ -187,61 +194,57 @@ export default function SlideToConfirm({
           style={[
             {
               height,
-              width: fillWidth,
+              left: 0,
+              position: "absolute",
               borderRadius: height / 2,
               backgroundColor: fillColor,
             },
             styles.fill,
+            fillStyle,
           ]}
         />
 
-        <Animated.Text
-          numberOfLines={1}
-          style={[styles.label, { opacity: labelOpacity }]}
-        >
+        <Animated.Text numberOfLines={1} style={[styles.label, labelStyle]}>
           {label}
         </Animated.Text>
 
         <Animated.Text
           numberOfLines={1}
-          style={[styles.label, { opacity: confirmedLabelOpacity }]}
+          style={[styles.label, confirmedLabelStyle]}
         >
           {confirmedText}
         </Animated.Text>
 
-        <Animated.View
-          {...panResponder.current.panHandlers}
-          style={[
-            {
-              left: PADDING,
-              width: THUMB_SIZE,
-              height: THUMB_SIZE,
-              backgroundColor: thumbColor,
-              transform: [{ translateX }],
-              borderRadius: THUMB_SIZE / 2,
-              top: (height - THUMB_SIZE) / 2,
-              shadowOpacity: dragging ? 0.18 : 0.08,
-            },
-            styles.thumb,
-          ]}
-        >
+        <GestureDetector gesture={pan}>
           <Animated.View
             style={[
-              styles.iconWrapper,
               {
-                opacity: arrowOpacity,
+                elevation: 4,
+                left: PADDING,
+                shadowRadius: 6,
+                width: THUMB_SIZE,
+                height: THUMB_SIZE,
+                shadowOpacity: 0.08,
+                shadowColor: "#000",
+                position: "absolute",
+                backgroundColor: thumbColor,
+                borderRadius: THUMB_SIZE / 2,
+                top: (height - THUMB_SIZE) / 2,
+                shadowOffset: { width: 0, height: 2 },
               },
+              styles.thumb,
+              thumbStyle,
             ]}
           >
-            <ChevronRightIcon style={styles.icon} />
-          </Animated.View>
+            <Animated.View style={[styles.iconWrapper, arrowStyle]}>
+              <ChevronRightIcon style={styles.icon} />
+            </Animated.View>
 
-          <Animated.View
-            style={[styles.iconWrapper, { opacity: checkOpacity }]}
-          >
-            <CheckIcon style={[styles.icon, styles.check]} />
+            <Animated.View style={[styles.iconWrapper, checkStyle]}>
+              <CheckIcon style={[styles.icon, styles.check]} />
+            </Animated.View>
           </Animated.View>
-        </Animated.View>
+        </GestureDetector>
       </View>
     </View>
   );
@@ -252,13 +255,16 @@ const styles = StyleSheet.create(({ colors }) => ({
     color: colors.success,
   },
   iconWrapper: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
     alignItems: "center",
     justifyContent: "center",
   },
   fill: {
     top: 0,
-    left: 0,
-    position: "absolute",
     variants: {
       disabled: {
         true: {
@@ -282,7 +288,6 @@ const styles = StyleSheet.create(({ colors }) => ({
     width: 22,
     height: 22,
     color: colors.black,
-    position: "absolute",
     variants: {
       disabled: {
         true: {
@@ -291,16 +296,15 @@ const styles = StyleSheet.create(({ colors }) => ({
       },
     },
   },
-  confirmedText: {
-    fontSize: 13,
-    marginTop: 14,
-    fontWeight: "500",
-    textAlign: "center",
-    color: colors.success,
+  thumb: {
+    alignItems: "center",
+    justifyContent: "center",
     variants: {
       disabled: {
         true: {
-          color: colors.slate7,
+          elevation: 0,
+          shadowOpacity: 0,
+          backgroundColor: colors.slate4,
         },
       },
     },
@@ -317,25 +321,6 @@ const styles = StyleSheet.create(({ colors }) => ({
       disabled: {
         true: {
           color: colors.slate7,
-        },
-      },
-    },
-  },
-  thumb: {
-    elevation: 4,
-    shadowRadius: 6,
-    shadowColor: "#000",
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
-    shadowOffset: { width: 0, height: 2 },
-    variants: {
-      disabled: {
-        true: {
-          elevation: 0,
-          shadowOpacity: 0,
-
-          backgroundColor: colors.slate4,
         },
       },
     },

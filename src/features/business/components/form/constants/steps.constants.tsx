@@ -10,7 +10,7 @@ import {
   BusinessSocialLinksFormStep,
 } from "../steps";
 
-type BusinessFormStepType = {
+export type BusinessFormStepType = {
   key: string;
   next: string;
   title: string;
@@ -18,7 +18,7 @@ type BusinessFormStepType = {
   fields: (keyof BusinessFormValuesType)[];
 };
 
-export const BUSINESS_FORM_STEPS: BusinessFormStepType[] = [
+const BASE_BUSINESS_FORM_STEPS: BusinessFormStepType[] = [
   {
     key: "general",
     component: <BusinessGeneralFormStep />,
@@ -55,3 +55,18 @@ export const BUSINESS_FORM_STEPS: BusinessFormStepType[] = [
     title: "create_business.steps.social_links.title",
   },
 ];
+
+export function getBusinessFormSteps(
+  type: "create" | "edit",
+): BusinessFormStepType[] {
+  const steps = [...BASE_BUSINESS_FORM_STEPS];
+  const lastIdx = steps.length - 1;
+  steps[lastIdx] = {
+    ...steps[lastIdx],
+    next:
+      type === "edit"
+        ? "edit_business.steps.social_links.next"
+        : "create_business.steps.social_links.next",
+  };
+  return steps;
+}

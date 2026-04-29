@@ -7,9 +7,9 @@ import { SvgWrapper } from "../components";
 export function EllipsisVerticalIcon(props: IconPropsType) {
   return (
     <SvgWrapper {...props} className="lucide lucide-ellipsis-vertical">
-      <Circle cx={12} cy={12} r={1} />
-      <Circle cx={12} cy={5} r={1} />
-      <Circle cx={12} cy={19} r={1} />
+      <Circle r={1} cx={12} cy={12} />
+      <Circle r={1} cy={5} cx={12} />
+      <Circle r={1} cx={12} cy={19} />
     </SvgWrapper>
   );
 }

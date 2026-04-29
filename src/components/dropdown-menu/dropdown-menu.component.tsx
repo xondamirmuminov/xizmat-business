@@ -1,42 +1,42 @@
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import {
-  cloneElement,
-  isValidElement,
-  useCallback,
-  useRef,
-  useState,
-  type ReactElement,
-} from "react";
-
-import { renderIcon } from "@/lib/helpers";
-import type { IconPropsType } from "@/types";
-
-import { Flex } from "../flex";
-import {
+  View,
   Modal,
   Pressable,
-  View,
   useWindowDimensions,
   type LayoutRectangle,
 } from "react-native";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
+import {
+  useRef,
+  useState,
+  useCallback,
+  cloneElement,
+  isValidElement,
+  type ReactElement,
+} from "react";
 
+import type { IconPropsType } from "@/types";
+
+import { renderIcon } from "@/lib/helpers";
+
+import { Flex } from "../flex";
 import { Typography } from "../typography";
 
 export type DropdownMenuItem = {
   key: string;
   label: string;
+  disabled?: boolean;
   onPress: () => void;
   destructive?: boolean;
-  disabled?: boolean;
   icon?: ReactElement<IconPropsType>;
 };
 
 type DropdownMenuProps = {
   items: DropdownMenuItem[];
-  /** Single element (e.g. `Button`); receives `onPress` to open the menu. */
-  trigger: ReactElement<{ onPress?: () => void }>;
   /** Applied to the anchor wrapper for screen readers. */
   anchorAccessibilityLabel?: string;
+  /** Single element (e.g. `Button`); receives `onPress` to open the menu. */
+  trigger: ReactElement<{ onPress?: () => void }>;
 };
 
 const PANEL_MIN_WIDTH = 168;
@@ -53,7 +53,7 @@ export function DropdownMenu({
   const { width: screenW } = useWindowDimensions();
   const anchorRef = useRef<View>(null);
   const [open, setOpen] = useState(false);
-  const [panelLayout, setPanelLayout] = useState<LayoutRectangle | null>(null);
+  const [panelLayout, setPanelLayout] = useState<null | LayoutRectangle>(null);
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -64,9 +64,12 @@ export function DropdownMenu({
         Math.max(PANEL_MIN_WIDTH, screenW - 2 * SCREEN_EDGE),
       );
       let left = x + w - panelWidth;
-      left = Math.max(SCREEN_EDGE, Math.min(left, screenW - panelWidth - SCREEN_EDGE));
+      left = Math.max(
+        SCREEN_EDGE,
+        Math.min(left, screenW - panelWidth - SCREEN_EDGE),
+      );
       const top = y + h + OFFSET_Y;
-      setPanelLayout({ x: left, y: top, width: panelWidth, height: 0 });
+      setPanelLayout({ y: top, x: left, height: 0, width: panelWidth });
       setOpen(true);
     });
   }, [screenW]);
@@ -91,20 +94,20 @@ export function DropdownMenu({
       <View
         ref={anchorRef}
         collapsable={false}
-        accessible={Boolean(anchorAccessibilityLabel)}
-        accessibilityLabel={anchorAccessibilityLabel}
         accessibilityRole="button"
+        accessibilityLabel={anchorAccessibilityLabel}
+        accessible={Boolean(anchorAccessibilityLabel)}
       >
         {triggerNode}
       </View>
       <Modal
-        visible={open}
         transparent
+        visible={open}
         animationType="fade"
         statusBarTranslucent
         onRequestClose={close}
       >
-        <Pressable style={styles.backdrop} onPress={close} />
+        <Pressable onPress={close} style={styles.backdrop} />
         {panelLayout ? (
           <View
             pointerEvents="box-none"
@@ -142,31 +145,32 @@ export function DropdownMenu({
                       styles.item,
                       index > 0 && styles.itemBorder,
                       {
+                        opacity: item.disabled ? 0.45 : 1,
                         borderTopColor: theme.colors.slate4,
                         backgroundColor:
                           pressed && !item.disabled
                             ? theme.colors.secondarySubtle
                             : "transparent",
-                        opacity: item.disabled ? 0.45 : 1,
                       },
                     ]}
                   >
                     <Flex
+                      gap={1.5}
                       direction="row"
                       alignItems="center"
-                      gap={1.5}
                       style={styles.itemRow}
                     >
                       {item.icon
                         ? renderIcon({
-                            icon: item.icon,
                             size: 18,
+                            icon: item.icon,
                             color: iconColor,
                           })
                         : null}
                       <Typography
                         size="text-sm"
                         weight="medium"
+                        style={item.icon ? styles.itemLabelWithIcon : undefined}
                         color={
                           item.disabled
                             ? "secondary"
@@ -174,7 +178,6 @@ export function DropdownMenu({
                               ? "error"
                               : "textPrimary"
                         }
-                        style={item.icon ? styles.itemLabelWithIcon : undefined}
                       >
                         {item.label}
                       </Typography>
@@ -191,29 +194,29 @@ export function DropdownMenu({
 }
 
 const styles = StyleSheet.create(({ space }) => ({
-  backdrop: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0,0,0,0.2)",
-  },
-  panelShell: {
-    position: "absolute",
-  },
-  panel: {
-    borderRadius: 12,
-    borderWidth: 1,
-    overflow: "hidden",
-  },
-  item: {
-    paddingVertical: space(1.5),
-    paddingHorizontal: space(2),
-  },
-  itemBorder: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
   itemRow: {
     minWidth: 0,
   },
   itemLabelWithIcon: {
     flex: 1,
+  },
+  panelShell: {
+    position: "absolute",
+  },
+  itemBorder: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  item: {
+    paddingVertical: space(1.5),
+    paddingHorizontal: space(2),
+  },
+  panel: {
+    borderWidth: 1,
+    borderRadius: 12,
+    overflow: "hidden",
+  },
+  backdrop: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0,0,0,0.2)",
   },
 }));

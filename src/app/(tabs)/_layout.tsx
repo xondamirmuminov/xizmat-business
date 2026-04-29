@@ -2,7 +2,13 @@ import { Tabs } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
-import { QueueIcon, HistoryIcon, QueueFilledIcon } from "@/assets";
+import {
+  QueueIcon,
+  StoreIcon,
+  HistoryIcon,
+  QueueFilledIcon,
+  StoreFilledIcon,
+} from "@/assets";
 
 export default function TabLayout() {
   const { t } = useTranslation();
@@ -39,6 +45,19 @@ export default function TabLayout() {
         options={{
           title: t("tab_bar.history"),
           tabBarIcon: ({ color }) => <HistoryIcon size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile/index"
+        options={{
+          title: t("tab_bar.profile"),
+          headerTitle: t("profile.screen_title"),
+          tabBarIcon: ({ color, focused }) =>
+            focused ? (
+              <StoreFilledIcon size={24} color={color} />
+            ) : (
+              <StoreIcon size={24} color={color} />
+            ),
         }}
       />
     </Tabs>

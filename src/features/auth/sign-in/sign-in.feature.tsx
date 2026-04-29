@@ -31,9 +31,11 @@ type SignInOutputType = {
 };
 
 export function SignIn() {
-  const { setUser, setToken, token: existingToken } = useAuthStore(
-    (state) => state,
-  );
+  const {
+    setUser,
+    setToken,
+    token: existingToken,
+  } = useAuthStore((state) => state);
 
   const { control, handleSubmit } = useForm();
 

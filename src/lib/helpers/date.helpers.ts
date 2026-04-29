@@ -6,8 +6,8 @@ export const getRemainingDatesInMonth = (): Dayjs[] => {
   const daysInMonth = today.daysInMonth();
   const result = [];
 
-  for (let index = currentDate; index < daysInMonth; index++) {
-    const date = dayjs().date(index);
+  for (let d = currentDate; d <= daysInMonth; d++) {
+    const date = today.date(d);
     result.push(date);
   }
 

@@ -27,6 +27,7 @@ export type ButtonProps = {
   radius?: ButtonRadiusEnum;
   iconStyle?: StyleProp<any>;
   variant?: ButtonVariantEnum;
+  accessibilityLabel?: string;
   endIcon?: ReactElement<IconPropsType>;
   startIcon?: ReactElement<IconPropsType>;
 };

@@ -1,5 +1,7 @@
 {
   "tab_bar": {
+    "queues": "Navbat",
+    "history": "Tarix",
     "profile": "Profil"
   },
   "labels": {
@@ -280,6 +282,63 @@
     "unsaved_leave": "Chiqish",
     "update_success": "Xizmat yangilandi",
     "load_error": "Xizmatni yuklab bo‘lmadi. Orqaga qayting va qayta urinib ko‘ring."
+  },
+  "queues": {
+    "progress_caption": "Bajarilgan / Jami",
+    "progress_a11y": "Bugun {{total}} tadan {{done}} tasi bajarilgan",
+    "search_placeholder_short": "Bron, ism yoki telefon",
+    "search_a11y_label": "Navbatni qidirish",
+    "search_a11y_hint": "Bron raqami, mijoz ismi yoki telefon bo‘yicha qidiring",
+    "empty": {
+      "title": "Navbatda bron yo‘q",
+      "description": "Mijozlar sizni bron qilganda ular shu yerda ko‘rinadi. Yoki bronni qo‘lda qo‘shishingiz mumkin."
+    }
+  },
+  "bookings": {
+    "actions": {
+      "view": "Batafsil",
+      "add_booking": "Bron qo‘shish",
+      "cancel": "Bronni rad etish"
+    },
+    "status": {
+      "upcoming": "Kutilmoqda",
+      "completed": "Yakunlangan",
+      "cancelled": "Bekor qilingan",
+      "confirmed": "Tasdiqlangan",
+      "pending": "Kutilmoqda",
+      "declined": "Rad etilgan",
+      "standby": "Kutish ro‘yxati",
+      "in_progress": "Jarayonda"
+    },
+    "queue_card": {
+      "cancel": "Bekor qilish",
+      "call": "Qo‘ng‘iroq",
+      "slide_start": "Ishni boshlash",
+      "slide_started": "Boshlandi",
+      "slide_complete": "Ishni yakunlash",
+      "slide_completed": "Yakunlandi"
+    },
+    "cancel": {
+      "why": "Nima uchun rad etmoqchisiz?",
+      "comment_placeholder": "Izohingiz",
+      "title": "Haqiqatan ham bekor qilasizmi?",
+      "description": "Agar hozir rad etsangiz, mijoz shu vaqtga yana bron qila olmasligi mumkin."
+    },
+    "add_modal": {
+      "title": "Bronni qo‘lda qo‘shish",
+      "select_service": "Xizmatni tanlang",
+      "success_message": "Bron navbatga muvaffaqiyatli qo‘shildi.",
+      "date_time_warning": "Navbatga qo‘shish uchun sanani va vaqtni tanlang."
+    },
+    "select_date": "Sanani tanlang",
+    "cancel_success_message": "Bron rad etildi."
+  },
+  "booking_time_picker": {
+    "time_picker_label": "Mijoz qachon kelishi mumkin?",
+    "empty": {
+      "title": "Bu kun uchun vaqt yo‘q",
+      "description": "Bu kun uchun bo‘sh vaqt yo‘q. Mijozga xabar bering yoki yangilash tugmasini bosing."
+    }
   },
   "date": {
     "week_days": {

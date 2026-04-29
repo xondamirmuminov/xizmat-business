@@ -1,4 +1,5 @@
 import { View, FlatList } from "react-native";
+import { useTranslation } from "react-i18next";
 import { useRef, useImperativeHandle } from "react";
 import { StyleSheet } from "react-native-unistyles";
 import Animated, {
@@ -7,7 +8,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { BookingType } from "@/types";
-import { Flex, Empty } from "@/components";
+import { Flex, Empty, Button } from "@/components";
 
 import { AnimatedQueueCard, QueueCardSkeleton } from "../animated-queue-card";
 
@@ -19,6 +20,7 @@ type Props = {
   ref?: any;
   loading?: boolean;
   bookings: BookingType[];
+  onAddBooking: () => void;
   activeInProgressBooking?: BookingType;
   onCancel: (bookingId: string) => void;
 };
@@ -28,8 +30,10 @@ export function QueueList({
   loading,
   bookings,
   onCancel,
+  onAddBooking,
   activeInProgressBooking,
 }: Props) {
+  const { t } = useTranslation();
   const scrollY = useSharedValue(0);
   const flatListRef = useRef<FlatList<BookingType>>(null);
 
@@ -47,10 +51,14 @@ export function QueueList({
     );
   };
 
+  const rawActiveIndex = bookings.findIndex(
+    (booking) => booking?._id === activeInProgressBooking?._id,
+  );
   const activeInProgressBookingIndex =
-    bookings?.findIndex(
-      (booking) => booking?._id === activeInProgressBooking?._id,
-    ) || 0;
+    rawActiveIndex >= 0 ? rawActiveIndex : 0;
+
+  const initialScrollIndex =
+    bookings.length > 0 ? activeInProgressBookingIndex : undefined;
 
   useImperativeHandle(ref, () => ({
     adjustScrollForInsert: (insertIndex: number) => {
@@ -75,10 +83,9 @@ export function QueueList({
       decelerationRate="fast"
       scrollEventThrottle={16}
       snapToInterval={itemFullSize}
+      initialScrollIndex={initialScrollIndex}
       contentContainerStyle={[styles.listContainer]}
-      initialScrollIndex={activeInProgressBookingIndex}
       keyExtractor={(booking) => (booking as BookingType)?._id}
-      ListEmptyComponent={loading ? renderSkeleton() : <Empty />}
       ItemSeparatorComponent={() => <View style={{ height: spacing }}></View>}
       getItemLayout={(_, index) => ({
         index,
@@ -97,6 +104,20 @@ export function QueueList({
           />
         );
       }}
+      ListEmptyComponent={
+        loading ? (
+          renderSkeleton()
+        ) : (
+          <Empty
+            title={t("queues.empty.title")}
+            description={t("queues.empty.description")}
+          >
+            <Button size="lg" color="secondary" onPress={onAddBooking}>
+              {t("bookings.actions.add_booking")}
+            </Button>
+          </Empty>
+        )
+      }
     />
   );
 }

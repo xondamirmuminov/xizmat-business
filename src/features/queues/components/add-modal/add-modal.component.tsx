@@ -135,8 +135,8 @@ export function AddBookingModal({ ref }: Props) {
     <CustomBottomSheetModal
       ref={ref}
       index={2}
-      title="Add booking manually"
       onChange={handleModalChange}
+      title={t("bookings.add_modal.title")}
       footerComponent={() => (
         <View style={styles.footerActionWrapper}>
           {activeStep === 0 ? (
@@ -182,7 +182,7 @@ export function AddBookingModal({ ref }: Props) {
           render={({ field, fieldState: { error } }) => (
             <Flex gap={1.5}>
               <Typography size="text-md" weight="medium">
-                Select service
+                {t("bookings.add_modal.select_service")}
               </Typography>
               {!!error && (
                 <Typography color="error" size="text-sm">

@@ -1,5 +1,8 @@
 import { View } from "react-native";
 import dayjs, { Dayjs } from "dayjs";
+import "dayjs/locale/en";
+import "dayjs/locale/ru";
+import "dayjs/locale/uz-latn";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { FlashList } from "@shopify/flash-list";
@@ -35,7 +38,13 @@ export function ServiceDateTimePicker({
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
   const [selectedTime, setSelectedTime] = useState<null | Dayjs>(null);
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const dayjsLocale = (() => {
+    if (i18n.language === "uz") return "uz-latn";
+    if (i18n.language === "ru") return "ru";
+    return "en";
+  })();
 
   const remainingDates = getRemainingDatesInMonth();
 
@@ -88,19 +97,20 @@ export function ServiceDateTimePicker({
   return (
     <Flex gap={2}>
       <Flex gap={1.5}>
-        <Typography weight="medium">{dayjs().format("MMMM YYYY")}</Typography>
+        <Typography weight="medium">
+          {dayjs().locale(dayjsLocale).format("MMMM YYYY")}
+        </Typography>
         <FlashList
           horizontal
           data={remainingDates}
           showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item?.toString()}
+          keyExtractor={(item) => item.format("YYYY-MM-DD")}
           ItemSeparatorComponent={() => <View style={{ width: 12 }}></View>}
           renderItem={({ item: date }) => {
-            const today = dayjs();
+            const todayStart = dayjs().startOf("day");
             const isSelected = selectedDate.isSame(date, "day");
-            const isDisabled =
-              date.date() !== today.date() &&
-              date?.date() !== today?.date() + 1;
+            const dayDiff = date.startOf("day").diff(todayStart, "day");
+            const isDisabled = dayDiff < 0 || dayDiff > 1;
 
             return (
               <ServiceDateTimePickerDateItem

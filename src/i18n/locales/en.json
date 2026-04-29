@@ -350,6 +350,17 @@
       }
     }
   },
+  "queues": {
+    "progress_caption": "Done / Total",
+    "progress_a11y": "{{done}} completed of {{total}} bookings today",
+    "search_placeholder_short": "Search booking, name, phone",
+    "search_a11y_label": "Search queue",
+    "search_a11y_hint": "Search by booking number, customer name, or phone number",
+    "empty": {
+      "title": "No bookings in queue",
+      "description": "When customers book you, they will appear here. You can also add a booking manually."
+    }
+  },
   "bookings": {
     "actions": {
       "view": "View details",
@@ -366,6 +377,14 @@
       "standby": "Waitlisted",
       "in_progress": "In progress"
     },
+    "queue_card": {
+      "cancel": "Cancel",
+      "call": "Call",
+      "slide_start": "Start the work",
+      "slide_started": "Started",
+      "slide_complete": "Complete the work",
+      "slide_completed": "Completed"
+    },
     "cancel": {
       "why": "Why do you want to decline?",
       "comment_placeholder": "Your comment",
@@ -373,6 +392,8 @@
       "description": "If you decline now, the customer might not be able to book again for that time."
     },
     "add_modal": {
+      "title": "Add booking manually",
+      "select_service": "Select service",
       "success_message": "Booking successfully added to the queue.",
       "date_time_warning": "Select date and time to add this booking to the queue."
     },

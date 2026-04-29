@@ -1,4 +1,7 @@
 import dayjs from "dayjs";
+import "dayjs/locale/en";
+import "dayjs/locale/ru";
+import "dayjs/locale/uz-latn";
 import { debounce } from "lodash";
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
@@ -34,7 +37,14 @@ export function Queues() {
   const [searchInputValue, setSearchInputValue] = useState<string>();
   const [selectedBookingId, setSelectedBookingId] = useState<string>("");
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const dayjsLocale = (() => {
+    if (i18n.language === "uz") return "uz-latn";
+    if (i18n.language === "ru") return "ru";
+    return "en";
+  })();
+  const today = dayjs().locale(dayjsLocale);
 
   const { data, loading, subscribeToMore } = useQuery<{
     businessBookings: {
@@ -50,8 +60,8 @@ export function Queues() {
       businessId,
       providerId: user?._id,
       search: searchInputValue || undefined,
-      endDate: dayjs().endOf("hour")?.toISOString(),
-      startDate: dayjs().startOf("hour")?.toISOString(),
+      endDate: dayjs().endOf("day").toISOString(),
+      startDate: dayjs().startOf("day").toISOString(),
       status: [
         BookingStatusEnum.IN_PROGRESS,
         BookingStatusEnum.CONFIRMED,
@@ -174,10 +184,17 @@ export function Queues() {
               justifyContent="space-between"
             >
               <Typography size="text-lg" weight="medium">
-                {dayjs().format("dddd, MMMM DD")}
+                {today.format("dddd, MMMM DD")}
               </Typography>
-              <Typography size="display-xs" weight="semibold">
-                {completedBookingsCount}/{pageInfo?.totalItems}
+              <Typography
+                size="display-xs"
+                weight="semibold"
+                accessibilityLabel={t("queues.progress_a11y", {
+                  done: completedBookingsCount,
+                  total: pageInfo?.totalItems ?? 0,
+                })}
+              >
+                {completedBookingsCount}/{pageInfo?.totalItems ?? 0}
               </Typography>
             </Flex>
             <Input
@@ -185,7 +202,9 @@ export function Queues() {
               numberOfLines={1}
               icon={<SearchIcon />}
               onChange={handleChangeSearchInput}
-              placeholder="Search with booking number, customer name or phone"
+              accessibilityHint={t("queues.search_a11y_hint")}
+              placeholder={t("queues.search_placeholder_short")}
+              accessibilityLabel={t("queues.search_a11y_label")}
             />
           </Flex>
           <QueueList
@@ -193,6 +212,7 @@ export function Queues() {
             ref={queueListRef}
             bookings={bookings}
             onCancel={handleCancelBooking}
+            onAddBooking={handleAddBooking}
             activeInProgressBooking={activeInProgressBooking}
           />
           <Flex alignItems="center" style={styles.footerContainer}>

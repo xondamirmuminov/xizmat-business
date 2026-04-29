@@ -141,7 +141,19 @@
     "value_no": "Нет",
     "delete_title": "Удалить этот бизнес?",
     "delete_message": "Это действие нельзя отменить. Вы сможете создать новый бизнес или выбрать другой из списка.",
-    "delete_success": "Бизнес удалён"
+    "delete_success": "Бизнес удалён",
+    "social_website_a11y": "Открыть сайт",
+    "social_instagram_a11y": "Открыть Instagram",
+    "social_telegram_a11y": "Открыть Telegram",
+    "social_facebook_a11y": "Открыть Facebook",
+    "social_youtube_a11y": "Открыть YouTube",
+    "social_tiktok_a11y": "Открыть TikTok",
+    "social_label_website": "Сайт",
+    "social_label_instagram": "Instagram",
+    "social_label_telegram": "Telegram",
+    "social_label_facebook": "Facebook",
+    "social_label_youtube": "YouTube",
+    "social_label_tiktok": "TikTok"
   },
   "create_business": {
     "actions": {

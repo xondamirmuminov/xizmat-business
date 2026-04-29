@@ -141,7 +141,19 @@
     "value_no": "Yo‘q",
     "delete_title": "Bu biznesni o‘chirasizmi?",
     "delete_message": "Buni qaytarib bo‘lmaydi. Yangi biznes yaratishingiz yoki ro‘yxatdan boshqasini tanlashingiz mumkin.",
-    "delete_success": "Biznes o‘chirildi"
+    "delete_success": "Biznes o‘chirildi",
+    "social_website_a11y": "Veb-saytni ochish",
+    "social_instagram_a11y": "Instagramni ochish",
+    "social_telegram_a11y": "Telegramni ochish",
+    "social_facebook_a11y": "Facebookni ochish",
+    "social_youtube_a11y": "YouTube ni ochish",
+    "social_tiktok_a11y": "TikTok ni ochish",
+    "social_label_website": "Veb-sayt",
+    "social_label_instagram": "Instagram",
+    "social_label_telegram": "Telegram",
+    "social_label_facebook": "Facebook",
+    "social_label_youtube": "YouTube",
+    "social_label_tiktok": "TikTok"
   },
   "create_business": {
     "actions": {

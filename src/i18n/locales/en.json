@@ -321,7 +321,19 @@
     "value_no": "No",
     "delete_title": "Delete this business?",
     "delete_message": "This cannot be undone. You can create a new business or choose another one from your list.",
-    "delete_success": "Business deleted"
+    "delete_success": "Business deleted",
+    "social_website_a11y": "Open website",
+    "social_instagram_a11y": "Open Instagram",
+    "social_telegram_a11y": "Open Telegram",
+    "social_facebook_a11y": "Open Facebook",
+    "social_youtube_a11y": "Open YouTube",
+    "social_tiktok_a11y": "Open TikTok",
+    "social_label_website": "Website",
+    "social_label_instagram": "Instagram",
+    "social_label_telegram": "Telegram",
+    "social_label_facebook": "Facebook",
+    "social_label_youtube": "YouTube",
+    "social_label_tiktok": "TikTok"
   },
   "edit_business": {
     "success_message": "Business updated",

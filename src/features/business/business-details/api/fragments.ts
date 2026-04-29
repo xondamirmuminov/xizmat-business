@@ -13,6 +13,14 @@ export const BUSINESS_DETAILS_FRAGMENT = gql`
     province
     description
     phoneNumbers
+    socialMediaLinks {
+      instagram
+      telegram
+      facebook
+      youtube
+      tiktok
+      website
+    }
     workingDays
     workingHours {
       from

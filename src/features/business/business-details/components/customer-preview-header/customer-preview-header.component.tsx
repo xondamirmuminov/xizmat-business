@@ -15,6 +15,8 @@ import {
   CircleCheckFilledIcon,
 } from "@/assets";
 
+import { SocialMediaLinksRow } from "../social-media-links-row/social-media-links-row.component";
+
 type Props = {
   business?: BusinessType;
   locale: keyof LocalizedTextType;
@@ -74,14 +76,16 @@ export function CustomerPreviewHeader({ locale, business }: Props) {
       </Flex>
       <View style={styles.paddingContainer}>
         <Flex gap={2} alignItems="flex-start">
-          <Typography weight="semibold" size="display-xs">
-            {business?.name}
-          </Typography>
-          {categoryLine ? (
-            <Typography size="text-sm" color="secondary" numberOfLines={2}>
-              {categoryLine}
+          <Flex gap={0.5} alignItems="flex-start">
+            <Typography weight="semibold" size="display-xs">
+              {business?.name}
             </Typography>
-          ) : null}
+            {categoryLine ? (
+              <Typography size="text-sm" color="secondary" numberOfLines={2}>
+                {categoryLine}
+              </Typography>
+            ) : null}
+          </Flex>
           <Flex gap={1.5}>
             <Flex gap={1} direction="row" alignItems="center">
               <MapPinIcon style={styles.infoIcon} />
@@ -112,6 +116,9 @@ export function CustomerPreviewHeader({ locale, business }: Props) {
             </Flex>
           </Flex>
         </Flex>
+        <View style={styles.socialLinksSection}>
+          <SocialMediaLinksRow links={business?.socialMediaLinks} />
+        </View>
       </View>
     </View>
   );
@@ -120,6 +127,9 @@ export function CustomerPreviewHeader({ locale, business }: Props) {
 const styles = StyleSheet.create(({ space, colors }) => ({
   header: {
     position: "relative",
+  },
+  socialLinksSection: {
+    marginTop: space(2),
   },
   logo: {
     width: 80,

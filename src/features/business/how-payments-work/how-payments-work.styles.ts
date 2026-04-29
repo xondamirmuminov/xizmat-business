@@ -13,12 +13,8 @@ export const howPaymentsWorkStyles = StyleSheet.create(({ space, colors }) => ({
   statusCheckIcon: {
     color: colors.success,
   },
-  formulaLine: {
-    opacity: 0.95,
-    lineHeight: 18,
-  },
   feeClip: {
-    borderRadius: 16,
+    borderRadius: 12,
     overflow: "hidden",
   },
   safe: {
@@ -45,10 +41,6 @@ export const howPaymentsWorkStyles = StyleSheet.create(({ space, colors }) => ({
     letterSpacing: 0.6,
     textTransform: "uppercase",
   },
-  formulaCaption: {
-    textAlign: "center",
-    marginBottom: space(0.5),
-  },
   feeRibbon: {
     height: 4,
     width: "100%",
@@ -64,17 +56,17 @@ export const howPaymentsWorkStyles = StyleSheet.create(({ space, colors }) => ({
     marginBottom: space(1.5),
   },
   notesWrap: {
-    borderRadius: 16,
+    borderRadius: 12,
     padding: space(2),
     backgroundColor: colors.slate2,
   },
   surfaceCard: {
-    borderRadius: 16,
+    borderRadius: 12,
     padding: space(2),
     backgroundColor: colors.slate2,
   },
   feeOuter: {
-    borderRadius: 16,
+    borderRadius: 12,
     overflow: "hidden",
     backgroundColor: colors.background,
   },
@@ -110,15 +102,6 @@ export const howPaymentsWorkStyles = StyleSheet.create(({ space, colors }) => ({
     paddingVertical: space(1.5),
     borderColor: colors.errorPress,
     backgroundColor: colors.errorSubtle,
-    borderWidth: StyleSheet.hairlineWidth,
-  },
-  formulaPill: {
-    borderRadius: 12,
-    marginTop: space(0.75),
-    borderColor: colors.slate4,
-    paddingVertical: space(1.25),
-    paddingHorizontal: space(1.5),
-    backgroundColor: colors.background,
     borderWidth: StyleSheet.hairlineWidth,
   },
 }));

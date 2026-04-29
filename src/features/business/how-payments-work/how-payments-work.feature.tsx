@@ -141,25 +141,6 @@ export function HowPaymentsWork() {
                 >
                   {t("profile.how_payments_fee_subtitle")}
                 </Typography>
-
-                <View style={styles.formulaPill}>
-                  <Typography
-                    size="text-xs"
-                    color="secondary"
-                    weight="semibold"
-                    style={styles.formulaCaption}
-                  >
-                    {t("profile.how_payments_formula_caption")}
-                  </Typography>
-                  <Typography
-                    align="center"
-                    size="text-xs"
-                    color="secondary"
-                    style={styles.formulaLine}
-                  >
-                    {t("profile.how_payments_formula_line")}
-                  </Typography>
-                </View>
               </View>
             </View>
           </View>

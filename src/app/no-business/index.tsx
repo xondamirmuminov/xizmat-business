@@ -1,7 +1,7 @@
-import { NoBusiness } from "@/features";
+import type { Href } from "expo-router";
 
-function NoBusinessScreen() {
-  return <NoBusiness />;
+import { Redirect } from "expo-router";
+
+export default function NoBusinessRedirect() {
+  return <Redirect href={"/(pre-work)/(tabs)/businesses" as Href} />;
 }
-
-export default NoBusinessScreen;

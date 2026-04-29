@@ -2,7 +2,44 @@
   "tab_bar": {
     "queues": "Navbat",
     "history": "Tarix",
-    "profile": "Profil"
+    "profile": "Profil",
+    "businesses": "Bizneslar"
+  },
+  "messages": {
+    "no_changes": "Hali oʻzgartirish yoʻq."
+  },
+  "user_profile": {
+    "screen_title": "Profil",
+    "sections": {
+      "account": "Hisob",
+      "preferences": "Sozlamalar",
+      "support": "Yordam",
+      "sign_out": "Chiqish"
+    },
+    "section_items": {
+      "theme": "Mavzu",
+      "sign_out": "Chiqish",
+      "language": "Til",
+      "contact_us": "Bogʻlanish",
+      "change_password": "Parolni oʻzgartirish",
+      "edit_personal_details": "Shaxsiy maʼlumotlarni tahrirlash"
+    },
+    "sign_out": {
+      "title": "Chiqish",
+      "description": "Rostdan ham profildan chiqmoqchimisiz?"
+    }
+  },
+  "edit_profile": {
+    "title": "Shaxsiy maʼlumotlarni tahrirlash",
+    "change_photo": "Suratni oʻzgartirish",
+    "success_message": "Profil muvaffaqiyatli yangilandi.",
+    "actions": {
+      "update": "Yangilash"
+    }
+  },
+  "change_password": {
+    "title": "Parolni oʻzgartirish",
+    "success_message": "Parol muvaffaqiyatli oʻzgardi."
   },
   "labels": {
     "phone": "Telefon",

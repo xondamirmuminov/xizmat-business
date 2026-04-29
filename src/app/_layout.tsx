@@ -119,6 +119,10 @@ export default function RootLayout() {
               <Stack.Protected guard={!!token}>
                 <Stack.Screen name="index" options={{ headerShown: false }} />
                 <Stack.Screen
+                  name="(pre-work)"
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
                   name="booking-info/[id]/index"
                   options={{ presentation: "containedModal" }}
                 />
@@ -130,6 +134,11 @@ export default function RootLayout() {
                   name="no-business/index"
                   options={{ headerShown: false }}
                 />
+                <Stack.Screen name="edit-profile/index" />
+                <Stack.Screen name="change-password/index" />
+                <Stack.Screen name="change-language/index" />
+                <Stack.Screen name="contact-us/index" />
+                <Stack.Screen name="how-payments-work/index" />
                 <Stack.Protected guard={!!businessId}>
                   <Stack.Screen
                     name="(tabs)"
@@ -156,9 +165,6 @@ export default function RootLayout() {
                     name="edit-business/index"
                     options={{ headerShown: false }}
                   />
-                  <Stack.Screen name="change-language/index" />
-                  <Stack.Screen name="contact-us/index" />
-                  <Stack.Screen name="how-payments-work/index" />
                 </Stack.Protected>
               </Stack.Protected>
             </Stack>

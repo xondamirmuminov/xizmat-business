@@ -81,6 +81,39 @@
   "messages": {
     "no_changes": "You've not made changes yet."
   },
+  "user_profile": {
+    "screen_title": "Profile",
+    "sections": {
+      "account": "Account",
+      "preferences": "Preferences",
+      "support": "Support",
+      "sign_out": "Sign out"
+    },
+    "section_items": {
+      "theme": "Theme",
+      "sign_out": "Sign out",
+      "language": "Language",
+      "contact_us": "Contact us",
+      "change_password": "Change password",
+      "edit_personal_details": "Edit personal details"
+    },
+    "sign_out": {
+      "title": "Sign out",
+      "description": "Are you sure you want to sign out?"
+    }
+  },
+  "edit_profile": {
+    "title": "Edit personal details",
+    "change_photo": "Change photo",
+    "success_message": "Profile updated successfully.",
+    "actions": {
+      "update": "Update details"
+    }
+  },
+  "change_password": {
+    "title": "Change password",
+    "success_message": "Password changed successfully."
+  },
   "sign_in": {
     "title": "Log in",
     "forgot_password": "Forgot password?",
@@ -238,7 +271,8 @@
   "tab_bar": {
     "queues": "Queues",
     "history": "History",
-    "profile": "Profile"
+    "profile": "Profile",
+    "businesses": "Businesses"
   },
   "profile": {
     "screen_title": "Business profile",

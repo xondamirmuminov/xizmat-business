@@ -1,4 +1,7 @@
 export * from "./auth";
+export * from "./edit-profile";
+export * from "./change-password";
+export * from "./provider-user-profile";
 export * from "./queues";
 export * from "./service";
 export * from "./business";

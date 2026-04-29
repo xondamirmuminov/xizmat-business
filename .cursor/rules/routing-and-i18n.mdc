@@ -1,0 +1,95 @@
+---
+description: expo-router file structure with double auth gate, screen options, and i18n keys
+globs: src/{app,i18n}/**/*.{ts,tsx,json}
+alwaysApply: false
+---
+
+# Routing — `expo-router`
+
+File-based routing under `src/app/`. Group folders use parentheses:
+
+```
+src/app/
+  _layout.tsx                  # Root <Stack> — token gate + businessId gate for work screens
+  index.tsx                    # Redirect: /(tabs) if businessId else /(pre-work)/(tabs)/businesses
+  (auth)/                      # sign-in / sign-up / verify
+  (pre-work)/                  # optional group; shell is <Slot />
+    (tabs)/                    # Bottom tabs when signed in but business not selected yet
+      _layout.tsx
+      businesses/index.tsx     # Businesses / NoBusiness picker
+      profile/index.tsx        # Provider user profile (customer-style)
+  (tabs)/                      # bottom tabs (queues, history, profile) — requires businessId
+    _layout.tsx
+    index.tsx
+    history/index.tsx
+    profile/index.tsx
+  no-business/index.tsx        # Legacy → Redirect to /(pre-work)/(tabs)/businesses
+  create-business/index.tsx
+  edit-profile/index.tsx       # Token-only stack (accessible before business selected)
+  change-password/index.tsx
+  change-language/index.tsx
+  contact-us/index.tsx
+  how-payments-work/index.tsx
+  business-details/index.tsx
+  services/index.tsx
+  booking-info/[id]/index.tsx  # presentation: "containedModal"
+  ...
+```
+
+## Auth gates
+
+Unlike `xizmat-app-mobile` (single token gate), providers have:
+
+1. **`token`** — authenticated user; unauthenticated routes use `(auth)`.
+2. **`businessId`** — required for `(tabs)` (queues/history/**business profile**), services, business-details, edit-business, create-service…
+
+**Signed in, no `businessId`** (no business selected / empty list): **`/(pre-work)/(tabs)`** — **Businesses** + **Profile** tabs. `/` redirects here (or straight to **`/(tabs)`** if `businessId` is set).
+
+Screens that must work **before** a business is selected live under **`guard={!!token}`** **outside** `guard={!!businessId}`**: `create-business`, `(pre-work)`, `no-business`, `edit-profile`, `change-password`, `change-language`, `contact-us`, `how-payments-work`, booking modal, root `index`, etc.
+
+```tsx
+<Stack.Protected guard={!!token}>
+  <Stack.Screen name="index" ... />
+  <Stack.Screen name="(pre-work)" ... />
+  <Stack.Screen name="create-business/index" ... />
+  <Stack.Screen name="no-business/index" ... />
+  <Stack.Screen name="edit-profile/index" />
+  <Stack.Screen name="change-password/index" />
+  <Stack.Screen name="change-language/index" />
+  <Stack.Screen name="contact-us/index" />
+  <Stack.Screen name="how-payments-work/index" />
+  <Stack.Protected guard={!!businessId}>
+    <Stack.Screen name="(tabs)" ... />
+    <Stack.Screen name="services/index" ... />
+    {/* other work screens */}
+  </Stack.Protected>
+</Stack.Protected>
+```
+
+When a provider has 0 businesses, **Businesses** tab shows **`NoBusiness`**. Creating a business (**`createBusiness`**) keeps them in pre-work until **`setBusinessId`**. Selecting a business → **`/(tabs)`** (queues).
+
+## Screen conventions
+
+- Every `app/<route>/index.tsx` is a **thin shell** importing a `Feature` from `@/features`.
+- The root `_layout.tsx` registers fonts, splash screen, Apollo, gesture handler,
+  bottom-sheet provider, keyboard provider, notification handler, and `<Toaster />`.
+- Custom header back button is configured in `screenOptions.headerLeft` (outlined
+  circular Button with `ChevronLeftIcon`). Keep new screens consistent.
+- Modals: set `presentation: "containedModal"` on screens that should slide in.
+
+## i18n — `i18next` + `react-i18next`
+
+- Languages: `en`, `uz`, `ru` (default `en`). Locales in `src/i18n/locales/*.json`.
+- Init in `src/i18n/index.ts`; user preference comes from `useAuthStore.language`,
+  fallback to device locale via `expo-localization`.
+- Inside components: `const { t } = useTranslation();` then `t('feature.key')`.
+- **Keys are dot-namespaced** by feature: `queues.title`, `bookings.empty.title`,
+  `business.create_button`, `actions.save`.
+- **`user_profile.*`** — signed-in provider profile (pre-business tabs); **`profile.*`** —
+  language labels shared with Business profile; **`tab_bar.businesses`** —
+  Businesses tab label.
+- **Backend errors** are namespaced under `graphql_errors.*` and the key is exactly
+  the backend's `BadRequestException('camelCaseKey')` message. Adding a new backend
+  error → add `graphql_errors.camelCaseKey` to **all three** locale files **AND**
+  to the customer app's locale files if the error can be raised there too.
+- Date helpers use `dayjs` with `uz-latn` locale loaded in `app/_layout.tsx`.

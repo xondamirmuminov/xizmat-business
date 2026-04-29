@@ -2,7 +2,44 @@
   "tab_bar": {
     "queues": "Очередь",
     "history": "История",
-    "profile": "Профиль"
+    "profile": "Профиль",
+    "businesses": "Бизнесы"
+  },
+  "messages": {
+    "no_changes": "Вы ещё не внесли изменения."
+  },
+  "user_profile": {
+    "screen_title": "Профиль",
+    "sections": {
+      "account": "Аккаунт",
+      "preferences": "Настройки",
+      "support": "Поддержка",
+      "sign_out": "Выход"
+    },
+    "section_items": {
+      "theme": "Оформление",
+      "sign_out": "Выйти из аккаунта",
+      "language": "Язык",
+      "contact_us": "Связаться с нами",
+      "change_password": "Сменить пароль",
+      "edit_personal_details": "Редактировать личные данные"
+    },
+    "sign_out": {
+      "title": "Выход из аккаунта",
+      "description": "Вы действительно хотите выйти?"
+    }
+  },
+  "edit_profile": {
+    "title": "Редактирование профиля",
+    "change_photo": "Изменить фото",
+    "success_message": "Профиль успешно обновлён.",
+    "actions": {
+      "update": "Сохранить"
+    }
+  },
+  "change_password": {
+    "title": "Смена пароля",
+    "success_message": "Пароль успешно изменён."
   },
   "labels": {
     "phone": "Телефон",

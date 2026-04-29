@@ -21,6 +21,7 @@ import {
   BusinessSelectionCard,
   BusinessSelectionCardSkeleton,
 } from "./components";
+import { NoBusiness } from "../no-business";
 
 export function Businesses() {
   const { user, businessId, setBusinessId, setHasBusiness } = useAuthStore();
@@ -104,7 +105,7 @@ export function Businesses() {
   }
 
   if (!hasBusiness) {
-    return <Redirect href="/no-business" />;
+    return <NoBusiness />;
   }
 
   if (businessId) {

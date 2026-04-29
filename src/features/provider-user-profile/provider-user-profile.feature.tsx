@@ -165,9 +165,7 @@ export function ProviderUserProfile() {
               />
             </ProfileSettingsSection>
 
-            <ProfileSettingsSection
-              label={t("user_profile.sections.sign_out")}
-            >
+            <ProfileSettingsSection label={t("user_profile.sections.sign_out")}>
               <ProfileSettingsRow
                 variant="danger"
                 showChevron={false}

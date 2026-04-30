@@ -271,8 +271,30 @@
   "tab_bar": {
     "queues": "Queues",
     "history": "History",
+    "payments": "Payments",
     "profile": "Profile",
     "businesses": "Businesses"
+  },
+  "payments": {
+    "section_spotlight": "This period",
+    "section_history": "Payment history",
+    "spotlight_empty": "No invoice for the current or previous month yet.",
+    "empty_title": "No payments yet",
+    "empty_description": "Your platform invoices will appear here when they are generated.",
+    "load_error": "Could not load payments. Pull to try again.",
+    "field_code": "Payment code",
+    "field_amount": "Amount",
+    "field_status": "Status",
+    "code_missing": "—",
+    "code_copied": "Payment code copied",
+    "code_copy_failed": "Could not copy",
+    "copy_code_a11y": "Copy payment code",
+    "status": {
+      "pending": "Pending",
+      "partially_paid": "Partially paid",
+      "paid": "Paid",
+      "overdue": "Overdue"
+    }
   },
   "profile": {
     "screen_title": "Business profile",

@@ -2,8 +2,30 @@
   "tab_bar": {
     "queues": "Очередь",
     "history": "История",
+    "payments": "Платежи",
     "profile": "Профиль",
     "businesses": "Бизнесы"
+  },
+  "payments": {
+    "section_spotlight": "Текущий период",
+    "section_history": "История платежей",
+    "spotlight_empty": "Пока нет счёта за текущий или прошлый месяц.",
+    "empty_title": "Платежей пока нет",
+    "empty_description": "Счета платформы появятся здесь, когда будут сформированы.",
+    "load_error": "Не удалось загрузить платежи. Потяните вниз, чтобы повторить.",
+    "field_code": "Код платежа",
+    "field_amount": "Сумма",
+    "field_status": "Статус",
+    "code_missing": "—",
+    "code_copied": "Код платежа скопирован",
+    "code_copy_failed": "Не удалось скопировать",
+    "copy_code_a11y": "Скопировать код платежа",
+    "status": {
+      "pending": "Ожидает",
+      "partially_paid": "Частично оплачен",
+      "paid": "Оплачен",
+      "overdue": "Просрочен"
+    }
   },
   "messages": {
     "no_changes": "Вы ещё не внесли изменения."

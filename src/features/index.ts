@@ -8,5 +8,6 @@ export * from "./business";
 export * from "./change-language";
 export * from "./contact-us";
 export * from "./how-payments-work";
+export * from "./payments";
 export * from "./booking-info";
 export * from "./bookings-history";

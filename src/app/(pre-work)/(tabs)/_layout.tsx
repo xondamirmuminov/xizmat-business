@@ -7,6 +7,7 @@ import {
   StoreIcon,
   UserFilledIcon,
   StoreFilledIcon,
+  HandCoinsIcon,
 } from "@/assets";
 
 export default function PreWorkTabsLayout() {
@@ -38,6 +39,14 @@ export default function PreWorkTabsLayout() {
             ) : (
               <StoreIcon size={24} color={color} />
             ),
+        }}
+      />
+      <Tabs.Screen
+        name="payments/index"
+        options={{
+          title: t("tab_bar.payments"),
+          headerTitle: t("tab_bar.payments"),
+          tabBarIcon: ({ color }) => <HandCoinsIcon size={24} color={color} />,
         }}
       />
       <Tabs.Screen

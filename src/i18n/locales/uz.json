@@ -2,8 +2,30 @@
   "tab_bar": {
     "queues": "Navbat",
     "history": "Tarix",
+    "payments": "To'lovlar",
     "profile": "Profil",
     "businesses": "Bizneslar"
+  },
+  "payments": {
+    "section_spotlight": "Joriy davr",
+    "section_history": "To'lovlar tarixi",
+    "spotlight_empty": "Joriy yoki avvalgi oy uchun hisob-faktura hali yo'q.",
+    "empty_title": "Hali to'lovlar yo'q",
+    "empty_description": "Hisob-fakturalar shakllanganda ular shu yerda ko'rinadi.",
+    "load_error": "To'lovlarni yuklab bo'lmadi. Qayta urinish uchun torting.",
+    "field_code": "To'lov kodi",
+    "field_amount": "Summa",
+    "field_status": "Holat",
+    "code_missing": "—",
+    "code_copied": "To'lov nusxalandi",
+    "code_copy_failed": "Nusxalab bo'lmadi",
+    "copy_code_a11y": "To'lov kodini nusxalash",
+    "status": {
+      "pending": "Kutilmoqda",
+      "partially_paid": "Qisman to'langan",
+      "paid": "To'langan",
+      "overdue": "Muddati o'tgan"
+    }
   },
   "messages": {
     "no_changes": "Hali oʻzgartirish yoʻq."

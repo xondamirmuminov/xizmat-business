@@ -8,6 +8,7 @@ import {
   HistoryIcon,
   QueueFilledIcon,
   StoreFilledIcon,
+  HandCoinsIcon,
 } from "@/assets";
 
 export default function TabLayout() {
@@ -45,6 +46,14 @@ export default function TabLayout() {
         options={{
           title: t("tab_bar.history"),
           tabBarIcon: ({ color }) => <HistoryIcon size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="payments/index"
+        options={{
+          title: t("tab_bar.payments"),
+          headerTitle: t("tab_bar.payments"),
+          tabBarIcon: ({ color }) => <HandCoinsIcon size={24} color={color} />,
         }}
       />
       <Tabs.Screen
